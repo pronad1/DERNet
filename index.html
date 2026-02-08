@@ -4,14 +4,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="description"
-    content="DERNet: A Unified Explainable Framework for Segmentation and Classification of Liver Cirrhosis on T2-Weighted MRI using Deep Learning.">
+    content="DERNet: A Unified DERNet and YOLO11 Framework for Spinal Lesion Triage, Localization, and Clinical Deployment">
 
-  <meta name="keywords"
-    content="Liver Cirrhosis, MRI Segmentation, Medical Imaging, Deep Learning, DERNet, Classification, Explainable AI">
+  <meta name="keywords" content="Spinal Lesion, Class Imbalance, DERNet, Clinical Deployment">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>DERNet: Liver Cirrhosis Analysis</title>
+  <title>DERNet: Spinal Lesion Analysis</title>
   <!-- Global site tag (gtag.js) - Google Analytics 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
   <script>
@@ -34,7 +33,7 @@
   <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
-  <link rel="icon" href="./static/images/3UR.png">
+  <link rel="icon" href="./static/images/dernet.png">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="./static/js/fontawesome.all.min.js"></script>
@@ -59,10 +58,10 @@
 
         <a class="navbar-item" href="#">
           <div style="display: flex; flex-direction: column; align-items: center; line-height: 1.2;">
-            <img src="./static/images/3UR.drawio.png" alt="3UResNet Logo"
+            <img src="./static/images/dernet.png" alt="DERNet Logo"
               style="max-height: 60px; width: auto; margin-bottom: 2px;">
             <span style="font-weight: bold; font-size: 20px; color: #333;">
-              3UResNet
+              DERNet
             </span>
           </div>
         </a>
@@ -76,44 +75,25 @@
       <div class="container is-max-desktop">
         <div class="columns is-centered">
           <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title">Multiclass Liver Cirrhosis Segmentation and Severity Staging on
-              T2-Weighted MRI Using 3UResNet Explainability and Per-Class Deep Expert Classifiers</h1>
+            <h1 class="title is-1 publication-title">A Unified DERNet and YOLO11 Framework for Spinal Lesion Triage,
+              Localization, and Clinical Deployment</h1>
             <div class="is-size-5 publication-authors">
               <span class="author-block">
-                <a href="mailto:dmazumder18.cse@bu.ac.bd">Deblina Mazumder Setu</a><sup>1</sup>,
+                <a href="mailto:prosenjit1156@gmail.com">Prosenjit Mondol</a><sup>1</sup>,
               </span>
               <span class="author-block">
                 <a href="mailto:samrat.sst@bou.ac.bd">Samrat Kumar Dey</a><sup>2</sup>,
               </span>
               <span class="author-block">
-                <a href="mailto:taislam@bu.ac.bd">Tania Islam</a><sup>1</sup>,
-              </span>
-              <span class="author-block">
                 <a href="mailto:arpita.cse@pstu.ac.bd">Arpita Howlader</a><sup>3</sup>,
-              </span>
-              <span class="author-block">
-                <a href="mailto:saurov@appscode.com">Saurov Chandra Biswas</a><sup>4</sup>,
-              </span>
-              <span class="author-block">
-                <a href="mailto:rmiit@juniv.edu">Rashed Mazumder</a><sup>5</sup>,
-              </span>
-              <span class="author-block">
-                <a href="mailto:u.raihan.siddiqi@gmail.com">Umme Raihan Siddiqi</a><sup>6</sup>,
-              </span>
-              <span class="author-block">
-                <a href="mailto:mahbub@cse.mist.ac.bd">Md. Mahbubur Rahman</a><sup>7</sup>
               </span>
 
             </div>
 
             <div class="is-size-5 publication-authors">
-              <span class="author-block"><sup>1</sup>University of Barishal,</span>
+              <span class="author-block"><sup>1</sup>Patuakhali Science and Technology University,</span>
               <span class="author-block"><sup>2</sup>Bangladesh Open University,</span>
               <span class="author-block"><sup>3</sup>Patuakhali Science and Technology University,</span>
-              <span class="author-block"><sup>4</sup>AppsCode Inc.,</span>
-              <span class="author-block"><sup>5</sup>Jahangirnagar University,</span>
-              <span class="author-block"><sup>6</sup>Shaheed Suhrawardy Medical College and Hospital,</span>
-              <span class="author-block"><sup>7</sup>Military Institute of Science and Technology</span>
             </div>
 
             <div class="column has-text-centered">
@@ -176,28 +156,67 @@
     <div class="container is-max-desktop">
       <div class="hero-body">
 
+        <!-- First Row: 4 Lesion Types -->
         <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 15px;">
-          <div style="text-align: center; width: 32%;">
-            <img src="./static/images/class1.PNG" alt="Class 1"
+          <div style="text-align: center; width: 23%;">
+            <img src="./static/images/vertebal with normal.JPG" alt="Vertebral Collapse"
               style="width: 100%; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
-            <p style="margin-top: 5px; font-weight: bold;">Class A (Mild)</p>
+            <p style="margin-top: 5px; font-weight: bold; font-size: 14px;">(a) Vertebral Collapse</p>
           </div>
 
-          <div style="text-align: center; width: 32%;">
-            <img src="./static/images/class2.png" alt="Class 2"
+          <div style="text-align: center; width: 23%;">
+            <img src="./static/images/osteophytes with normal.JPG" alt="Osteophytes"
               style="width: 100%; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
-            <p style="margin-top: 5px; font-weight: bold;">Class B (Moderate)</p>
+            <p style="margin-top: 5px; font-weight: bold; font-size: 14px;">(b) Osteophytes</p>
           </div>
 
-          <div style="text-align: center; width: 32%;">
-            <img src="./static/images/class3.png" alt="Class 3"
+          <div style="text-align: center; width: 23%;">
+            <img src="./static/images/spondylolysthesis with normal.JPG" alt="Spondylolisthesis"
               style="width: 100%; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
-            <p style="margin-top: 5px; font-weight: bold;">Class C (Severe)</p>
+            <p style="margin-top: 5px; font-weight: bold; font-size: 14px;">(c) Spondylolisthesis</p>
+          </div>
+
+          <div style="text-align: center; width: 23%;">
+            <img src="./static/images/sergical implant with normal.JPG" alt="Surgical Implant"
+              style="width: 100%; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+            <p style="margin-top: 5px; font-weight: bold; font-size: 14px;">(d) Surgical Implant</p>
           </div>
         </div>
+
+        <!-- Second Row: 4 Lesion Types -->
+        <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 15px;">
+          <div style="text-align: center; width: 23%;">
+            <img src="./static/images/Disc space narrowing with normal.jpg" alt="Disc Space Narrowing"
+              style="width: 100%; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+            <p style="margin-top: 5px; font-weight: bold; font-size: 14px;">(e) Disc Space Narrowing</p>
+          </div>
+
+          <div style="text-align: center; width: 23%;">
+            <img src="./static/images/foraminal stenosis with normal.jpg" alt="Foraminal Stenosis"
+              style="width: 100%; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+            <p style="margin-top: 5px; font-weight: bold; font-size: 14px;">(f) Foraminal Stenosis</p>
+          </div>
+
+          <div style="text-align: center; width: 23%;">
+            <img src="./static/images/other lession with normal.jpg" alt="Other Lesion"
+              style="width: 100%; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+            <p style="margin-top: 5px; font-weight: bold; font-size: 14px;">(g) Other Lesion</p>
+          </div>
+
+          <div style="text-align: center; width: 23%;">
+            <img src="./static/images/normal.jpg" alt="Normal"
+              style="width: 100%; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+            <p style="margin-top: 5px; font-weight: bold; font-size: 14px;">(h) Normal</p>
+          </div>
+        </div>
+
         <h2 class="subtitle has-text-centered">
-          <span class="dnerf">Liver Cirrhosis Classification</span>: Visualizing the Progression Across 3 Critical
-          Severity Levels.
+          <span class="dnerf">Spinal Lesion Classification</span>: Examples of detected spinal lesions in X-ray images.
+          The figure highlights four distinct pathologies: (a) Vertebral Collapse, (b) Osteophytes, (c)
+          Spondylolisthesis, (d) Surgical Implants, (e) Disc Space Narrowing, (f) Foraminal Stenosis, (g) Other Lesion
+          and (h) Normal. In these visualizations, the green bounding boxes represent ground truth annotations (serving
+          as the normal reference standard), while the blue bounding boxes indicate the specific lesions detected by our
+          proposed framework.
         </h2>
 
       </div>
@@ -300,9 +319,11 @@
                 <li><strong>Proposed Model:</strong> <em>3UResNet</em>, an ensemble of U-Net, TransUNet++, and Attention
                   U-Net with a <strong>ResNet50 encoder</strong>.</li>
                 <li><strong>Pipeline:</strong> First, precise segmentation (Dice: 0.9516), followed by extraction of
-                  <strong>Shape & Visual features</strong>.</li>
+                  <strong>Shape & Visual features</strong>.
+                </li>
                 <li><strong>Classification:</strong> Utilized <strong>DenseNet121</strong> (for Mild) and
-                  <strong>CoAnNet</strong> (for Moderate/Severe) with WeightedRandom Sampler to mitigate imbalance.</li>
+                  <strong>CoAnNet</strong> (for Moderate/Severe) with WeightedRandom Sampler to mitigate imbalance.
+                </li>
               </ul>
             </div>
           </div>
