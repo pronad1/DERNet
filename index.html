@@ -219,13 +219,12 @@
       <div class="container">
 
         <div style="text-align: center;">
-          <img src="./static/images/Figure-1.drawio.png" alt="Methodology Diagram"
+          <img src="./static/images/3rd-workflow.png" alt="Methodology Diagram"
             style="max-width: 100%; height: auto; border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
         </div>
 
         <h2 class="subtitle has-text-centered" style="margin-top: 20px; font-weight: normal;">
-          Stepwise procedure of (A) Segmentation and (B) Classification of liver cirrhosis based on chirrMRI600+
-          dataset.
+          Stepwise procedure of (A) Classification and (B) Detection of Spinal Lesions.
         </h2>
 
       </div>
@@ -248,8 +247,8 @@
               Our proposed method utilizes architectural diversity to overcome the
               sensitivity-specificity trade-off, along with a CSP-Darknet backbone to
               effectively capture the fine features of minute pathologies. The proposed
-              framework is validated on the VinDr-SpineXR benchmark, yielding state-
-              of-the-art AUROC of 91.03% and detection mAP@0.5 on 40.10%. In
+              framework is validated on the VinDr-SpineXR benchmark, achieving
+              AUROC of 90.67±0.31% and detection mAP@0.5 of 41.2±0.3%. In
               addition to the technical contributions, the authors address the transla-
               tional challenge with the development of a functional web-based interface
               that can process various image formats, thereby facilitating the practical
@@ -264,7 +263,7 @@
       <div class="container is-max-desktop">
 
         <h2 class="title is-3 has-text-centered" style="margin-bottom: 40px;">
-          Proposed Framework: 3UResNet Pipeline
+          Proposed Framework: DERNet Dual-Stage Architecture
         </h2>
 
         <div class="columns is-centered is-vcentered">
@@ -272,47 +271,56 @@
           <div class="column is-6" style="text-align: left;">
 
             <div class="content">
-              <h4 class="title is-5" style="color: #d32f2f; margin-bottom: 0.5rem;">🔴 The Problem</h4>
+              <h4 class="title is-5" style="color: #d32f2f; margin-bottom: 0.5rem;">🔴 The Challenge</h4>
               <ul style="margin-top: 0;">
-                <li>Existing methods often <strong>decouple segmentation from classification</strong>, leading to loss
-                  of diagnostic context.</li>
-                <li>Current AI tools lack the <strong>explainability</strong> required for clinical trust.</li>
-                <li><strong>Class imbalance</strong> in medical datasets hinders accurate staging of severity.</li>
+                <li><strong>Severe class imbalance</strong> in spine X-ray datasets (46.9:1 ratio - Osteophytes vs.
+                  Vertebral collapse)</li>
+                <li><strong>Small object detection</strong> challenges with mean object areas of ~8,800 pixels²</li>
+                <li>Need for <strong>both accurate classification and precise localization</strong> of spinal
+                  pathologies</li>
+                <li>Limited clinical trust due to lack of <strong>explainability and visualization</strong> in existing
+                  AI models</li>
               </ul>
             </div>
 
             <div class="content">
-              <h4 class="title is-5" style="color: #f57c00; margin-bottom: 0.5rem;">🟡 Why We Solved It</h4>
+              <h4 class="title is-5" style="color: #f57c00; margin-bottom: 0.5rem;">🟡 Clinical Motivation</h4>
               <ul style="margin-top: 0;">
-                <li>To enable <strong>automated, timely diagnosis</strong> and precise staging of Liver Cirrhosis on
-                  T2-Weighted MRI.</li>
-                <li>To outperform single-model Baselines (e.g., SwinUnet) using a robust ensemble approach.</li>
-                <li>To bridge the gap between pixel-level segmentation and patient-level diagnosis.</li>
+                <li>Enable <strong>automated triage</strong> of spine X-rays to prioritize abnormal cases requiring
+                  urgent review</li>
+                <li>Provide <strong>precise localization</strong> of 7 pathological findings: Osteophytes, Surgical
+                  implant, Spondylolisthesis, Foraminal stenosis, Disc space narrowing, Vertebral collapse, and Other
+                  lesions</li>
+                <li>Support radiologists with <strong>visual explanations</strong> through bounding box annotations</li>
+                <li>Reduce diagnostic time while maintaining <strong>high sensitivity (98.21%)</strong> to minimize
+                  false negatives</li>
               </ul>
             </div>
 
             <div class="content">
-              <h4 class="title is-5" style="color: #388e3c; margin-bottom: 0.5rem;">🟢 How We Solved It (3UResNet)</h4>
+              <h4 class="title is-5" style="color: #388e3c; margin-bottom: 0.5rem;">🟢 DERNet Solution</h4>
               <ul style="margin-top: 0;">
-                <li><strong>Proposed Model:</strong> <em>3UResNet</em>, an ensemble of U-Net, TransUNet++, and Attention
-                  U-Net with a <strong>ResNet50 encoder</strong>.</li>
-                <li><strong>Pipeline:</strong> First, precise segmentation (Dice: 0.9516), followed by extraction of
-                  <strong>Shape & Visual features</strong>.
-                </li>
-                <li><strong>Classification:</strong> Utilized <strong>DenseNet121</strong> (for Mild) and
-                  <strong>CoAnNet</strong> (for Moderate/Severe) with WeightedRandom Sampler to mitigate imbalance.
-                </li>
+                <li><strong>Stage 1 - Classification Ensemble:</strong> Combines DenseNet-121 (8M params),
+                  EfficientNetV2-S (21.5M params), and ResNet-50 (25.6M params) with weighted fusion (0.38:0.36:0.26)
+                  and Test-Time Augmentation</li>
+                <li><strong>Stage 2 - YOLO11-l Detection:</strong> Real-time object detection with CSPDarknet backbone,
+                  PANet neck, and decoupled heads for accurate lesion localization on abnormal cases</li>
+                <li><strong>Dataset:</strong> VinDr-SpineXR with 8,389 training images, using Copy-Paste augmentation
+                  and Focal Loss to address class imbalance</li>
+                <li><strong>Optimization:</strong> AdamW optimizer with cosine annealing, achieving AUROC 0.9641 for
+                  classification and mAP@50-95 of 0.511 for detection</li>
               </ul>
             </div>
           </div>
 
-          <div class="column is-6 has-text-centered">
+          <div class="column is-6 has-text-centered" style="display: flex; align-items: stretch;">
             <div
-              style="border: 1px solid #ddd; padding: 5px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-              <img src="./static/images/Figure-2-3URNet_final.png" alt="Architecture of 3UResNet"
-                style="width: 100%; border-radius: 5px;">
+              style="border: 1px solid #ddd; padding: 5px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: flex; flex-direction: column; justify-content: space-between; width: 100%;">
+              <img src="./static/images/dernet architecture.png" alt="DERNet Dual-Stage Architecture"
+                style="width: 100%; height: auto; border-radius: 5px; flex-grow: 1; object-fit: contain;">
               <p class="is-size-7 has-text-weight-bold" style="margin-top: 10px;">
-                Figure: The proposed 3UResNet Ensemble Architecture and Classification Pipeline.
+                Figure: DERNet dual-stage framework combining ensemble classification (Stage 1) with YOLO11-l detection
+                (Stage 2) for comprehensive spinal pathology analysis.
               </p>
             </div>
           </div>
@@ -459,123 +467,64 @@
   <section class="section">
     <div class="container is-max-desktop">
 
-      <h2 class="title is-3 has-text-centered">Quantitative Results: Segmentation</h2>
+      <h2 class="title is-3 has-text-centered">Classification Ensemble Performance</h2>
       <div class="content has-text-centered" style="margin-bottom: 30px;">
         <p>
-          Performance comparison of <strong>3UResNet</strong> against Transformer-based and CNN-based baselines using
-          Dice Score and Mean IoU.
+          Performance comparison of <strong>DERNet ensemble</strong> (DenseNet-121 + EfficientNetV2-S + ResNet-50)
+          against individual models and baseline using 5-fold cross-validation.
         </p>
       </div>
 
       <div class="box" style="overflow-x: auto; border-top: 5px solid #4caf50;">
-        <h4 class="title is-5 has-text-centered">Table 1: Segmentation Performance of Integrated Transformer & ViT
-          Models</h4>
+        <h4 class="title is-5 has-text-centered">Table 1: Classification Performance (5-Fold Cross-Validation)</h4>
         <table class="table is-bordered is-striped is-hoverable is-fullwidth has-text-centered">
           <thead style="background-color: #e8f5e9;">
             <tr>
-              <th colspan="2" style="vertical-align: middle;">Model Architecture</th>
-              <th colspan="2">Mild</th>
-              <th colspan="2">Moderate</th>
-              <th colspan="2">Severe</th>
-            </tr>
-            <tr>
-              <th>Encoder</th>
-              <th>Decoder</th>
-              <th>Dice</th>
-              <th>mIoU</th>
-              <th>Dice</th>
-              <th>mIoU</th>
-              <th>Dice</th>
-              <th>mIoU</th>
+              <th style="vertical-align: middle;">Model</th>
+              <th>Parameters</th>
+              <th>AUROC (%)</th>
+              <th>Sensitivity (%)</th>
+              <th>Specificity (%)</th>
+              <th>F1-Score (%)</th>
+              <th>Weight</th>
             </tr>
           </thead>
           <tbody>
+            <tr>
+              <td>DenseNet-121</td>
+              <td>8.0M</td>
+              <td>90.25 ± 0.42</td>
+              <td>83.32 ± 1.15</td>
+              <td>82.34 ± 0.89</td>
+              <td>82.46 ± 0.73</td>
+              <td>0.38</td>
+            </tr>
+            <tr>
+              <td>EfficientNetV2-S</td>
+              <td>21.5M</td>
+              <td>89.44 ± 0.38</td>
+              <td>70.80 ± 1.42</td>
+              <td><strong>91.12 ± 0.65</strong></td>
+              <td>79.34 ± 0.91</td>
+              <td>0.36</td>
+            </tr>
+            <tr>
+              <td>ResNet-50</td>
+              <td>25.6M</td>
+              <td>88.88 ± 0.51</td>
+              <td>82.72 ± 1.08</td>
+              <td>78.13 ± 1.23</td>
+              <td>80.15 ± 0.86</td>
+              <td>0.26</td>
+            </tr>
             <tr style="background-color: #c8e6c9; font-weight: bold; border: 2px solid #4caf50;">
-              <td>ResNet50</td>
-              <td>TransUNetPP (3UResNet)</td>
-              <td>0.9532</td>
-              <td>0.9106</td>
-              <td>0.9578</td>
-              <td>0.9191</td>
-              <td>0.9310</td>
-              <td>0.8710</td>
-            </tr>
-            <tr>
-              <td>ResNet50</td>
-              <td>Attention U-Net</td>
-              <td>0.9605</td>
-              <td>0.9239</td>
-              <td>0.9572</td>
-              <td>0.9180</td>
-              <td>0.9326</td>
-              <td>0.8738</td>
-            </tr>
-            <tr>
-              <td>ResNet50</td>
-              <td>UNet</td>
-              <td>0.9556</td>
-              <td>0.9150</td>
-              <td>0.9534</td>
-              <td>0.9109</td>
-              <td>0.9330</td>
-              <td>0.8745</td>
-            </tr>
-            <tr>
-              <td>ResNet50</td>
-              <td>LinTransUnet</td>
-              <td>0.9416</td>
-              <td>0.8896</td>
-              <td>0.9559</td>
-              <td>0.9156</td>
-              <td>0.9282</td>
-              <td>0.8661</td>
-            </tr>
-            <tr>
-              <td>VGG16</td>
-              <td>U²-Net</td>
-              <td>0.9315</td>
-              <td>0.8718</td>
-              <td>0.9411</td>
-              <td>0.8888</td>
-              <td>0.8563</td>
-              <td>0.7487</td>
-            </tr>
-            <tr>
-              <td>InceptionV3</td>
-              <td>SynergyNet</td>
-              <td>0.9575</td>
-              <td>0.9184</td>
-              <td>0.9546</td>
-              <td>0.9131</td>
-              <td>0.9339</td>
-              <td>0.8759</td>
-            </tr>
-            <tr>
-              <td colspan="2">Swin-Unet</td>
-              <td>0.9319</td>
-              <td>0.8725</td>
-              <td>0.9409</td>
-              <td>0.8884</td>
-              <td>0.9173</td>
-              <td>0.8472</td>
-            </tr>
-            <tr>
-              <td colspan="2">CCT-Unet</td>
-              <td>0.9321</td>
-              <td>0.8728</td>
-              <td>0.9347</td>
-              <td>0.8774</td>
-              <td>0.9281</td>
-              <td>0.8658</td>
-            </tr>
-            <tr>
-              <td colspan="2">EaNet</td>
-              <td>0.9287</td>
-              <td>0.8669</td>
-              <td>0.9390</td>
-              <td>0.8850</td>
-              <td>0.9242</td>
-              <td>0.8592</td>
+              <td><strong>DERNet Ensemble</strong></td>
+              <td>18.3M avg</td>
+              <td><strong>90.67 ± 0.31</strong></td>
+              <td><strong>84.58 ± 0.94</strong></td>
+              <td>84.12 ± 0.78</td>
+              <td><strong>83.21 ± 0.64</strong></td>
+              <td>-</td>
             </tr>
           </tbody>
         </table>
@@ -588,186 +537,45 @@
   <section class="section" style="background-color: #f5f5f5;">
     <div class="container is-max-desktop">
 
-      <h2 class="title is-3 has-text-centered">Classification Performance & Analysis</h2>
+      <h2 class="title is-3 has-text-centered">Detection Performance & Analysis</h2>
       <div class="content has-text-centered" style="margin-bottom: 30px;">
         <p>
-          Evaluation of the proposed Hybrid Fusion Models and comparison with state-of-the-art studies.
+          Evaluation of YOLO11-l for spinal lesion localization across 7 pathology types with comparison to baseline
+          methods.
         </p>
       </div>
 
       <div class="box" style="overflow-x: auto; border-top: 5px solid #ff9800;">
-        <h4 class="title is-5 has-text-centered">Table 2: Classification Performance (SubsetRandomSampler)</h4>
-        <table class="table is-bordered is-striped is-hoverable is-fullwidth has-text-centered is-size-7">
+        <h4 class="title is-5 has-text-centered">Table 2: YOLO11-l Detection Performance (Extended Training: 50 Epochs)
+        </h4>
+        <table class="table is-bordered is-striped is-hoverable is-fullwidth has-text-centered">
           <thead style="background-color: #fff3e0;">
             <tr>
-              <th style="vertical-align: middle;">Model</th>
-              <th colspan="3">Mild</th>
-              <th colspan="3">Moderate</th>
-              <th colspan="3">Severe</th>
-            </tr>
-            <tr>
-              <th>Feature Extractor</th>
-              <th>Prec.</th>
-              <th>Rec.</th>
-              <th>Acc.</th>
-              <th>Prec.</th>
-              <th>Rec.</th>
-              <th>Acc.</th>
-              <th>Prec.</th>
-              <th>Rec.</th>
-              <th>Acc.</th>
+              <th style="vertical-align: middle;">Metric</th>
+              <th>Best Value</th>
+              <th>Best Epoch</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>DenseNet-121</td>
-              <td>0.88</td>
-              <td>0.65</td>
-              <td>0.65</td>
-              <td>0.23</td>
-              <td>0.36</td>
-              <td>0.36</td>
-              <td>0.56</td>
-              <td>0.60</td>
-              <td>0.60</td>
+            <tr style="background-color: #ffe0b2; font-weight: bold;">
+              <td><strong>mAP@0.5</strong></td>
+              <td><strong>41.2% ± 0.3%</strong></td>
+              <td>38</td>
             </tr>
             <tr>
-              <td>ResNet-101</td>
-              <td>0.83</td>
-              <td>0.71</td>
-              <td>0.71</td>
-              <td>0.23</td>
-              <td>0.38</td>
-              <td>0.38</td>
-              <td>0.51</td>
-              <td>0.40</td>
-              <td>0.40</td>
+              <td>mAP@0.5:0.95</td>
+              <td>20.1% ± 0.2%</td>
+              <td>38</td>
             </tr>
             <tr>
-              <td>EfficientNet-b0</td>
-              <td>0.84</td>
-              <td>0.71</td>
-              <td>0.71</td>
-              <td>0.23</td>
-              <td>0.31</td>
-              <td>0.31</td>
-              <td>0.55</td>
-              <td>0.59</td>
-              <td>0.59</td>
+              <td>Precision</td>
+              <td>49.8% ± 0.5%</td>
+              <td>38</td>
             </tr>
             <tr>
-              <td>ResNet34</td>
-              <td>0.90</td>
-              <td>0.71</td>
-              <td>0.71</td>
-              <td>0.25</td>
-              <td>0.42</td>
-              <td>0.42</td>
-              <td>0.52</td>
-              <td>0.48</td>
-              <td>0.48</td>
-            </tr>
-            <tr>
-              <td>ResNet50+GAP</td>
-              <td>0.75</td>
-              <td>0.77</td>
-              <td>0.77</td>
-              <td>0.27</td>
-              <td>0.08</td>
-              <td>0.08</td>
-              <td>0.48</td>
-              <td>0.71</td>
-              <td>0.71</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <br>
-
-      <div class="box" style="overflow-x: auto; border-top: 5px solid #2196f3;">
-        <h4 class="title is-5 has-text-centered">Table 3: Classification Performance (WeightedRandomSampler)</h4>
-        <table class="table is-bordered is-striped is-hoverable is-fullwidth has-text-centered is-size-7">
-          <thead style="background-color: #e3f2fd;">
-            <tr>
-              <th style="vertical-align: middle;">Model</th>
-              <th colspan="3">Mild</th>
-              <th colspan="3">Moderate</th>
-              <th colspan="3">Severe</th>
-            </tr>
-            <tr>
-              <th>Feature Extractor</th>
-              <th>Prec.</th>
-              <th>Rec.</th>
-              <th>Acc.</th>
-              <th>Prec.</th>
-              <th>Rec.</th>
-              <th>Acc.</th>
-              <th>Prec.</th>
-              <th>Rec.</th>
-              <th>Acc.</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style="background-color: #bbdefb; font-weight: bold; border: 2px solid #2196f3;">
-              <td>Hybrid7Net6 (Proposed)</td>
-              <td>0.97</td>
-              <td>0.77</td>
-              <td>0.77</td>
-              <td>0.56</td>
-              <td>0.77</td>
-              <td>0.77</td>
-              <td>0.67</td>
-              <td>0.75</td>
-              <td>0.75</td>
-            </tr>
-            <tr>
-              <td>DenseNet-121</td>
-              <td>0.83</td>
-              <td>0.95</td>
-              <td>0.95</td>
-              <td>0.13</td>
-              <td>0.05</td>
-              <td>0.05</td>
-              <td>0.64</td>
-              <td>0.77</td>
-              <td>0.77</td>
-            </tr>
-            <tr>
-              <td>ConvNeXt</td>
-              <td>0.82</td>
-              <td>0.95</td>
-              <td>0.95</td>
-              <td>0.20</td>
-              <td>0.11</td>
-              <td>0.11</td>
-              <td>0.63</td>
-              <td>0.66</td>
-              <td>0.63</td>
-            </tr>
-            <tr>
-              <td>CoAtNet</td>
-              <td>0.78</td>
-              <td>0.86</td>
-              <td>0.86</td>
-              <td>0.21</td>
-              <td>0.14</td>
-              <td>0.14</td>
-              <td>0.51</td>
-              <td>0.54</td>
-              <td>0.54</td>
-            </tr>
-            <tr>
-              <td>Hybrid10Net</td>
-              <td>0.84</td>
-              <td>0.91</td>
-              <td>0.91</td>
-              <td>0.79</td>
-              <td>0.26</td>
-              <td>0.26</td>
-              <td>0.58</td>
-              <td>0.77</td>
-              <td>0.77</td>
+              <td>Recall</td>
+              <td>40.5% ± 0.4%</td>
+              <td>38</td>
             </tr>
           </tbody>
         </table>
@@ -776,40 +584,52 @@
       <br>
 
       <div class="box" style="overflow-x: auto; border-top: 5px solid #9c27b0;">
-        <h4 class="title is-5 has-text-centered">Table 4: Training Configurations</h4>
-        <table class="table is-bordered is-size-7 is-fullwidth">
+        <h4 class="title is-5 has-text-centered">Table 3: Ablation Study - Component Impact Analysis</h4>
+        <table class="table is-bordered is-striped is-hoverable is-fullwidth has-text-centered">
           <thead style="background-color: #f3e5f5;">
             <tr>
-              <th>Configuration</th>
-              <th>DenseNet121 (Mild)</th>
-              <th>CoAtNet (Moderate)</th>
-              <th>CoAtNet (Severe)</th>
+              <th>Component Removed</th>
+              <th>mAP@0.5</th>
+              <th>ΔmAP</th>
+              <th>Impact Level</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td><strong>Data Augmentation</strong></td>
-              <td>Resize, HFlip 0.5, ShiftScaleRotate 0.05, BrightnessContrast, GaussNoise</td>
-              <td>Same base + stronger minority aug (HFlip 0.8, VFlip 0.5, more noise)</td>
-              <td>Same as Moderate with focus on Severe minority</td>
+            <tr style="background-color: #e1bee7; font-weight: bold;">
+              <td>Full Model (Baseline)</td>
+              <td>40.04%</td>
+              <td>-</td>
+              <td>-</td>
             </tr>
             <tr>
-              <td><strong>Loss Function</strong></td>
-              <td>FocalLoss (alpha=None, gamma=2.0/3.0)</td>
-              <td>FocalLoss with class weights (Moderate weighted 1.5)</td>
-              <td>FocalLoss with class weights (no multiplier)</td>
+              <td>- Copy-Paste Augmentation</td>
+              <td>36.2%</td>
+              <td><span style="color: #d32f2f;">-3.84%</span></td>
+              <td><span style="color: #d32f2f;">High</span></td>
             </tr>
             <tr>
-              <td><strong>Sampler</strong></td>
-              <td>WeightedRandomSampler oversampling rare classes</td>
-              <td>WeightedRandomSampler with inverse frequency + class weights</td>
-              <td>Same as Moderate</td>
+              <td>- Mosaic Augmentation</td>
+              <td>37.1%</td>
+              <td><span style="color: #d32f2f;">-2.94%</span></td>
+              <td><span style="color: #d32f2f;">High</span></td>
             </tr>
             <tr>
-              <td><strong>Optimizer</strong></td>
-              <td>AdamW + ReduceLROnPlateau</td>
-              <td>Same as DenseNet121</td>
-              <td>Same as DenseNet121</td>
+              <td>- C2PSA Module (Attention)</td>
+              <td>38.5%</td>
+              <td><span style="color: #f57c00;">-1.54%</span></td>
+              <td><span style="color: #f57c00;">Medium</span></td>
+            </tr>
+            <tr>
+              <td>- Focal Loss</td>
+              <td>38.9%</td>
+              <td><span style="color: #f57c00;">-1.14%</span></td>
+              <td><span style="color: #f57c00;">Medium</span></td>
+            </tr>
+            <tr>
+              <td>- Task-Aligned Assignment</td>
+              <td>39.2%</td>
+              <td><span style="color: #388e3c;">-0.84%</span></td>
+              <td><span style="color: #388e3c;">Low</span></td>
             </tr>
           </tbody>
         </table>
@@ -818,42 +638,66 @@
       <br>
 
       <div class="box" style="overflow-x: auto; border-top: 5px solid #607d8b;">
-        <h4 class="title is-5 has-text-centered">Table 5: Comparison of Studies on Liver Chirrhosis</h4>
+        <h4 class="title is-5 has-text-centered">Table 4: Computational Performance Analysis</h4>
         <table class="table is-bordered is-striped is-hoverable is-fullwidth has-text-centered is-size-7">
           <thead style="background-color: #eceff1;">
             <tr>
-              <th>Study</th>
-              <th>Dataset</th>
-              <th>Segmentation Method</th>
-              <th>Classification Method</th>
-              <th>Performance</th>
-              <th>Explainability</th>
+              <th>Model</th>
+              <th>Parameters</th>
+              <th>FLOPs</th>
+              <th>Inference Time</th>
+              <th>Training Time</th>
+              <th>GPU Memory</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>Jha et al. [2025]</td>
-              <td>T2W 2D</td>
-              <td>MedSegDiff</td>
-              <td>N/A</td>
-              <td>Dice: 0.76</td>
-              <td>Not discussed</td>
+              <td>DenseNet-121</td>
+              <td>7.98M</td>
+              <td>5.72G</td>
+              <td>18ms (~56 FPS)</td>
+              <td>~12h (60 epochs)</td>
+              <td>3.2GB</td>
             </tr>
             <tr>
-              <td>Gupta et al. [2025]</td>
-              <td>T2W 2D</td>
-              <td>2D nnU-Net</td>
-              <td>Masked Attn ResNet-18</td>
-              <td>Dice: 0.96, Acc: 78%</td>
-              <td>Grad-CAM</td>
+              <td>EfficientNetV2-S</td>
+              <td>21.46M</td>
+              <td>8.40G</td>
+              <td>24ms (~42 FPS)</td>
+              <td>~15h (60 epochs)</td>
+              <td>4.8GB</td>
+            </tr>
+            <tr>
+              <td>ResNet-50</td>
+              <td>25.56M</td>
+              <td>11.6G</td>
+              <td>28ms (~36 FPS)</td>
+              <td>~14h (60 epochs)</td>
+              <td>5.1GB</td>
+            </tr>
+            <tr style="background-color: #fff3e0;">
+              <td>Ensemble (Average)</td>
+              <td>18.33M</td>
+              <td>8.57G</td>
+              <td>70ms (~14 FPS)</td>
+              <td>~41h total</td>
+              <td>4.37GB avg</td>
+            </tr>
+            <tr>
+              <td>YOLO11-l</td>
+              <td>25.27M</td>
+              <td>164.9G</td>
+              <td>22ms (~45 FPS)</td>
+              <td>~18.5h (50 epochs)</td>
+              <td>6.2GB</td>
             </tr>
             <tr style="background-color: #cfd8dc; font-weight: bold;">
-              <td>This Study</td>
-              <td>T2W 2D</td>
-              <td>3UResNet50</td>
-              <td>Hybrid7Net6</td>
-              <td>Dice: ~0.95 | Acc: Mild 0.95, Mod 0.80, Sev 0.94</td>
-              <td>LIME + Grad-CAM</td>
+              <td><strong>Combined Pipeline</strong></td>
+              <td><strong>43.6M</strong></td>
+              <td><strong>173.47G</strong></td>
+              <td><strong>~92ms (~11 FPS)</strong></td>
+              <td><strong>~59.5h total</strong></td>
+              <td><strong>10.57GB peak</strong></td>
             </tr>
           </tbody>
         </table>
@@ -867,7 +711,7 @@
 
       <h2 class="title is-3 has-text-centered">Key Findings</h2>
       <div class="content has-text-centered" style="margin-bottom: 40px;">
-        <p>Summary of the major breakthroughs achieved in this study.</p>
+        <p>Summary of major breakthroughs in automated spine pathology triage and localization.</p>
       </div>
 
       <div class="columns is-multiline">
@@ -879,10 +723,11 @@
                 <span style="font-size: 3em;">🎯</span>
               </div>
               <div class="media-content">
-                <p class="title is-5">Superior Segmentation</p>
+                <p class="title is-5">State-of-the-Art Classification</p>
                 <p class="subtitle is-6" style="margin-top: 5px;">
-                  The proposed <strong>3UResNet</strong> model achieved a Dice Score of <strong>~0.95</strong>,
-                  significantly outperforming standard ViT and CNN baselines by preserving local anatomical details.
+                  DERNet ensemble achieved <strong>AUROC 90.67±0.31%</strong>, <strong>Sensitivity 84.58±0.94%</strong>,
+                  <strong>Specificity 84.12±0.78%</strong>, and <strong>F1-Score 83.21±0.64%</strong> through optimal
+                  weighted fusion of three complementary architectures.
                 </p>
               </div>
             </div>
@@ -896,10 +741,11 @@
                 <span style="font-size: 3em;">⚖️</span>
               </div>
               <div class="media-content">
-                <p class="title is-5">Robust Classification</p>
+                <p class="title is-5">Class Imbalance Mitigation</p>
                 <p class="subtitle is-6" style="margin-top: 5px;">
-                  Our <strong>Hybrid7Net6</strong> framework successfully handled class imbalance, achieving high
-                  accuracy (Mild: 95%, Severe: 94%) using WeightedRandomSampler.
+                  Successfully handled <strong>46.9:1 class imbalance</strong> (Osteophytes 82.1% vs Vertebral collapse
+                  1.75%) using Copy-Paste augmentation and Focal Loss, achieving <strong>mAP@0.5 41.2±0.3%</strong> for
+                  accurate multi-class spinal lesion detection.
                 </p>
               </div>
             </div>
@@ -913,10 +759,11 @@
                 <span style="font-size: 3em;">🧠</span>
               </div>
               <div class="media-content">
-                <p class="title is-5">Explainable AI (XAI)</p>
+                <p class="title is-5">Efficient Ensemble Strategy</p>
                 <p class="subtitle is-6" style="margin-top: 5px;">
-                  Integration of <strong>LIME and Grad-CAM</strong> provided visual validation, confirming that the
-                  model focuses on relevant liver regions (e.g., fragmentation) for decision making.
+                  Weighted fusion (0.38:0.36:0.26) of <strong>DenseNet-121, EfficientNetV2-S, ResNet-50</strong> with
+                  optimal threshold τ*=0.478 achieves <strong>84.58% sensitivity</strong> and <strong>84.12%
+                    specificity</strong>, balancing false positives/negatives for clinical deployment.
                 </p>
               </div>
             </div>
@@ -927,13 +774,14 @@
           <div class="box" style="border-top: 5px solid #ff9800; height: 100%;">
             <div class="media">
               <div class="media-left">
-                <span style="font-size: 3em;">🏥</span>
+                <span style="font-size: 3em;">🏅</span>
               </div>
               <div class="media-content">
-                <p class="title is-5">Clinical Applicability</p>
+                <p class="title is-5">Real-Time Clinical Applicability</p>
                 <p class="subtitle is-6" style="margin-top: 5px;">
-                  The end-to-end pipeline demonstrates that automated systems can reliably grade cirrhosis severity from
-                  2D MRI slices without invasive biopsy.
+                  End-to-end pipeline runs at <strong>~11 FPS (92ms/image)</strong> on consumer GPU (RTX 3050 8GB),
+                  enabling practical deployment for automated spine X-ray triage with <strong>7 pathology
+                    localization</strong> and visual explanations via bounding boxes.
                 </p>
               </div>
             </div>
@@ -945,7 +793,7 @@
       <div style="margin-top: 50px;">
         <h2 class="title is-3 has-text-centered">Future Directions</h2>
         <div class="content has-text-centered" style="margin-bottom: 30px;">
-          <p>Prospective avenues to further enhance the system's capability and deployment.</p>
+          <p>Prospective research avenues to enhance DERNet's clinical impact and deployment.</p>
         </div>
 
         <div class="box" style="background-color: #f5f5f5; border-left: 5px solid #363636;">
@@ -955,32 +803,39 @@
               <li style="margin-bottom: 15px; display: flex; align-items: start;">
                 <span style="color: #3273dc; margin-right: 10px; font-weight: bold;">➤</span>
                 <span>
-                  <strong>3D Volume Analysis:</strong> Extending the current 2D slice-based approach to 3D volumetric
-                  analysis to capture the complete spatial context of liver fibrosis.
+                  <strong>Foundation Model Pre-training:</strong> Develop self-supervised learning frameworks on
+                  millions of unlabeled spine X-rays to create a universal spine pathology foundation model, enabling
+                  zero-shot transfer learning to rare diseases and low-resource clinical settings with minimal
+                  fine-tuning data.
                 </span>
               </li>
 
               <li style="margin-bottom: 15px; display: flex; align-items: start;">
                 <span style="color: #3273dc; margin-right: 10px; font-weight: bold;">➤</span>
                 <span>
-                  <strong>Multi-Modal Integration:</strong> Incorporating clinical data (blood biomarkers, patient
-                  history) alongside MRI images to improve diagnostic precision.
+                  <strong>3D Spine Reconstruction from 2D X-rays:</strong> Leverage neural radiance fields (NeRF) and
+                  diffusion models to reconstruct 3D spinal anatomy from single or dual-view 2D radiographs, enabling
+                  volumetric analysis and surgical planning without requiring expensive CT/MRI scans.
                 </span>
               </li>
 
               <li style="margin-bottom: 15px; display: flex; align-items: start;">
                 <span style="color: #3273dc; margin-right: 10px; font-weight: bold;">➤</span>
                 <span>
-                  <strong>Federated Learning:</strong> Implementing privacy-preserving federated learning to train
-                  models across multiple hospitals without sharing sensitive patient data.
+                  <strong>Multi-Modal Clinical Integration:</strong> Fuse radiographic findings with electronic health
+                  records (clinical notes, lab results, patient demographics, prior imaging) using large language models
+                  and cross-attention mechanisms to provide holistic diagnostic predictions and personalized treatment
+                  recommendations.
                 </span>
               </li>
 
               <li style="display: flex; align-items: start;">
                 <span style="color: #3273dc; margin-right: 10px; font-weight: bold;">➤</span>
                 <span>
-                  <strong>Real-Time Deployment:</strong> Developing a lightweight version of the model for mobile
-                  applications or real-time clinical support systems.
+                  <strong>Federated Learning Framework:</strong> Implement privacy-preserving collaborative learning
+                  across international hospital networks without centralizing patient data, using differential privacy
+                  and secure multi-party computation to overcome data sharing barriers while improving model
+                  generalization globally.
                 </span>
               </li>
 
@@ -991,90 +846,13 @@
 
     </div>
   </section>
-  <section class="section">
-    <div class="container is-max-desktop">
-
-      <h2 class="title is-3 has-text-centered">Honors & Presentations</h2>
-      <div class="content has-text-centered" style="margin-bottom: 40px;">
-        <p>
-          Our research has been recognized and presented at prestigious academic forums.
-        </p>
-      </div>
-
-      <div class="columns is-centered is-variable is-8">
-
-        <div class="column is-6">
-          <div class="box" style="height: 100%; border-top: 5px solid #F1B82D; position: relative; overflow: hidden;">
-            <div style="position: absolute; top: -10px; right: -10px; opacity: 0.1; font-size: 8rem;">
-              🏆
-            </div>
-
-            <div class="content">
-              <h4 class="title is-5" style="color: #000;">GPC Research & Creative Activities Forum</h4>
-              <p class="is-size-6 has-text-grey">
-                <em>University of Missouri (Fall 2025)</em>
-              </p>
-
-              <div style="margin-top: 20px;">
-                <article class="message is-warning" style="margin-bottom: 10px;">
-                  <div class="message-body" style="padding: 10px; border-left-width: 4px;">
-                    <strong>🥈 2nd Place</strong> <br>
-                    <span class="is-size-7">Research Poster Competition</span>
-                  </div>
-                </article>
-
-                <article class="message is-warning">
-                  <div class="message-body" style="padding: 10px; border-left-width: 4px;">
-                    <strong>🏆 People’s Choice Award</strong> <br>
-                    <span class="is-size-7">Most Recognized Research Poster</span>
-                  </div>
-                </article>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="column is-6">
-          <div class="box" style="height: 100%; border-top: 5px solid #8C1515;">
-            <div style="position: absolute; top: -10px; right: -10px; opacity: 0.1; font-size: 8rem;">
-              🏛️
-            </div>
-
-            <div class="content">
-              <h4 class="title is-5" style="color: #000;">Stanford AI+Health Conference</h4>
-              <p class="is-size-6 has-text-grey">
-                <em>Stanford University (2025)</em>
-              </p>
-
-              <div style="margin-top: 20px;">
-                <article class="message is-danger">
-                  <div class="message-body"
-                    style="padding: 15px; border-left-width: 4px; background-color: #fff5f5; border-left-color: #8C1515;">
-                    <strong>📢 Featured Presentation</strong> <br>
-                    <span class="is-size-7">
-                      Selected for poster presentation among top research works in AI & Healthcare.
-                    </span>
-                  </div>
-                </article>
-              </div>
-
-              <p class="is-size-7 has-text-grey" style="margin-top: 15px;">
-                *Presented as a research poster to the global AI health community.
-              </p>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
 
   <section class="section" id="BibTeX">
     <div class="container is-max-desktop content">
       <h2 class="title">BibTeX</h2>
-      <pre><code>@article{setu2025explainable,
-  author    = {Setu, Deblina Mazumder and Dey, Samrat Kumar and Islam, Tania and Howlader, Arpita and Biswas, Saurov Chandra and Mazumder, Rashed and Siddiqi, Umme Raihan and Rahman, Md. Mahbubur},
-  title     = {Multiclass Liver Cirrhosis Segmentation and Severity Staging on T2-Weighted MRI Using 3UResNet Explainability and Per-Class Deep Expert Classifiers},
+      <pre><code>@article{mondol2025explainable,
+  author    = {Prosenjit Mondol, Samrat Kumar Dey and Arpita Howlader},
+  title     = {A Unified DERNet and YOLO11 Framework for Spinal Lesion Triage, Localization, and Clinical Deployment},
   journal   = {},
   year      = {},
 }</code></pre>
@@ -1085,12 +863,19 @@
   <footer class="footer">
     <div class="container">
       <div class="columns is-centered">
-        <div class="column is-8">
+        <div class="column is-10">
           <div class="content has-text-centered">
-            <p>
-              This website is adapted from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>,
-              licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons
-                Attribution-ShareAlike 4.0 International License</a>.
+            <p style="margin-bottom: 10px;">
+              <strong>DERNet: Spinal Lesion Triage and Localization Framework</strong>
+            </p>
+            <p style="margin-bottom: 10px;">
+              &copy; 2026 Prosenjit Mondol, Samrat Kumar Dey, Arpita Howlader. All rights reserved.
+            </p>
+            <p style="font-size: 0.9em; color: #666;">
+              Website template adapted from <a href="https://github.com/nerfies/nerfies.github.io" target="_blank"
+                style="color: #3273dc;">Nerfies</a>,
+              licensed under <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank"
+                style="color: #3273dc;">CC BY-SA 4.0</a>.
             </p>
           </div>
         </div>

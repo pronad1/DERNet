@@ -1,13 +1,7 @@
-<mxGraphModel dx="2084" dy="1054" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1400" math="0" shadow="0">
+<mxGraphModel dx="1895" dy="958" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1800" pageHeight="1400" math="0" shadow="0">
   <root>
     <mxCell id="0" />
     <mxCell id="1" parent="0" />
-    
-    <!-- Main Title -->
-    <mxCell id="main_title" value="&lt;b style=&quot;font-size: 22px; font-family: Helvetica;&quot;&gt;DERNet: Dual-Stage Ensemble Framework for Spine Lesion Detection&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-      <mxGeometry x="200" y="30" width="1400" height="40" as="geometry" />
-    </mxCell>
-    
     <mxCell id="section1_container" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#B0BEC5;dashed=1;dashPattern=5 5;align=left;verticalAlign=top;" value="" vertex="1">
       <mxGeometry height="220" width="320" x="50" y="90" as="geometry" />
     </mxCell>
@@ -189,12 +183,12 @@
     <mxCell id="arrow_det4" edge="1" parent="1" source="postproc" target="det_output">
       <mxGeometry relative="1" as="geometry" />
     </mxCell>
-    <mxCell id="arrow_input_cls" edge="1" parent="1" source="input_image" style="strokeWidth=2;endArrow=classic;html=1;" target="model2">
+    <mxCell id="arrow_input_cls" edge="1" parent="1" source="input_image" style="strokeWidth=2;endArrow=classic;html=1;">
       <mxGeometry relative="1" as="geometry">
         <Array as="points">
           <mxPoint x="325" y="390" />
-          <mxPoint x="325" y="600" />
         </Array>
+        <mxPoint x="325" y="472" as="targetPoint" />
       </mxGeometry>
     </mxCell>
     <mxCell id="arrow_input_det" edge="1" parent="1" source="input_image" style="strokeWidth=2;endArrow=classic;html=1;" target="yolo_backbone">
