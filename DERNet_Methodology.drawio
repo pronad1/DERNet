@@ -1,0 +1,269 @@
+<mxfile host="app.diagrams.net" agent="Copilot" version="29.3.6">
+  <diagram id="DERNet_Methodology_Workflow" name="Complete Methodology">
+    <mxGraphModel dx="2400" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- Title -->
+        <mxCell id="title" value="&lt;b&gt;&lt;font style=&quot;font-size: 20px;&quot;&gt;DERNet: Dual-Stage Ensemble for Robust Spine Lesion Detection&lt;/font&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="400" y="10" width="800" height="40" as="geometry" />
+        </mxCell>
+        
+        <!-- ===== PREPROCESSING PIPELINE (TOP) ===== -->
+        <mxCell id="preprocess_container" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Data Preprocessing Pipeline&lt;/font&gt;&lt;/b&gt;" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;rounded=1;arcSize=5;startSize=30;" vertex="1" parent="1">
+          <mxGeometry x="50" y="70" width="1500" height="150" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="prep_1" value="&lt;b&gt;VinDr-SpineXR&lt;/b&gt;&lt;br&gt;8,389 Images&lt;br&gt;7 Pathology Classes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" vertex="1" parent="preprocess_container">
+          <mxGeometry x="20" y="45" width="150" height="85" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="prep_2" value="&lt;b&gt;Format Convert&lt;/b&gt;&lt;br&gt;CSV → COCO JSON&lt;br&gt;Bbox Calculation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="preprocess_container">
+          <mxGeometry x="200" y="45" width="140" height="85" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="prep_3" value="&lt;b&gt;Class Balance&lt;/b&gt;&lt;br&gt;Imbalance: 46.9:1&lt;br&gt;Copy-Paste (α=0.2)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;" vertex="1" parent="preprocess_container">
+          <mxGeometry x="370" y="45" width="140" height="85" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="prep_4" value="&lt;b&gt;Augmentation&lt;/b&gt;&lt;br&gt;Mosaic, H-Flip&lt;br&gt;Rotation, Mixup&lt;br&gt;Color Jitter" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;" vertex="1" parent="preprocess_container">
+          <mxGeometry x="540" y="45" width="140" height="85" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="prep_5" value="&lt;b&gt;5-Fold CV&lt;/b&gt;&lt;br&gt;Train: 6,711&lt;br&gt;Val: 1,678&lt;br&gt;Seed=42" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="preprocess_container">
+          <mxGeometry x="710" y="45" width="140" height="85" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="prep_6" value="&lt;b&gt;Normalize&lt;/b&gt;&lt;br&gt;ImageNet Stats&lt;br&gt;384×384 (Cls)&lt;br&gt;640×640 (Det)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" vertex="1" parent="preprocess_container">
+          <mxGeometry x="880" y="45" width="140" height="85" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="prep_7" value="&lt;b&gt;Ready for Training&lt;/b&gt;&lt;br&gt;Preprocessed&lt;br&gt;Data Split" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=12;" vertex="1" parent="preprocess_container">
+          <mxGeometry x="1050" y="45" width="140" height="85" as="geometry" />
+        </mxCell>
+        
+        <!-- Arrows for preprocessing -->
+        <mxCell id="arrow_p1" edge="1" parent="preprocess_container" source="prep_1" target="prep_2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_p2" edge="1" parent="preprocess_container" source="prep_2" target="prep_3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_p3" edge="1" parent="preprocess_container" source="prep_3" target="prep_4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_p4" edge="1" parent="preprocess_container" source="prep_4" target="prep_5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_p5" edge="1" parent="preprocess_container" source="prep_5" target="prep_6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_p6" edge="1" parent="preprocess_container" source="prep_6" target="prep_7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Central Spine Image -->
+        <mxCell id="spine_image" value="&lt;b&gt;SPINE X-RAY&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="700" y="260" width="200" height="90" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow_prep_to_image" edge="1" parent="1" source="prep_7" target="spine_image">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1120" y="240" />
+              <mxPoint x="800" y="240" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- ===== CLASSIFICATION BRANCH (LEFT) ===== -->
+        <mxCell id="cls_container" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Classification Branch (DERNet-Cls)&lt;/font&gt;&lt;/b&gt;" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;rounded=1;arcSize=5;startSize=30;" vertex="1" parent="1">
+          <mxGeometry x="50" y="390" width="600" height="560" as="geometry" />
+        </mxCell>
+        
+        <!-- Three models -->
+        <mxCell id="model_densenet" value="&lt;b&gt;DenseNet-121&lt;/b&gt;&lt;br&gt;────────&lt;br&gt;Input: 384×384×3&lt;br&gt;Dense Blocks: 4&lt;br&gt;Growth Rate: k=32&lt;br&gt;Params: 8.0M&lt;br&gt;────────&lt;br&gt;Dense Connectivity&lt;br&gt;Feature Reuse" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;align=center;" vertex="1" parent="cls_container">
+          <mxGeometry x="30" y="50" width="160" height="160" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="model_efficientnet" value="&lt;b&gt;EfficientNetV2-S&lt;/b&gt;&lt;br&gt;────────&lt;br&gt;Input: 384×384×3&lt;br&gt;Fused-MBConv&lt;br&gt;SE Attention&lt;br&gt;Params: 21.5M&lt;br&gt;────────&lt;br&gt;Efficient Scaling&lt;br&gt;Progressive Training" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;align=center;" vertex="1" parent="cls_container">
+          <mxGeometry x="220" y="50" width="160" height="160" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="model_resnet" value="&lt;b&gt;ResNet-50&lt;/b&gt;&lt;br&gt;────────&lt;br&gt;Input: 384×384×3&lt;br&gt;Bottleneck: 3 Layers&lt;br&gt;Skip Connections&lt;br&gt;Params: 25.6M&lt;br&gt;────────&lt;br&gt;Deep Residuals&lt;br&gt;Gradient Flow" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;align=center;" vertex="1" parent="cls_container">
+          <mxGeometry x="410" y="50" width="160" height="160" as="geometry" />
+        </mxCell>
+        
+        <!-- Ensemble -->
+        <mxCell id="ensemble_box" value="&lt;b&gt;Weighted Ensemble + TTA&lt;/b&gt;&lt;br&gt;────────────────────&lt;br&gt;P&lt;sub&gt;ens&lt;/sub&gt; = 0.38·P&lt;sub&gt;1&lt;/sub&gt; + 0.36·P&lt;sub&gt;2&lt;/sub&gt; + 0.26·P&lt;sub&gt;3&lt;/sub&gt;&lt;br&gt;────────────────────&lt;br&gt;Test-Time Augmentation&lt;br&gt;Horizontal Flip | Original" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b0e3e6;strokeColor=#0e8088;fontSize=12;fontStyle=1;" vertex="1" parent="cls_container">
+          <mxGeometry x="70" y="240" width="460" height="90" as="geometry" />
+        </mxCell>
+        
+        <!-- Decision Threshold -->
+        <mxCell id="threshold_diamond" value="&lt;b&gt;Threshold Decision&lt;/b&gt;&lt;br&gt;────────&lt;br&gt;P&lt;sub&gt;ens&lt;/sub&gt; ≥ T* = 0.478 ?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#9933ff;strokeColor=#560056;fontColor=#ffffff;fontSize=12;fontStyle=1;" vertex="1" parent="cls_container">
+          <mxGeometry x="200" y="360" width="200" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Normal/Abnormal outputs -->
+        <mxCell id="output_normal" value="&lt;b&gt;NORMAL&lt;/b&gt;&lt;br&gt;────────&lt;br&gt;No Pathology&lt;br&gt;Detected" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#60a917;strokeColor=#2D7600;fontColor=#ffffff;fontSize=13;fontStyle=1;" vertex="1" parent="cls_container">
+          <mxGeometry x="30" y="500" width="140" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="output_abnormal" value="&lt;b&gt;ABNORMAL&lt;/b&gt;&lt;br&gt;────────&lt;br&gt;Proceed to&lt;br&gt;Detection" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#a20025;strokeColor=#6F0000;fontColor=#ffffff;fontSize=13;fontStyle=1;" vertex="1" parent="cls_container">
+          <mxGeometry x="430" y="500" width="140" height="50" as="geometry" />
+        </mxCell>
+        
+        <!-- Arrows for classification -->
+        <mxCell id="arrow_c1" edge="1" parent="cls_container" source="model_densenet" target="ensemble_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_c2" edge="1" parent="cls_container" source="model_efficientnet" target="ensemble_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_c3" edge="1" parent="cls_container" source="model_resnet" target="ensemble_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_c4" edge="1" parent="cls_container" source="ensemble_box" target="threshold_diamond">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_c5" edge="1" parent="cls_container" source="threshold_diamond" target="output_normal">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="250" y="480" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="100" y="480" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow_c5_label" value="&lt;b&gt;No&lt;/b&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontColor=#cc0000;" vertex="1" connectable="0" parent="arrow_c5">
+          <mxGeometry x="-0.4" y="1" relative="1" as="geometry">
+            <mxPoint x="-15" y="-9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow_c6" edge="1" parent="cls_container" source="threshold_diamond" target="output_abnormal">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="500" y="480" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow_c6_label" value="&lt;b&gt;Yes&lt;/b&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontColor=#009900;" vertex="1" connectable="0" parent="arrow_c6">
+          <mxGeometry x="-0.3" y="2" relative="1" as="geometry">
+            <mxPoint x="15" y="-8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- ===== DETECTION BRANCH (RIGHT) ===== -->
+        <mxCell id="det_container" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Detection Branch (YOLO11-l)&lt;/font&gt;&lt;/b&gt;" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;rounded=1;arcSize=5;startSize=30;" vertex="1" parent="1">
+          <mxGeometry x="700" y="390" width="850" height="560" as="geometry" />
+        </mxCell>
+        
+        <!-- Backbone -->
+        <mxCell id="det_backbone" value="&lt;b&gt;BACKBONE&lt;/b&gt;&lt;br&gt;═════════════&lt;br&gt;CSPDarknet + C3k2&lt;br&gt;─────────────&lt;br&gt;C2PSA Modules&lt;br&gt;Partial Self-Attention&lt;br&gt;─────────────&lt;br&gt;SPPF (Spatial Pyramid)&lt;br&gt;Multi-Scale Pooling&lt;br&gt;─────────────&lt;br&gt;Output: P3, P4, P5&lt;br&gt;(80×80, 40×40, 20×20)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;align=center;fontStyle=0;" vertex="1" parent="det_container">
+          <mxGeometry x="30" y="50" width="180" height="200" as="geometry" />
+        </mxCell>
+        
+        <!-- Neck -->
+        <mxCell id="det_neck" value="&lt;b&gt;NECK&lt;/b&gt;&lt;br&gt;═════════════&lt;br&gt;PAN Architecture&lt;br&gt;─────────────&lt;br&gt;Path Aggregation&lt;br&gt;Bottom-Up | Top-Down&lt;br&gt;─────────────&lt;br&gt;Multi-Scale Fusion&lt;br&gt;Feature Pyramid&lt;br&gt;─────────────&lt;br&gt;P3-P7 Scales&lt;br&gt;5 Detection Layers" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;align=center;" vertex="1" parent="det_container">
+          <mxGeometry x="240" y="50" width="180" height="200" as="geometry" />
+        </mxCell>
+        
+        <!-- Head -->
+        <mxCell id="det_head" value="&lt;b&gt;HEAD&lt;/b&gt;&lt;br&gt;═════════════&lt;br&gt;Decoupled Detection&lt;br&gt;─────────────&lt;br&gt;Classification Branch&lt;br&gt;7 Lesion Classes&lt;br&gt;─────────────&lt;br&gt;Regression Branch&lt;br&gt;BBox + DFL (16 bins)&lt;br&gt;─────────────&lt;br&gt;Anchor-Free Design&lt;br&gt;Direct Prediction" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;align=center;" vertex="1" parent="det_container">
+          <mxGeometry x="450" y="50" width="180" height="200" as="geometry" />
+        </mxCell>
+        
+        <!-- Loss Functions -->
+        <mxCell id="det_loss" value="&lt;b&gt;LOSS FUNCTIONS&lt;/b&gt;&lt;br&gt;═════════════════════&lt;br&gt;CIoU Loss (λ=7.5) | Focal Loss (λ=0.5, γ=2.0) | DFL (λ=1.5)&lt;br&gt;─────────────────────&lt;br&gt;Task-Aligned Assignment | Dynamic Label Matching" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;align=center;fontStyle=1;" vertex="1" parent="det_container">
+          <mxGeometry x="660" y="50" width="170" height="200" as="geometry" />
+        </mxCell>
+        
+        <!-- Post-Processing -->
+        <mxCell id="det_postprocess" value="&lt;b&gt;POST-PROCESSING&lt;/b&gt;&lt;br&gt;═══════════════════════&lt;br&gt;1. Confidence Filter (τ &gt; 0.25)&lt;br&gt;2. NMS (IoU &lt; 0.45)&lt;br&gt;3. Class-wise Filtering&lt;br&gt;4. Top-300 Selection&lt;br&gt;5. Coordinate Scaling" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;align=left;fontStyle=1;" vertex="1" parent="det_container">
+          <mxGeometry x="240" y="280" width="390" height="110" as="geometry" />
+        </mxCell>
+        
+        <!-- Detection Output -->
+        <mxCell id="det_output" value="&lt;b&gt;7-CLASS LESION DETECTIONS&lt;/b&gt;&lt;br&gt;════════════════════════════════════&lt;br&gt;• Osteophytes | • Surgical Implant | • Spondylolisthesis&lt;br&gt;• Foraminal Stenosis | • Disc Space Narrowing&lt;br&gt;• Vertebral Collapse | • Other Lesions&lt;br&gt;════════════════════════════════════&lt;br&gt;Output: BBoxes [x, y, w, h] + Class Probabilities + Confidence Scores" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#60a917;strokeColor=#2D7600;fontColor=#ffffff;fontSize=11;align=left;fontStyle=1;" vertex="1" parent="det_container">
+          <mxGeometry x="30" y="420" width="800" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Arrows for detection -->
+        <mxCell id="arrow_d1" edge="1" parent="det_container" source="det_backbone" target="det_neck">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_d2" edge="1" parent="det_container" source="det_neck" target="det_head">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_d3" edge="1" parent="det_container" source="det_head" target="det_postprocess">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="540" y="270" />
+              <mxPoint x="435" y="270" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow_d4" edge="1" parent="det_container" source="det_postprocess" target="det_output">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="435" y="410" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Arrows from spine image to branches -->
+        <mxCell id="arrow_image_to_cls" edge="1" parent="1" source="spine_image" target="cls_container">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="700" y="380" />
+              <mxPoint x="350" y="380" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow_image_to_det" edge="1" parent="1" source="spine_image" target="det_container">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="900" y="380" />
+              <mxPoint x="1125" y="380" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- ===== DECISION FUSION (BOTTOM) ===== -->
+        <mxCell id="fusion_box" value="&lt;b&gt;DECISION FUSION RULE&lt;/b&gt;&lt;br&gt;═════════════════════════════&lt;br&gt;If Classification = NORMAL → Output: Normal (No Lesions)&lt;br&gt;If Classification = ABNORMAL → Output: Detection Results with Lesion Localizations" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="350" y="980" width="900" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- Final Output -->
+        <mxCell id="final_output" value="&lt;b&gt;FINAL PREDICTION&lt;/b&gt;&lt;br&gt;═══════════════════════════════════════════&lt;br&gt;• Abnormality Probability: P&lt;sub&gt;abnormal&lt;/sub&gt;&lt;br&gt;• Bounding Box Predictions: {(x, y, w, h, class, conf)}&lt;br&gt;• Lesion-Level Localization + Probability Scores" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6a00ff;strokeColor=#3700CC;fontColor=#ffffff;fontSize=13;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="350" y="1090" width="900" height="90" as="geometry" />
+        </mxCell>
+        
+        <!-- Arrows to fusion -->
+        <mxCell id="arrow_cls_to_fusion" edge="1" parent="1" source="output_abnormal" target="fusion_box">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="550" y="960" />
+              <mxPoint x="500" y="960" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow_det_to_fusion" edge="1" parent="1" source="det_output" target="fusion_box">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1130" y="960" />
+              <mxPoint x="900" y="960" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow_fusion_to_final" edge="1" parent="1" source="fusion_box" target="final_output">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
