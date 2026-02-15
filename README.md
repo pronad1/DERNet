@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # DERNet: Unified Framework for Spinal Lesion Analysis
 
 [![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen)](https://pronad1.github.io/DERNet/)
