@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # DERNet: Unified Framework for Spinal Lesion Analysis
 
 [![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen)](https://pronad1.github.io/DERNet/)
@@ -92,3 +93,9 @@ If you use this code or dataset in your research, please cite our work:
 
 ---
 *This repository contains the source code for the DERNet project website and framework implementation.*
+=======
+try to complete this repo
+//
+https://pronad1.github.io/DERNet/
+
+>>>>>>> 489cc3b3d59d5f581faf61e0258b106dd4d4d0ae
