@@ -21,12 +21,13 @@ Our approach addresses the sensitivity-specificity trade-off and effectively cap
 
 ---
 
-## 🚀 Key Features
+## 🚀 Key Contributions
 
-*   **Dual-Stage Architecture:** Combines a powerful classification ensemble with a real-time object detection model.
-*   **Ensemble Strategy:** Weighted fusion of **DenseNet-121 (0.38)**, **EfficientNetV2-S (0.36)**, and **ResNet-50 (0.26)**.
-*   **Advanced Detection:** Utilizes **YOLO11-L** with a CSP-Darknet backbone and PANet neck for small object detection.
-*   **Class Imbalance Mitigation:** Implements **Copy-Paste augmentation** and **Focal Loss** to handle ratios as high as 46.9:1 (Osteophytes vs. Vertebral Collapse).
+*   **Dual-Stage Cascaded Architecture:** A novel framework combining a high-sensitivity triage ensemble with a high-precision YOLO11-L detector.
+*   **Triage Ensemble:** Weighted fusion of **DenseNet-121 (0.38)**, **EfficientNetV2-S (0.36)**, and **ResNet-50 (0.26)** utilizing Test-Time Augmentation (TTA).
+*   **Advanced Localization:** **YOLO11-L** optimized with C2PSA attention modules, SPPF, and a decoupled head for small object detection.
+*   **Robust Imbalance Handling:** Implementation of **Copy-Paste Augmentation**, **Focal Loss**, and **Class-Aware Sampling** to address limit-case class imbalances (up to 46.9:1).
+*   **Validated Performance:** Statistically significant improvement over baselines (p < 0.05) with **90.67% AUROC** in classification and **41.2% mAP@0.5** in detection.
 *   **Explainable AI:** Integrated with LIME and Grad-CAM for transparent clinical decision support.
 
 ---
@@ -42,10 +43,19 @@ Our approach addresses the sensitivity-specificity trade-off and effectively cap
 | **DERNet Ensemble** | **90.67** | **84.58** | **84.12** | **83.21** |
 
 ### Detection (YOLO11-L)
-*   **mAP@0.5:** 41.2% ± 0.3%
-*   **Precision:** 49.8%
-*   **Recall:** 40.5%
+*   **mAP@0.5:** **41.2% ± 0.3%** (vs. baseline 33.15%)
+*   **mAP@0.5:0.95:** 20.1% ± 0.2%
+*   **Precision:** 49.8% ± 0.5%
+*   **Recall:** 40.5% ± 0.4%
 *   **Inference Speed:** ~92ms per image (11 FPS) on RTX 3050
+
+### Comparison with Baselines
+| Method | Task | Key Metric | Our Result | Baseline | Improvement | p-value |
+| :--- | :--- | :--- | :---: | :---: | :---: | :---: |
+| VinDr Paper | Classification | AUROC | **90.67%** | 88.61% | +2.06% | <0.001 |
+| VinDr Paper | Classification | Specificity | **84.12%** | 79.32% | +4.80% | <0.001 |
+| RT-DETR-l | Detection | mAP@0.5 | **41.2%** | 25.68% | +60.4% | <0.001 |
+| Paper Baseline | Detection | mAP@0.5 | **41.2%** | 33.15% | +24.3% | <0.001 |
 
 ---
 
@@ -58,6 +68,30 @@ The framework detects and localizes 7 distinct spinal lesions:
 5.  Disc Space Narrowing
 6.  Foraminal Stenosis
 7.  Other Lesions
+
+---
+
+## 🔬 Technical Methodology
+
+### 1. Dataset & Preprocessing
+Utilizing the **VinDr-SpineXR** dataset (8,389 images), we address class imbalance (46.9:1 ratio) through:
+*   **CLAHE** and adaptive normalization.
+*   **Copy-Paste Augmentation** (p=0.2) for minority classes.
+*   **Geometric Augmentations:** Rotation (±15°), Flip, Mosaic (epochs 1-30).
+
+### 2. Triage Stage (Classification)
+An ensemble of three distinct architectures acts as a sensitive filter:
+*   **DenseNet-121:** Feature reuse efficiency.
+*   **EfficientNetV2-S:** Faster training and inference.
+*   **ResNet-50:** Residual learning robustness.
+*   **Strategy:** Weighted averaging (w1=0.38, w2=0.36, w3=0.26) with TTA.
+
+### 3. Localization Stage (Detection)
+The **YOLO11-L** model is employed for precise lesion localization:
+*   **Backbone:** CSP-Darknet with C2PSA attention modules.
+*   **Neck:** PANet for multi-scale feature fusion.
+*   **Head:** Decoupled anchor-free head.
+*   **Loss Function:** $L_{total} = 7.5 L_{CIoU} + 0.5 L_{Focal} + 1.5 L_{DFL}$
 
 ---
 
@@ -78,14 +112,14 @@ If you use this code or dataset in your research, please cite our work:
 
 ```bibtex
 @article{mondol2025dernet,
-  author    = {Prosenjit Mondol, Samrat Kumar Dey and Arpita Howlader},
-  title     = {A Unified DERNet and YOLO11 Framework for Spinal Lesion Triage, Segmentation and Clinical Deployment},
+  author    = {},
+  title     = {A Cascaded DERNet and YOLO11 Framework for Spinal Lesion Triage and Localization},
   journal   = {To be updated},
   year      = {2026},
 }
 ```
 
 ## 👥 Authors
-- **Prosenjit Mondol** - Patuakhali Science and Technology University
-- **Samrat Kumar Dey** - Bangladesh Open University
-- **Arpita Howlader** - Patuakhali Science and Technology University
+- **~~** - Patuakhali Science and Technology University
+- **~~** - Bangladesh Open University
+- **~~** - Patuakhali Science and Technology University
