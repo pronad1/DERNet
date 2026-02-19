@@ -6,9 +6,9 @@
 
 **A Unified DERNet and YOLO11 Framework for Spinal Lesion Triage, Localization, and Clinical Deployment**
 
-## 🌐 Live Project
+## 🌐 Live Web
 Visit the project website for visualizations, detailed methodology, and interactive elements:  
-**[https://pronad1.github.io/DERNet/](https://pronad1.github.io/DERNet/)**
+**[Web Access](https://pronad1.github.io/DERNet/)**
 
 ---
 
