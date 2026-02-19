@@ -4,7 +4,7 @@
 [![Paper](https://img.shields.io/badge/Paper-PDF-red)](#)
 [![License](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey)](http://creativecommons.org/licenses/by-sa/4.0/)
 
-**A Unified DERNet and YOLO11 Framework for Spinal Lesion Triage, Localization, and Clinical Deployment**
+**A Cascaded DERNet and YOLO11 Framework for Spinal Lesion Triage and Localization**
 
 ## 🌐 Live Web
 Visit the project website for visualizations, detailed methodology, and interactive elements:  
