@@ -111,7 +111,7 @@ The pipeline follows four key stages:
 If you use this code or dataset in your research, please cite our work:
 
 ```bibtex
-@article{mondol2025dernet,
+@article{~,
   author    = {},
   title     = {A Cascaded DERNet and YOLO11 Framework for Spinal Lesion Triage and Localization},
   journal   = {To be updated},
@@ -120,6 +120,6 @@ If you use this code or dataset in your research, please cite our work:
 ```
 
 ## 👥 Authors
-- **~~** - Patuakhali Science and Technology University
-- **~~** - Bangladesh Open University
-- **~~** - Patuakhali Science and Technology University
+- **~~** - ~
+- **~~** - ~
+- **~~** - ~
