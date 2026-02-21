@@ -108,7 +108,7 @@ The pipeline follows four key stages:
 ---
 
 ## 📚 Citation
-If you use this code or dataset in your research, please cite our work:
+If you use this code in your research, please cite our work:
 
 ```bibtex
 @article{~,
