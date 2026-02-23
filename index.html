@@ -200,12 +200,13 @@
         </div>
 
         <h2 class="subtitle has-text-centered">
-          <span class="dnerf">Spinal Lesion Classification</span>: Examples of detected spinal lesions in X-ray images.
-          The figure highlights seven distinct pathologies: (a) Vertebral Collapse, (b) Osteophytes, (c)
-          Spondylolisthesis, (d) Surgical Implants, (e) Disc Space Narrowing, (f) Foraminal Stenosis, (g) Other Lesion
-          and (h) Normal. In these visualizations, the green bounding boxes represent ground truth annotations (serving
-          as the normal reference standard), while the blue bounding boxes indicate the specific lesions detected by our
-          proposed framework.
+          <span class="dnerf">Spinal Lesion Classification</span>: Representative examples of spinal radiographs from
+          the VinDr-SpineXR benchmark.
+          The figure illustrates the heterogeneity and visual subtlety of seven lesion categories: (a) Vertebral
+          Collapse, (b) Osteophytes, (c) Spondylolisthesis, (d) Surgical Implants, (e) Disc Space Narrowing, (f)
+          Foraminal Stenosis, and (g) Other Lesions. Many lesions occupy less than 1% of the field-of-view and are
+          often confounded by overlapping anatomical structures. This variability and small object scale exacerbate
+          class imbalance (46.9:1 ratio) and motivate the need for a cascaded triage–localization framework.
         </h2>
 
       </div>
@@ -223,9 +224,8 @@
         </div>
 
         <h2 class="subtitle has-text-centered" style="margin-top: 20px; font-weight: normal;">
-          Architectural Overview. The pipeline follows four stages: (1) Data Collection, (2) Adaptive Preprocessing
-          Pipeline, (3) Probabilistic DERNet Classification for binary triage, and (4) YOLO11-L Detection optimized for
-          fine-grained lesion localization.
+          Overview of the cascaded framework for spinal lesion triage and localiza-
+          tion.
         </h2>
 
       </div>
@@ -240,20 +240,23 @@
           <h2 class="title is-3">Abstract</h2>
           <div class="content has-text-justified">
             <p>
-              Automated analysis of spinal radiographs is critical to early
-              diagnosis but is currently limited by severe class imbalance and the visual subtlety of lesions. This work
-              introduces DERNet—an ensemble of
-              DenseNet121, EfficientNetV2-S, and ResNet50—for highly sensitive clas-
-              sification, coupled with a YOLO11-L model for precise lesion detection.
-              Our proposed method utilizes architectural diversity to overcome the
-              sensitivity-specificity trade-off, along with a CSP-Darknet backbone to
-              effectively capture the fine features of minute pathologies. The proposed
-              framework is validated on the VinDr-SpineXR benchmark, achieving
-              AUROC of 90.67±0.31% and detection mAP@0.5 of 41.2±0.3%. In
-              addition to the technical contributions, the authors address the transla-
-              tional challenge with the development of a functional web-based interface
-              that can process various image formats, thereby facilitating the practical
-              application of the proposed framework.
+              Automated analysis of spinal radiographs is critical for early
+              diagnostic triage but remains severely constrained by the visual subtlety
+              of minute lesions. The purpose of this study is to improve screening
+              sensitivity and localization specificity by engineering a unified, cascaded
+              artificial intelligence framework. For this methodology, we decouple the
+              diagnostic workflow into two hierarchical stages: First, we use DERNet,
+              which is a combination of EfficientNetV2-S, DenseNet121, and ResNet50
+              - a highly sensitive binary triage and secondly, routing abnormal cases to
+              a customized YOLO11-L detector to detect precisely. According to the
+              experimental results on the VinDr-SpineXR benchmark, our approach is
+              more effective, achieving AUROC of 91.03% for the image-level classi-
+              fication task and a mAP@0.5 of 40.10% for the lesion-level localization
+              task. This research is necessary and beneficial to the medical imaging
+              research community, as it is through LIME, Grad-CAM and Qualita-
+              tive Segmentation that the framework ensures diagnostic transparency,
+              bridging the critical gap between high-performance deep learning and
+              trustworthy clinical deployment.
             </p>
           </div>
         </div>
@@ -320,8 +323,10 @@
               <img src="./static/images/3rd dernet.png" alt="DERNet Dual-Stage Architecture"
                 style="width: 100%; height: auto; border-radius: 5px; flex-grow: 1; object-fit: contain;">
               <p class="is-size-7 has-text-weight-bold" style="margin-top: 10px;">
-                Figure: DERNet dual-stage framework combining ensemble classification (Stage 1) with YOLO11-l detection
-                (Stage 2) for comprehensive spinal pathology analysis.
+                Figure: DERNet probabilistic ensemble architecture for high-sensitivity radio-
+                graphic triage. Each backbone (DenseNet121, EfficientNetV2-S, ResNet50) pro-
+                duces independent posterior probabilities via Global Average Pooling and Sig-
+                moid activation.
               </p>
             </div>
           </div>
