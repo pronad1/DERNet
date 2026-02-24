@@ -224,8 +224,7 @@
         </div>
 
         <h2 class="subtitle has-text-centered" style="margin-top: 20px; font-weight: normal;">
-          Overview of the cascaded framework for spinal lesion triage and localiza-
-          tion.
+          Overview of the cascaded framework for spinal lesion triage and localization.
         </h2>
 
       </div>
@@ -254,7 +253,7 @@
               fication task and a mAP@0.5 of 40.10% for the lesion-level localization
               task. This research is necessary and beneficial to the medical imaging
               research community, as it is through LIME, Grad-CAM and Qualita-
-              tive Segmentation that the framework ensures diagnostic transparency,
+              tive Visualization that the framework ensures diagnostic transparency,
               bridging the critical gap between high-performance deep learning and
               trustworthy clinical deployment.
             </p>
@@ -305,14 +304,14 @@
               <h4 class="title is-5" style="color: #388e3c; margin-bottom: 0.5rem;">🟢 DERNet Solution</h4>
               <ul style="margin-top: 0;">
                 <li><strong>Stage 1 - Classification Ensemble:</strong> Combines DenseNet-121 (8M params),
-                  EfficientNetV2-S (21.5M params), and ResNet-50 (25.6M params) with weighted fusion (0.38:0.36:0.26)
+                  EfficientNetV2-S (21.5M params), and ResNet-50 (25.6M params) with weighted fusion (0.42:0.32:0.26)
                   and Test-Time Augmentation</li>
-                <li><strong>Stage 2 - YOLO11-l Detection:</strong> Real-time object detection with CSPDarknet backbone,
+                <li><strong>Stage 2 - YOLO11-L Detection:</strong> Real-time object detection with CSPDarknet backbone,
                   PANet neck, and decoupled heads for accurate lesion localization on abnormal cases</li>
                 <li><strong>Dataset:</strong> VinDr-SpineXR with 8,389 training images, using Copy-Paste augmentation
                   and Focal Loss to address class imbalance</li>
-                <li><strong>Optimization:</strong> AdamW optimizer with cosine annealing, achieving AUROC 0.9641 for
-                  classification and mAP@50-95 of 0.511 for detection</li>
+                <li><strong>Optimization:</strong> AdamW optimizer with cosine annealing, achieving AUROC 91.03% for
+                  classification and mAP@0.5 of 40.10% for detection</li>
               </ul>
             </div>
           </div>
@@ -397,15 +396,15 @@
           </div>
         </div>
 
-        <!-- Right Column: Qualitative Segmentation -->
+        <!-- Right Column: Qualitative Visualization -->
         <div class="column is-4">
           <div class="box" style="height: 100%; display: flex; flex-direction: column;">
             <div style="text-align: center; flex-grow: 1;">
-              <img src="./static/images/qualitative.png" alt="Qualitative Segmentation"
+              <img src="./static/images/qualitative.png" alt="Qualitative Visualization"
                 style="max-width: 100%; height: auto; border-radius: 5px;">
             </div>
             <div class="content" style="margin-top: 20px;">
-              <h4 class="title is-6">(c) Qualitative Segmentation</h4>
+              <h4 class="title is-6">(c) Qualitative Visualization</h4>
               <p style="font-size: 0.9rem;">
                 Comparison of the ground truth mask and predicted mask along with error analysis for the DERNet model.
               </p>
@@ -453,11 +452,11 @@
             <tr>
               <td>DenseNet-121</td>
               <td>8.0M</td>
-              <td>90.25 ± 0.42</td>
-              <td>83.32 ± 1.15</td>
-              <td>82.34 ± 0.89</td>
-              <td>82.46 ± 0.73</td>
-              <td>0.38</td>
+              <td>86.93 ± 0.42</td>
+              <td>80.39 ± 1.15</td>
+              <td>79.32 ± 0.89</td>
+              <td>79.55 ± 0.73</td>
+              <td>0.42</td>
             </tr>
             <tr>
               <td>EfficientNetV2-S</td>
@@ -466,7 +465,7 @@
               <td>70.80 ± 1.42</td>
               <td><strong>91.12 ± 0.65</strong></td>
               <td>79.34 ± 0.91</td>
-              <td>0.36</td>
+              <td>0.32</td>
             </tr>
             <tr>
               <td>ResNet-50</td>
@@ -477,13 +476,31 @@
               <td>80.15 ± 0.86</td>
               <td>0.26</td>
             </tr>
+            <tr>
+              <td>VinDr Ensemble [2]</td>
+              <td>-</td>
+              <td>88.61</td>
+              <td>83.07</td>
+              <td>79.32</td>
+              <td>81.06</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>HealNNet [15]</td>
+              <td>-</td>
+              <td>88.84</td>
+              <td>-</td>
+              <td>-</td>
+              <td>81.20</td>
+              <td>-</td>
+            </tr>
             <tr style="background-color: #c8e6c9; font-weight: bold; border: 2px solid #4caf50;">
               <td><strong>DERNet Ensemble</strong></td>
               <td>18.3M avg</td>
-              <td><strong>90.67 ± 0.31</strong></td>
-              <td><strong>84.58 ± 0.94</strong></td>
-              <td>84.12 ± 0.78</td>
-              <td><strong>83.21 ± 0.64</strong></td>
+              <td><strong>91.03 ± 0.31</strong></td>
+              <td><strong>84.91 ± 0.94</strong></td>
+              <td>81.68 ± 0.78</td>
+              <td><strong>83.09 ± 0.64</strong></td>
               <td>-</td>
             </tr>
           </tbody>
@@ -506,39 +523,105 @@
       </div>
 
       <div class="box" style="overflow-x: auto; border-top: 5px solid #ff9800;">
-        <h4 class="title is-5 has-text-centered">Table 2: YOLO11-l Detection Performance (Extended Training: 50 Epochs)
-        </h4>
+        <h4 class="title is-5 has-text-centered">Table 2: Comparison results of different methods (mAP@0.5)</h4>
         <table class="table is-bordered is-striped is-hoverable is-fullwidth has-text-centered">
           <thead style="background-color: #fff3e0;">
             <tr>
-              <th style="vertical-align: middle;">Metric</th>
-              <th>Best Value</th>
-              <th>Best Epoch</th>
+              <th style="vertical-align: middle;">Method</th>
+              <th>LT2</th>
+              <th>LT4</th>
+              <th>LT6</th>
+              <th>LT8</th>
+              <th>LT10</th>
+              <th>LT11</th>
+              <th>LT13</th>
+              <th>mAP@0.5</th>
             </tr>
           </thead>
           <tbody>
+            <tr>
+              <td>Dino [19]</td>
+              <td>16.58</td>
+              <td>22.87</td>
+              <td>28.53</td>
+              <td>32.71</td>
+              <td>59.78</td>
+              <td>41.28</td>
+              <td>3.24</td>
+              <td>29.28</td>
+            </tr>
+            <tr>
+              <td>RetinaNet [20]</td>
+              <td>14.53</td>
+              <td>25.35</td>
+              <td>41.67</td>
+              <td>32.14</td>
+              <td>65.49</td>
+              <td>51.85</td>
+              <td>5.30</td>
+              <td>28.09</td>
+            </tr>
+            <tr>
+              <td>Faster R-CNN [9]</td>
+              <td>22.66</td>
+              <td>35.99</td>
+              <td>49.24</td>
+              <td>31.68</td>
+              <td>65.22</td>
+              <td>51.68</td>
+              <td>2.16</td>
+              <td>31.83</td>
+            </tr>
+            <tr>
+              <td>Sparse R-CNN [10]</td>
+              <td>20.09</td>
+              <td>32.67</td>
+              <td>48.16</td>
+              <td>45.32</td>
+              <td>72.20</td>
+              <td>49.30</td>
+              <td>5.41</td>
+              <td>33.15</td>
+            </tr>
+            <tr>
+              <td>VinDr-SpineXR [2]</td>
+              <td>21.43</td>
+              <td>27.36</td>
+              <td>34.78</td>
+              <td>41.29</td>
+              <td>62.53</td>
+              <td>43.39</td>
+              <td>4.16</td>
+              <td>33.56</td>
+            </tr>
+            <tr>
+              <td>EGCA-Net [18]</td>
+              <td>22.36</td>
+              <td>29.75</td>
+              <td>36.73</td>
+              <td>44.69</td>
+              <td>66.58</td>
+              <td>50.41</td>
+              <td>2.09</td>
+              <td>36.09</td>
+            </tr>
             <tr style="background-color: #ffe0b2; font-weight: bold;">
-              <td><strong>mAP@0.5</strong></td>
-              <td><strong>41.2% ± 0.3%</strong></td>
-              <td>38</td>
-            </tr>
-            <tr>
-              <td>mAP@0.5:0.95</td>
-              <td>20.1% ± 0.2%</td>
-              <td>38</td>
-            </tr>
-            <tr>
-              <td>Precision</td>
-              <td>49.8% ± 0.5%</td>
-              <td>38</td>
-            </tr>
-            <tr>
-              <td>Recall</td>
-              <td>40.5% ± 0.4%</td>
-              <td>38</td>
+              <td>Ours (YOLO11-L)</td>
+              <td>26.70</td>
+              <td>41.40</td>
+              <td>40.60</td>
+              <td>54.80</td>
+              <td>74.10</td>
+              <td>51.20</td>
+              <td>2.99</td>
+              <td>40.10</td>
             </tr>
           </tbody>
         </table>
+        <p class="is-size-7 has-text-left mt-2" style="font-style: italic;">
+          (*) LT2, LT4, LT6, LT8, LT10, LT11, LT13 denotes for disc space narrowing, foraminal stenosis, osteophytes,
+          spondylolisthesis, surgical implant, vertebral collapse and other lesions, respectively.
+        </p>
       </div>
 
       <br>
@@ -666,6 +749,92 @@
     </div>
   </section>
 
+  <section class="section">
+    <div class="container is-max-widescreen">
+
+      <h2 class="title is-3 has-text-centered">
+        Error Analysis
+      </h2>
+
+      <div class="content has-text-centered mb-5">
+        <p>
+          Detailed examination of model performance through confusion matrices and analysis of misclassified instances.
+        </p>
+      </div>
+
+      <div class="columns is-variable is-3">
+
+        <!-- Left Column: Confusion Matrix -->
+        <div class="column is-4">
+          <div class="box" style="height: 100%; display: flex; flex-direction: column;">
+            <div style="text-align: center; flex-grow: 1;">
+              <img src="./static/images/confusion_matrix.png" alt="Confusion Matrix"
+                style="max-width: 100%; height: auto; border-radius: 5px;">
+            </div>
+            <div class="content" style="margin-top: 20px;">
+              <h4 class="title is-6">(a) Confusion Matrix</h4>
+              <p style="font-size: 0.9rem;">
+                The class-wise confusion matrix provides a granular breakdown of the model's diagnostic accuracy across
+                all seven spinal lesion categories. By visualizing true positives versus misclassifications, we
+                quantitatively assess the impact of severe class imbalance (e.g., distinguishing rare "Vertebral
+                collapse" from frequent "Osteophytes"). The matrix reveals high diagonal density, confirming robust
+                sensitivity even for minority classes, while highlighting specific inter-class ambiguities—such as the
+                subtle overlap between "Disc space narrowing" and "Spondylolisthesis"—that guided our refined
+                architectural choices.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Middle Column: False Positive Analysis -->
+        <div class="column is-4">
+          <div class="box" style="height: 100%; display: flex; flex-direction: column;">
+            <div style="text-align: center; flex-grow: 1;">
+              <img src="./static/images/false_positives.png" alt="False Positive Analysis"
+                style="max-width: 100%; height: auto; border-radius: 5px;">
+            </div>
+            <div class="content" style="margin-top: 20px;">
+              <h4 class="title is-6">(b) False Positive Analysis</h4>
+              <p style="font-size: 0.9rem;">
+                A systematic investigation of False Positives (FPs) elucidates the model's decision boundaries in
+                complex radiological environments. We examine instances where normal anatomical variations, high-density
+                bone structures, or external artifacts (e.g., surgical clips) were incorrectly flagged as pathological.
+                This analysis is critical for clinical deployment, as reducing FPs—particularly in triage
+                settings—minimizes unnecessary follow-ups. Our findings show that the majority of FPs occur in
+                low-contrast regions, necessitating the integration of context-aware attention mechanisms to suppress
+                background noise.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Missed Lesions Analysis -->
+        <div class="column is-4">
+          <div class="box" style="height: 100%; display: flex; flex-direction: column;">
+            <div style="text-align: center; flex-grow: 1;">
+              <img src="./static/images/missed_lesions.png" alt="Missed Lesions Analysis"
+                style="max-width: 100%; height: auto; border-radius: 5px;">
+            </div>
+            <div class="content" style="margin-top: 20px;">
+              <h4 class="title is-6">(c) Missed Lesions Analysis</h4>
+              <p style="font-size: 0.9rem;">
+                A comprehensive review of False Negatives (FNs) uncovers the morphological characteristics of spinal
+                lesions that evade detection. We analyze 'missed' cases to identify patterns such as extreme subtlety
+                (lesions occupying &lt;1% of the FOV), occlusion by overlapping structures, or atypical visual
+                presentations. Understanding these failure modes—specifically in 'Other lesions' and early-stage
+                'Foraminal stenosis'—drives future improvements in multi-scale feature extraction. This rigorous audit
+                ensures transparency and targeted refinement, directly addressing the safety-critical requirement of
+                minimizing missed diagnoses in clinical workflows.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
   <section class="section" style="background-color: #fff;">
     <div class="container is-max-desktop">
 
@@ -704,7 +873,7 @@
                 <p class="title is-5">Class Imbalance Mitigation</p>
                 <p class="subtitle is-6" style="margin-top: 5px;">
                   Successfully handled <strong>46.9:1 class imbalance</strong> (Osteophytes 82.1% vs Vertebral collapse
-                  1.75%) using Copy-Paste augmentation and Focal Loss, achieving <strong>mAP@0.5 41.2±0.3%</strong> for
+                  1.75%) using Copy-Paste augmentation and Focal Loss, achieving <strong>mAP@0.5 40.10±0.3%</strong> for
                   accurate multi-class spinal lesion detection.
                 </p>
               </div>
