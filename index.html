@@ -39,6 +39,19 @@
   <script src="./static/js/bulma-carousel.min.js"></script>
   <script src="./static/js/bulma-slider.min.js"></script>
   <script src="./static/js/index.js"></script>
+
+  <!-- MathJax Configuration -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+  </script>
+  <!-- MathJax for rendering math symbols -->
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
 </head>
 
 <body>
@@ -333,6 +346,181 @@
         </div>
       </div>
       <!--/ Paper video. -->
+    </div>
+  </section>
+
+  <section class="section" style="background-color: #f8f9fa;">
+    <div class="container is-max-widescreen">
+
+      <h2 class="title is-3 has-text-centered">
+        Implementation Details & Experimental Configuration
+      </h2>
+
+      <div class="content has-text-centered mb-5">
+        <p>
+          Specific parameter settings for the DERNet triage threshold, YOLO11 detector, and spinal radiograph
+          enhancement.
+        </p>
+      </div>
+
+      <div class="columns is-variable is-3">
+
+        <!-- Column 1: Threshold Optimization -->
+        <div class="column is-4">
+          <div class="box" style="height: 100%; border-top: 4px solid #00d1b2;">
+            <h4 class="title is-5 has-text-centered" style="margin-bottom: 1rem;">
+              <span class="icon-text"><span class="icon"><i class="fas fa-balance-scale"></i></span> <span>Threshold
+                  Optimization</span></span>
+            </h4>
+            <div class="content is-size-7">
+              <p>
+                <strong>Optimal Threshold $\tau^* = 0.478$</strong><br>
+                Selected via grid search to maximize F1-score on validation set.
+              </p>
+              <ul style="margin-top: -10px; margin-bottom: 10px;">
+                <li>Range: $[0.35, 0.60]$ (default 0.5)</li>
+                <li>Step size: $\Delta\tau = 0.0002$</li>
+                <li>Metric: 5-fold CV average</li>
+              </ul>
+
+              <h6 class="title is-7" style="margin-bottom: 5px;">Method Comparison:</h6>
+              <table class="table is-bordered is-narrow is-fullwidth" style="font-size: 0.65rem;">
+                <thead>
+                  <tr style="background-color: #f0fdf4;">
+                    <th>Method</th>
+                    <th>$\tau^*$</th>
+                    <th>F1 (%)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="background-color: #e6fffa; font-weight: bold;">
+                    <td>F1-Max</td>
+                    <td>0.478</td>
+                    <td>83.09</td>
+                  </tr>
+                  <tr>
+                    <td>Youden's J</td>
+                    <td>0.462</td>
+                    <td>82.84</td>
+                  </tr>
+                  <tr>
+                    <td>Default</td>
+                    <td>0.500</td>
+                    <td>82.63</td>
+                  </tr>
+                  <tr>
+                    <td>Balanced Acc</td>
+                    <td>0.485</td>
+                    <td>83.01</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="mt-2">
+                <em>Why F1-Max?</em> More robust to class imbalance (46.9:1) than Youden or Accuracy.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 2: YOLO11 Hyperparameters -->
+        <div class="column is-4">
+          <div class="box" style="height: 100%; border-top: 4px solid #3273dc;">
+            <h4 class="title is-5 has-text-centered" style="margin-bottom: 1rem;">
+              <span class="icon-text"><span class="icon"><i class="fas fa-sliders-h"></i></span> <span>YOLO11
+                  Configuration</span></span>
+            </h4>
+            <div class="content is-size-7">
+              <p>
+                <strong>optimized on COCO dataset</strong><br>
+                Hyperparameters determined via combination search:
+              </p>
+              <table class="table is-bordered is-narrow is-fullwidth" style="font-size: 0.65rem;">
+                <thead>
+                  <tr style="background-color: #e3f2fd;">
+                    <th>Param</th>
+                    <th>Value</th>
+                    <th>Rationale</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>$\gamma$ (Focal)</strong></td>
+                    <td>2.0</td>
+                    <td>Balances easy/hard examples</td>
+                  </tr>
+                  <tr>
+                    <td><strong>$\alpha$ (Focal)</strong></td>
+                    <td>0.25</td>
+                    <td>Optimal for minority foreground</td>
+                  </tr>
+                  <tr>
+                    <td><strong>$\lambda_{box}$</strong></td>
+                    <td>7.5</td>
+                    <td>Box regression weight</td>
+                  </tr>
+                  <tr>
+                    <td><strong>$\lambda_{cls}$</strong></td>
+                    <td>0.5</td>
+                    <td>Class loss weight</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>
+                <strong>Augmentation:</strong> Copy-Paste ($\alpha=0.2$) utilized to address severe class imbalance
+                (46.9:1).
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 3: Radiograph Preprocessing -->
+        <div class="column is-4">
+          <div class="box" style="height: 100%; border-top: 4px solid #f14668;">
+            <h4 class="title is-5 has-text-centered" style="margin-bottom: 1rem;">
+              <span class="icon-text"><span class="icon"><i class="fas fa-x-ray"></i></span> <span>Radiograph
+                  Preprocessing</span></span>
+            </h4>
+            <div class="content is-size-7">
+              <p>
+                <strong>Strategy:</strong> CLAHE enhancement to mitigate exposure variance.
+              </p>
+              <div class="notification is-light p-2 mb-2" style="font-size: 0.6rem; text-align: left;">
+                $$I'(i, j) = \beta \cdot \frac{CDF_{\Omega_k}(I(i, j)) - CDF_{min}}{|\Omega_k| - CDF_{min}}$$
+              </div>
+              <table class="table is-bordered is-narrow is-fullwidth" style="font-size: 0.65rem;">
+                <thead>
+                  <tr style="background-color: #ffebee;">
+                    <th>Param</th>
+                    <th>Value</th>
+                    <th>Purpose</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Clip Limit</td>
+                    <td>2.0</td>
+                    <td>Limits contrast noise</td>
+                  </tr>
+                  <tr>
+                    <td>Grid Size</td>
+                    <td>$8 \times 8$</td>
+                    <td>Local equalization</td>
+                  </tr>
+                  <tr>
+                    <td>Scale $\beta$</td>
+                    <td>255</td>
+                    <td>8-bit mapping</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>
+                Preprocessing ensures consistent feature extraction across 8,389 training images.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
   </section>
 
