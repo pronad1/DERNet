@@ -3,7 +3,8 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="description" content="A Cascaded DERNet and YOLO11 Framework for Spinal Lesion Triage and Localization">
+  <meta name="description"
+    content="A Cascaded DERNet and YOLO11 Framework for Spinal Lesion Triage and Localization with Explainable AI">
 
   <meta name="keywords" content="Spine X-rays, Radiographs, DERNet, Explainability, YOLO11">
 
@@ -252,23 +253,23 @@
           <h2 class="title is-3">Abstract</h2>
           <div class="content has-text-justified">
             <p>
-              Automated analysis of spinal radiographs is critical for early
-              diagnostic triage but remains severely constrained by the visual subtlety
-              of minute lesions. The purpose of this study is to improve screening
-              sensitivity and localization specificity by engineering a unified, cascaded
-              artificial intelligence framework. For this methodology, we decouple the
-              diagnostic workflow into two hierarchical stages: First, we use DERNet,
-              which is a combination of EfficientNetV2-S, DenseNet121, and ResNet50
-              - a highly sensitive binary triage and secondly, routing abnormal cases to
-              a customized YOLO11-L detector to detect precisely. According to the
-              experimental results on the VinDr-SpineXR benchmark, our approach is
-              more effective, achieving AUROC of 91.03% for the image-level classi-
-              fication task and a mAP@0.5 of 40.10% for the lesion-level localization
-              task. This research is necessary and beneficial to the medical imaging
-              research community, as it is through LIME, Grad-CAM and Qualita-
-              tive Visualization that the framework ensures diagnostic transparency,
-              bridging the critical gap between high-performance deep learning and
-              trustworthy clinical deployment.
+              Automated analysis of spinal radiographs is essential for
+              early diagnostic triage but remains challenging due to the visual subtlety and small scale of many spinal
+              lesions. We propose a unified cascaded deep learning framework designed to improve screening sensitivity
+              while maintaining precise lesion localization. The diagnostic workflow is
+              structurally decoupled into two stages. First, DERNet, a heterogeneous
+              ensemble of EfficientNetV2-S, DenseNet121, and ResNet50, performs
+              high-sensitivity binary triage to filter normal radiographs. Abnormal
+              cases are subsequently routed to a customized YOLO11-L detector for
+              fine-grained lesion localization. Experimental evaluation on the VinDrSpineXR benchmark demonstrates
+              strong performance, achieving an AUROC of 91.03% for image-level classification and a mAP@0.5 of 40.10%
+              for lesion-level detection. To enhance clinical interpretability, we integrate explainability techniques
+              including LIME, Grad-CAM, and qualitative visualization, ensuring that predictions are aligned with
+              anatomically relevant structures. The proposed framework provides an interpretable and efficient solution
+              for automated spinal radiograph analysis.
+              Additional resources, including extended experimental analyses, error
+              analysis, qualitative visualizations, real-time demos, and reproducibility
+              resources, are available at the DERNet project website.
             </p>
           </div>
         </div>
