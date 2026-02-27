@@ -272,51 +272,54 @@
       <div class="container is-max-desktop">
 
         <h2 class="title is-3 has-text-centered" style="margin-bottom: 40px;">
-          Cascaded DERNet-YOLO11 Framework: A Dual-Stage Triage-Localization Architecture for Spinal Lesion Detection
+          Cascaded DERNet-YOLO11 Framework: Dual-Stage Triage-Localization Architecture
         </h2>
 
         <div class="columns is-centered is-vcentered">
 
-          <div class="column is-6" style="text-align: left;">
+          <div class="column is-4" style="text-align: left;">
 
             <div class="content">
-              <h4 class="title is-5" style="color: #d32f2f; margin-bottom: 0.5rem;">🔴 Clinical Problem Statement</h4>
-              <ul style="margin-top: 0;">
-                <li><strong>Extreme class imbalance:</strong> Severe distribution skew with 46.9:1 ratio between majority (Osteophytes) and minority (Vertebral Collapse) classes, complicating model training and evaluation</li>
-                <li><strong>Small-scale lesion detection:</strong> Pathological regions constitute <1% of image field-of-view with mean object areas of ~8,800 pixels², causing false negatives in conventional architectures</li>
-                <li><strong>Dual clinical requirements:</strong> Radiological workflow demands both high-sensitivity binary triage for abnormality screening AND precise spatial localization across 7 distinct pathology categories</li>
-                <li><strong>Clinical interpretability gap:</strong> Existing black-box AI systems lack transparent visual explanations, limiting clinical adoption and diagnostic trust in automated spine radiology</li>
+              <h4 class="title is-5" style="color: #d32f2f; margin-bottom: 0.5rem;">🔴 Clinical Problem</h4>
+              <ul style="margin-top: 0; font-size: 0.95rem;">
+                <li><strong>Extreme class imbalance:</strong> 46.9:1 ratio</li>
+                <li><strong>Small lesions:</strong>
+                  <1% field-of-view (~8,800 px²)</li>
+                <li><strong>Dual requirements:</strong> Triage + Localization</li>
+                <li><strong>Interpretability gap:</strong> Black-box AI limitations</li>
               </ul>
             </div>
 
             <div class="content">
-              <h4 class="title is-5" style="color: #f57c00; margin-bottom: 0.5rem;">🟡 Clinical Workflow Integration</h4>
-              <ul style="margin-top: 0;">
-                <li><strong>Automated triage (Stage 1):</strong> Binary classification prioritizes abnormal radiographs for urgent radiologist review, reducing diagnostic backlog and improving turnaround time in high-volume clinical settings</li>
-                <li><strong>Multi-class localization (Stage 2):</strong> Spatial detection of 7 pathological entities—Osteophytes, Surgical Implants, Spondylolisthesis, Foraminal Stenosis, Disc Space Narrowing, Vertebral Collapse, and Other Lesions—with bounding-box annotations for anatomical reference</li>
-                <li><strong>Explainable AI for radiology:</strong> Visual localization overlays provide interpretable decision support, enabling radiologists to validate model predictions and maintain diagnostic control</li>
-                <li><strong>High-sensitivity paradigm:</strong> Achieves 84.91% sensitivity with 81.68% specificity, optimizing the recall-precision trade-off to minimize false negatives in safety-critical clinical deployment</li>
+              <h4 class="title is-5" style="color: #f57c00; margin-bottom: 0.5rem;">🟡 Clinical Workflow</h4>
+              <ul style="margin-top: 0; font-size: 0.95rem;">
+                <li><strong>Stage 1:</strong> Binary triage for abnormality screening</li>
+                <li><strong>Stage 2:</strong> 7-class localization with bounding boxes</li>
+                <li><strong>Explainable AI:</strong> Visual validation support</li>
+                <li><strong>Performance:</strong> 84.91% sensitivity, 81.68% specificity</li>
               </ul>
             </div>
 
             <div class="content">
-              <h4 class="title is-5" style="color: #388e3c; margin-bottom: 0.5rem;">🟢 Proposed DERNet-YOLO11 Architecture</h4>
-              <ul style="margin-top: 0;">
-                <li><strong>Stage 1—Ensemble Classification Module:</strong> Probabilistic fusion of three complementary CNNs—DenseNet-121 (8M params, dense connectivity), EfficientNetV2-S (21.5M params, efficient scaling), ResNet-50 (25.6M params, residual learning)—with optimized weighted ensemble (0.42:0.32:0.26) and Test-Time Augmentation (TTA) for robust binary triage achieving 91.03% AUROC</li>
-                <li><strong>Stage 2—YOLO11-L Localization Module:</strong> State-of-the-art real-time object detector with CSPDarknet backbone, Path Aggregation Network (PANet) neck, and decoupled detection heads, fine-tuned exclusively on abnormal cases flagged by Stage 1 for efficient lesion localization with mAP@0.5 of 40.10%</li>
-                <li><strong>Training Strategy:</strong> VinDr-SpineXR dataset (10,468 images, 8,389 training) with advanced augmentation—Copy-Paste synthesis for minority classes, Focal Loss (γ=2) for class imbalance mitigation, and AdamW optimization with cosine annealing learning rate schedule</li>
-                <li><strong>Clinical Inference Pipeline:</strong> Cascaded workflow processes spine radiographs through Stage 1 binary screening, conditionally invokes Stage 2 detection only for abnormal cases, and outputs combined triage decision with spatial annotations, achieving ~11 FPS (92ms/image) on consumer GPU (RTX 3050 8GB) for real-time clinical viability</li>
+              <h4 class="title is-5" style="color: #388e3c; margin-bottom: 0.5rem;">🟢 Architecture</h4>
+              <ul style="margin-top: 0; font-size: 0.95rem;">
+                <li><strong>Stage 1:</strong> DenseNet-121 + EfficientNetV2-S + ResNet-50 ensemble (91.03% AUROC)</li>
+                <li><strong>Stage 2:</strong> YOLO11-L with CSPDarknet + PANet (40.10% mAP@0.5)</li>
+                <li><strong>Dataset:</strong> VinDr-SpineXR (10,468 images)</li>
+                <li><strong>Real-time:</strong> 11 FPS on RTX 3050 GPU</li>
               </ul>
             </div>
           </div>
 
-          <div class="column is-6 has-text-centered" style="display: flex; align-items: stretch;">
+          <div class="column is-8 has-text-centered">
             <div
-              style="border: 1px solid #ddd; padding: 5px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: flex; flex-direction: column; justify-content: space-between; width: 100%;">
+              style="border: 1px solid #ddd; padding: 8px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); height: 100%;">
               <img src="./static/images/3rd-dernet.png" alt="DERNet Dual-Stage Architecture"
-                style="width: 100%; height: auto; border-radius: 5px; flex-grow: 1; object-fit: contain;">
-              <p class="is-size-7 has-text-weight-bold" style="margin-top: 10px;">
-                Figure: Cascaded DERNet-YOLO11 dual-stage architecture. Stage 1 employs probabilistic ensemble fusion of three complementary CNN backbones (DenseNet-121, EfficientNetV2-S, ResNet-50) with Global Average Pooling and Sigmoid activation for binary triage classification. Stage 2 conditionally applies YOLO11-L object detector with CSPDarknet backbone and PANet neck for multi-class lesion localization in abnormal cases, achieving end-to-end spine pathology detection with visual explainability.
+                style="width: 100%; height: 650px; border-radius: 5px; object-fit: contain;">
+              <p class="is-size-7 has-text-weight-bold" style="margin-top: 10px; text-align: left; padding: 0 10px;">
+                <strong>Figure:</strong> Cascaded DERNet-YOLO11 dual-stage architecture combining ensemble
+                classification (Stage 1) and object detection (Stage 2) for automated spine lesion triage and
+                localization.
               </p>
             </div>
           </div>
