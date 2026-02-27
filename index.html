@@ -105,7 +105,7 @@
               <div class="publication-links">
                 <!-- PDF Link. -->
                 <span class="link-block">
-                  <a href="./version 7.pdf" class="external-link button is-normal is-rounded is-dark">
+                  <a href="#" class="external-link button is-normal is-rounded is-dark">
                     <span class="icon">
                       <i class="fas fa-file-pdf"></i>
                     </span>
@@ -206,14 +206,14 @@
         </div>
 
         <h2 class="subtitle has-text-centered">
-          <span class="dnerf">Spinal Lesion Classification</span>: Representative examples of spinal radiographs from
-          the VinDr-SpineXR benchmark.
-          The figure illustrates the heterogeneity and visual subtlety of seven lesion categories: (a) Vertebral
-          Collapse, (b) Osteophytes, (c) Spondylolisthesis, (d) Surgical Implants, (e) Disc Space Narrowing, (f)
-          Foraminal Stenosis, and (g) Other Lesions. Many lesions occupy less than 1% of the field-of-view and are
-          often confounded by overlapping anatomical structures. This variability and small object scale exacerbate
-          class imbalance (46.9:1 ratio) and motivate the need for a cascaded triage–localization framework.
-        </h2>
+          <span class="dnerf">Automated Lesion Detection and Localization</span>: Visual demonstration of the cascaded
+          DERNet-YOLO11 framework on VinDr-SpineXR benchmark images. The figure presents eight representative cases
+          including seven pathological conditions with precise bounding-box localization: (a) Vertebral Collapse, (b)
+          Osteophytes, (c) Spondylolisthesis, (d) Surgical Implants, (e) Disc Space Narrowing, (f) Foraminal Stenosis,
+          (g) Other Lesions, alongside (h) a Normal spine radiograph for comparison. Each pathological case demonstrates
+          the model's capability to accurately detect and spatially localize subtle lesions despite significant class
+          imbalance (46.9:1 ratio), small object scales (often <1% of image area), and anatomical structure overlap. The
+            localization boxes validate the clinical applicability of the integrated triage–localization pipeline. </h2>
 
       </div>
     </div>
@@ -1101,11 +1101,12 @@
       </div>
 
       <div style="margin-top: 50px;">
-        <h2 class="title is-3 has-text-centered" style="color: #2c3e50; font-weight: 700;">Performance Evaluation
-          Gallery</h2>
+        <h2 class="title is-3 has-text-centered" style="color: #2c3e50; font-weight: 700;">Live Clinical Deployment
+          Interface</h2>
         <div class="content has-text-centered" style="margin-bottom: 25px;">
-          <p style="font-size: 16px; color: #555; line-height: 1.6;">Comprehensive visual analysis showcasing model
-            explainability, segmentation accuracy, and clinical validation results</p>
+          <p style="font-size: 16px; color: #555; line-height: 1.6;">Real-world implementation of the cascaded DERNet
+            and YOLO11 framework for automated spinal lesion triage, precise localization, and explainable AI-driven
+            diagnosis visualization in clinical workflows</p>
         </div>
 
         <div class="box"
