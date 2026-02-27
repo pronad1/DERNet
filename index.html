@@ -1013,7 +1013,6 @@
       </div>
 
       <div class="columns is-multiline">
-
         <div class="column is-6">
           <div class="box" style="border-top: 5px solid #4caf50; height: 100%;">
             <div class="media">
@@ -1023,9 +1022,9 @@
               <div class="media-content">
                 <p class="title is-5">Robust Classification</p>
                 <p class="subtitle is-6" style="margin-top: 5px;">
-                  DERNet ensemble achieved <strong>AUROC 91.03%</strong>, <strong>Sensitivity 84.91%</strong>,
-                  <strong>Specificity 81.68%</strong>, and <strong>F1-Score 83.09%</strong> through optimal
-                  weighted fusion of three complementary architectures.
+                  DERNet ensemble: <strong>AUROC 91.03%</strong>, <strong>Sensitivity 84.91%</strong>,
+                  <strong>Specificity 81.68%</strong>, <strong>F1-Score 83.09%</strong> via weighted fusion of
+                  DenseNet-121, EfficientNetV2-S, ResNet-50.
                 </p>
               </div>
             </div>
@@ -1041,9 +1040,8 @@
               <div class="media-content">
                 <p class="title is-5">Class Imbalance Mitigation</p>
                 <p class="subtitle is-6" style="margin-top: 5px;">
-                  Successfully handled <strong>46.9:1 class imbalance</strong> (Osteophytes 82.1% vs Vertebral collapse
-                  1.75%) using Copy-Paste augmentation and Focal Loss, achieving <strong>mAP@0.5 40.10±0.3%</strong> for
-                  accurate multi-class spinal lesion detection.
+                  Handled <strong>46.9:1 class imbalance</strong> using <strong>Copy-Paste augmentation</strong> and
+                  <strong>Focal Loss</strong>, achieving <strong>mAP@0.5 40.10±0.3%</strong> for 7-class detection.
                 </p>
               </div>
             </div>
@@ -1059,10 +1057,9 @@
               <div class="media-content">
                 <p class="title is-5">Explainable AI (XAI) Integration</p>
                 <p class="subtitle is-6" style="margin-top: 5px;">
-                  Integration of <strong>LIME</strong> (Local Interpretable Model-agnostic Explanations) and
-                  <strong>Grad-CAM</strong> (Gradient-weighted Class Activation Mapping) provided visual validation and
-                  saliency maps, confirming that the ensemble model focuses on clinically relevant spinal regions for
-                  transparent, trustworthy diagnosis.
+                  <strong>LIME</strong>, <strong>Grad-CAM</strong>, and <strong>Qualitative Visualization</strong>
+                  provide saliency maps and visual validation, ensuring model focuses on clinically relevant spinal
+                  regions for transparent diagnosis.
                 </p>
               </div>
             </div>
@@ -1078,15 +1075,13 @@
               <div class="media-content">
                 <p class="title is-5">Real-Time Clinical Applicability</p>
                 <p class="subtitle is-6" style="margin-top: 5px;">
-                  End-to-end pipeline runs at <strong>~11 FPS (92ms/image)</strong> on consumer GPU (RTX 3050 8GB),
-                  enabling practical deployment for automated spine X-ray triage with <strong>7 pathology
-                    localization</strong> and visual explanations via bounding boxes.
+                  <strong>~11 FPS (92ms/image)</strong> on RTX 3050 GPU for real-time spine triage with <strong>7
+                    pathology localization</strong> and bounding-box visual explanations.
                 </p>
               </div>
             </div>
           </div>
         </div>
-
       </div>
 
       <div style="margin-top: 50px;">
