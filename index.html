@@ -10,7 +10,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>DERNet Framework for Spinal Lesion Triage and Localization</title>
+  <title>DERNet Framework for Spinal Lesion Triage and Localization with Explainable AI</title>
   <!-- Global site tag (gtag.js) - Google Analytics 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
   <script>
@@ -89,31 +89,23 @@
         <div class="columns is-centered">
           <div class="column has-text-centered">
             <h1 class="title is-1 publication-title">A Cascaded DERNet and YOLO11 Framework for Spinal Lesion Triage and
-              Localization</h1>
+              Localization with Explainable AI</h1>
             <div class="is-size-5 publication-authors">
               <span class="author-block">
-                <a href="mailto:~">Anonymized Authors</a><sup>1</sup>,
-              </span>
-              <span class="author-block">
-                <a href="mailto:~">Anonymized Authors</a><sup>2</sup>,
-              </span>
-              <span class="author-block">
-                <a href="mailto:~">Anonymized Authors</a><sup>3</sup>,
+                <a href="#">Anonymized Authors</a>
               </span>
 
             </div>
 
             <div class="is-size-5 publication-authors">
-              <span class="author-block"><sup>1</sup>Anonymized,</span>
-              <span class="author-block"><sup>2</sup>Anonymized,</span>
-              <span class="author-block"><sup>3</sup>Anonymized,</span>
+              <span class="author-block">Anonymized Affiliations</span>
             </div>
 
             <div class="column has-text-centered">
               <div class="publication-links">
                 <!-- PDF Link. -->
                 <span class="link-block">
-                  <a href="#" class="external-link button is-normal is-rounded is-dark">
+                  <a href="./version 7.pdf" class="external-link button is-normal is-rounded is-dark">
                     <span class="icon">
                       <i class="fas fa-file-pdf"></i>
                     </span>
@@ -309,7 +301,7 @@
                   implant, Spondylolisthesis, Foraminal stenosis, Disc space narrowing, Vertebral collapse, and Other
                   lesions</li>
                 <li>Support radiologists with <strong>visual explanations</strong> through bounding box annotations</li>
-                <li>Reduce diagnostic time while maintaining <strong>high sensitivity (98.21%)</strong> to minimize
+                <li>Reduce diagnostic time while maintaining <strong>high sensitivity (84.91%)</strong> to minimize
                   false negatives</li>
               </ul>
             </div>
@@ -829,7 +821,7 @@
           <tbody>
             <tr style="background-color: #e1bee7; font-weight: bold;">
               <td>Full Model (Baseline)</td>
-              <td>40.04%</td>
+              <td>40.10%</td>
               <td>-</td>
               <td>-</td>
             </tr>
@@ -1043,8 +1035,8 @@
               <div class="media-content">
                 <p class="title is-5">State-of-the-Art Classification</p>
                 <p class="subtitle is-6" style="margin-top: 5px;">
-                  DERNet ensemble achieved <strong>AUROC 90.67±0.31%</strong>, <strong>Sensitivity 84.58±0.94%</strong>,
-                  <strong>Specificity 84.12±0.78%</strong>, and <strong>F1-Score 83.21±0.64%</strong> through optimal
+                  DERNet ensemble achieved <strong>AUROC 91.03%</strong>, <strong>Sensitivity 84.91%</strong>,
+                  <strong>Specificity 81.68%</strong>, and <strong>F1-Score 83.09%</strong> through optimal
                   weighted fusion of three complementary architectures.
                 </p>
               </div>
@@ -1079,8 +1071,8 @@
               <div class="media-content">
                 <p class="title is-5">Efficient Ensemble Strategy</p>
                 <p class="subtitle is-6" style="margin-top: 5px;">
-                  Weighted fusion (0.38:0.36:0.26) of <strong>DenseNet-121, EfficientNetV2-S, ResNet-50</strong> with
-                  optimal threshold τ*=0.478 achieves <strong>84.58% sensitivity</strong> and <strong>84.12%
+                  Weighted fusion (0.42:0.32:0.26) of <strong>DenseNet-121, EfficientNetV2-S, ResNet-50</strong> with
+                  optimal threshold τ*=0.478 achieves <strong>84.91% sensitivity</strong> and <strong>81.68%
                     specificity</strong>, balancing false positives/negatives for clinical deployment.
                 </p>
               </div>
@@ -1106,6 +1098,105 @@
           </div>
         </div>
 
+      </div>
+
+      <div style="margin-top: 50px;">
+        <h2 class="title is-3 has-text-centered" style="color: #2c3e50; font-weight: 700;">Performance Evaluation
+          Gallery</h2>
+        <div class="content has-text-centered" style="margin-bottom: 25px;">
+          <p style="font-size: 16px; color: #555; line-height: 1.6;">Comprehensive visual analysis showcasing model
+            explainability, segmentation accuracy, and clinical validation results</p>
+        </div>
+
+        <div class="box"
+          style="background-color: #fff; border: 1px solid #e0e0e0; border-radius: 10px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); position: relative;">
+
+          <!-- Left Arrow -->
+          <button id="demo-prev"
+            style="position: absolute; left: 10px; top: 45%; transform: translateY(-50%); background-color: rgba(50, 115, 220, 0.9); color: white; border: none; border-radius: 50%; width: 45px; height: 45px; font-size: 20px; cursor: pointer; z-index: 10; box-shadow: 0 2px 8px rgba(0,0,0,0.2); transition: background-color 0.3s;"
+            onmouseover="this.style.backgroundColor='rgba(50, 115, 220, 1)'"
+            onmouseout="this.style.backgroundColor='rgba(50, 115, 220, 0.9)'">
+            &#10094;
+          </button>
+
+          <!-- Right Arrow -->
+          <button id="demo-next"
+            style="position: absolute; right: 10px; top: 45%; transform: translateY(-50%); background-color: rgba(50, 115, 220, 0.9); color: white; border: none; border-radius: 50%; width: 45px; height: 45px; font-size: 20px; cursor: pointer; z-index: 10; box-shadow: 0 2px 8px rgba(0,0,0,0.2); transition: background-color 0.3s;"
+            onmouseover="this.style.backgroundColor='rgba(50, 115, 220, 1)'"
+            onmouseout="this.style.backgroundColor='rgba(50, 115, 220, 0.9)'">
+            &#10095;
+          </button>
+
+          <!-- Demo Gallery Container -->
+          <div id="demo-gallery" style="overflow: hidden; padding: 0 60px;">
+            <div id="demo-gallery-wrapper" style="display: flex; gap: 15px; transition: transform 0.5s ease-in-out;">
+
+              <!-- Duplicate last 3 images at start for seamless looping -->
+              <div class="demo-item" style="flex: 0 0 calc(33.333% - 10px); text-align: center;">
+                <img src="./static/images/6.jpg" alt="Demo 6"
+                  style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+              </div>
+              <div class="demo-item" style="flex: 0 0 calc(33.333% - 10px); text-align: center;">
+                <img src="./static/images/7.jpg" alt="Demo 7"
+                  style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+              </div>
+              <div class="demo-item" style="flex: 0 0 calc(33.333% - 10px); text-align: center;">
+                <img src="./static/images/8.jpg" alt="Demo 8"
+                  style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+              </div>
+
+              <!-- Original 8 images -->
+              <div class="demo-item" style="flex: 0 0 calc(33.333% - 10px); text-align: center;">
+                <img src="./static/images/1.jpg" alt="Demo 1"
+                  style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+              </div>
+              <div class="demo-item" style="flex: 0 0 calc(33.333% - 10px); text-align: center;">
+                <img src="./static/images/2.jpg" alt="Demo 2"
+                  style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+              </div>
+              <div class="demo-item" style="flex: 0 0 calc(33.333% - 10px); text-align: center;">
+                <img src="./static/images/3.jpg" alt="Demo 3"
+                  style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+              </div>
+              <div class="demo-item" style="flex: 0 0 calc(33.333% - 10px); text-align: center;">
+                <img src="./static/images/4.jpg" alt="Demo 4"
+                  style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+              </div>
+              <div class="demo-item" style="flex: 0 0 calc(33.333% - 10px); text-align: center;">
+                <img src="./static/images/5.jpg" alt="Demo 5"
+                  style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+              </div>
+              <div class="demo-item" style="flex: 0 0 calc(33.333% - 10px); text-align: center;">
+                <img src="./static/images/6.jpg" alt="Demo 6"
+                  style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+              </div>
+              <div class="demo-item" style="flex: 0 0 calc(33.333% - 10px); text-align: center;">
+                <img src="./static/images/7.jpg" alt="Demo 7"
+                  style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+              </div>
+              <div class="demo-item" style="flex: 0 0 calc(33.333% - 10px); text-align: center;">
+                <img src="./static/images/8.jpg" alt="Demo 8"
+                  style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+              </div>
+
+              <!-- Duplicate first 3 images at end for seamless looping -->
+              <div class="demo-item" style="flex: 0 0 calc(33.333% - 10px); text-align: center;">
+                <img src="./static/images/1.jpg" alt="Demo 1"
+                  style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+              </div>
+              <div class="demo-item" style="flex: 0 0 calc(33.333% - 10px); text-align: center;">
+                <img src="./static/images/2.jpg" alt="Demo 2"
+                  style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+              </div>
+              <div class="demo-item" style="flex: 0 0 calc(33.333% - 10px); text-align: center;">
+                <img src="./static/images/3.jpg" alt="Demo 3"
+                  style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+              </div>
+
+            </div>
+          </div>
+
+        </div>
       </div>
 
       <div style="margin-top: 50px;">
@@ -1146,10 +1237,10 @@
   <section class="section" id="BibTeX">
     <div class="container is-max-desktop content">
       <h2 class="title">BibTeX</h2>
-      <pre><code>@article{~,
-  author    = {},
-  title     = {A Cascaded DERNet and YOLO11 Framework for Spinal Lesion Triage and Localization},
-  journal   = {},
+      <pre><code>@article{DERNet2026,
+  author    = {Anonymized Authors},
+  title     = {A Cascaded DERNet and YOLO11 Framework for Spinal Lesion Triage and Localization with Explainable AI},
+  journal   = {Under Review},
   year      = {2026},
 }</code></pre>
     </div>
