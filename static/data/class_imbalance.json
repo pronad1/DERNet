@@ -1,0 +1,34 @@
+[
+    {
+        "label": "Normal",
+        "count": 5000
+    },
+    {
+        "label": "Disc Space Narrowing (LT2)",
+        "count": 107
+    },
+    {
+        "label": "Foraminal Stenosis (LT4)",
+        "count": 57
+    },
+    {
+        "label": "Osteophytes (LT6)",
+        "count": 24
+    },
+    {
+        "label": "Spondylolisthesis (LT8)",
+        "count": 12
+    },
+    {
+        "label": "Surgical Implant (LT10)",
+        "count": 9
+    },
+    {
+        "label": "Vertebral Collapse (LT11)",
+        "count": 6
+    },
+    {
+        "label": "Other Lesions (LT13)",
+        "count": 3
+    }
+]

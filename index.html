@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+    content="A Cascaded DERNet and YOLO11 Framework for Spinal Lesion Triage and Localization with Explainable AI">
+
+  <meta name="keywords" content="Spine X-rays, Radiographs, DERNet, Explainability, YOLO11">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>DERNet Framework for Spinal Lesion Triage and Localization with Explainable AI</title>
+  <!-- Global site tag (gtag.js) - Google Analytics 
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script> -->
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/dernet.png">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <!-- Chart.js for Class Imbalance Visualization -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="./static/js/index.js"></script>
+
+  <!-- MathJax Configuration -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+  </script>
+  <!-- MathJax for rendering math symbols -->
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+</head>
+
+<body>
+
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+
+    <div class="navbar-menu">
+      <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+
+        <a class="navbar-item" href="#">
+          <div style="display: flex; flex-direction: column; align-items: center; line-height: 1.2;">
+            <img src="./static/images/dernet.png" alt="DERNet Logo"
+              style="max-height: 60px; width: auto; margin-bottom: 2px;">
+            <span style="font-weight: bold; font-size: 20px; color: #333;">
+              DERNet
+            </span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">A Cascaded DERNet and YOLO11 Framework for Spinal Lesion Triage and
+              Localization with Explainable AI</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="#">Anonymized Authors</a>
+              </span>
+
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">Anonymized Affiliations</span>
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- PDF Link. -->
+                <span class="link-block">
+                  <a href="#" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="https://github.com/CIMILab/Spinal_Lession-VinDr-SpineXR"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+                <!-- Dataset Link. -->
+                <span class="link-block">
+                  <a href="https://physionet.org/content/vindr-spinexr/1.0.0/"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="far fa-images"></i>
+                    </span>
+                    <span>Data</span>
+                  </a>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+
+        <!-- First Row: 4 Lesion Types -->
+        <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 15px;">
+          <div style="text-align: center; width: 23%;">
+            <img src="./static/images/vertebal with normal.JPG" alt="Vertebral Collapse"
+              style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+            <p style="margin-top: 5px; font-weight: bold; font-size: 14px;">(a) Vertebral Collapse</p>
+          </div>
+
+          <div style="text-align: center; width: 23%;">
+            <img src="./static/images/osteophytes with normal.JPG" alt="Osteophytes"
+              style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+            <p style="margin-top: 5px; font-weight: bold; font-size: 14px;">(b) Osteophytes</p>
+          </div>
+
+          <div style="text-align: center; width: 23%;">
+            <img src="./static/images/spondylolysthesis with normal.JPG" alt="Spondylolisthesis"
+              style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+            <p style="margin-top: 5px; font-weight: bold; font-size: 14px;">(c) Spondylolisthesis</p>
+          </div>
+
+          <div style="text-align: center; width: 23%;">
+            <img src="./static/images/sergical implant with normal.JPG" alt="Surgical Implant"
+              style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+            <p style="margin-top: 5px; font-weight: bold; font-size: 14px;">(d) Surgical Implant</p>
+          </div>
+        </div>
+
+        <!-- Second Row: 4 Lesion Types -->
+        <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 15px;">
+          <div style="text-align: center; width: 23%;">
+            <img src="./static/images/Disc space narrowing with normal.jpg" alt="Disc Space Narrowing"
+              style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+            <p style="margin-top: 5px; font-weight: bold; font-size: 14px;">(e) Disc Space Narrowing</p>
+          </div>
+
+          <div style="text-align: center; width: 23%;">
+            <img src="./static/images/foraminal stenosis with normal.jpg" alt="Foraminal Stenosis"
+              style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+            <p style="margin-top: 5px; font-weight: bold; font-size: 14px;">(f) Foraminal Stenosis</p>
+          </div>
+
+          <div style="text-align: center; width: 23%;">
+            <img src="./static/images/other lession with normal.jpg" alt="Other Lesion"
+              style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+            <p style="margin-top: 5px; font-weight: bold; font-size: 14px;">(g) Other Lesion</p>
+          </div>
+
+          <div style="text-align: center; width: 23%;">
+            <img src="./static/images/normal.jpg" alt="Normal"
+              style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+            <p style="margin-top: 5px; font-weight: bold; font-size: 14px;">(h) Normal</p>
+          </div>
+        </div>
+
+        <h2 class="subtitle has-text-centered">
+          <span class="dnerf">Automated Lesion Detection and Localization</span>: Visual demonstration of the cascaded
+          DERNet-YOLO11 framework on VinDr-SpineXR benchmark images. The figure presents eight representative cases
+          including seven pathological conditions with precise bounding-box localization: (a) Vertebral Collapse, (b)
+          Osteophytes, (c) Spondylolisthesis, (d) Surgical Implants, (e) Disc Space Narrowing, (f) Foraminal Stenosis,
+          (g) Other Lesions, alongside (h) a Normal spine radiograph for comparison. Each pathological case demonstrates
+          the model's capability to accurately detect and spatially localize subtle lesions despite significant class
+          imbalance (46.9:1 ratio), small object scales (often <1% of image area), and anatomical structure overlap. The
+            localization boxes validate the clinical applicability of the integrated triage–localization pipeline. </h2>
+
+      </div>
+    </div>
+  </section>
+
+
+  <section class="hero is-light is-small">
+    <div class="hero-body">
+      <div class="container">
+
+        <div style="text-align: center;">
+          <img src="./static/images/4th-workflow.png" alt="Methodology Diagram"
+            style="max-width: 100%; height: auto; border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        </div>
+
+        <h2 class="subtitle has-text-centered" style="margin-top: 20px; font-weight: normal;">
+          Overview of the cascaded framework for spinal lesion triage and localization.
+        </h2>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Automated analysis of spinal radiographs is essential for
+              early diagnostic triage but remains challenging due to the visual subtlety and small scale of many spinal
+              lesions. We propose a unified cascaded deep learning framework designed to improve screening sensitivity
+              while maintaining precise lesion localization. The diagnostic workflow is
+              structurally decoupled into two stages. First, DERNet, a heterogeneous
+              ensemble of EfficientNetV2-S, DenseNet121, and ResNet50, performs
+              high-sensitivity binary triage to filter normal radiographs. Abnormal
+              cases are subsequently routed to a customized YOLO11-L detector for
+              fine-grained lesion localization. Experimental evaluation on the VinDrSpineXR benchmark demonstrates
+              strong performance, achieving an AUROC of 91.03% for image-level classification and a mAP@0.5 of 40.10%
+              for lesion-level detection. To enhance clinical interpretability, we integrate explainability techniques
+              including LIME, Grad-CAM, and qualitative visualization, ensuring that predictions are aligned with
+              anatomically relevant structures. The proposed framework provides an interpretable and efficient solution
+              for automated spinal radiograph analysis.
+              Additional resources, including extended experimental analyses, error
+              analysis, qualitative visualizations, real-time demos, and reproducibility
+              resources, are available at the DERNet project website.
+            </p>
+          </div>
+        </div>
+      </div>
+      <!--/ Abstract. -->
+
+      <!-- Paper video. -->
+      <div class="container is-max-desktop">
+
+        <h2 class="title is-3 has-text-centered" style="margin-bottom: 40px;">
+          Cascaded DERNet-YOLO11 Framework: Dual-Stage Triage-Localization Architecture
+        </h2>
+
+        <div class="columns is-centered is-vcentered">
+
+          <div class="column is-4" style="text-align: left;">
+
+            <div class="content">
+              <h4 class="title is-5" style="color: #d32f2f; margin-bottom: 0.5rem;">🔴 Clinical Problem</h4>
+              <ul style="margin-top: 0; font-size: 0.95rem;">
+                <li><strong>Extreme class imbalance:</strong> 46.9:1 ratio</li>
+                <li><strong>Small lesions:</strong>
+                  <1% field-of-view (~8,800 px²)</li>
+                <li><strong>Dual requirements:</strong> Triage + Localization</li>
+                <li><strong>Interpretability gap:</strong> Black-box AI limitations</li>
+              </ul>
+            </div>
+
+            <div class="content">
+              <h4 class="title is-5" style="color: #f57c00; margin-bottom: 0.5rem;">🟡 Clinical Workflow</h4>
+              <ul style="margin-top: 0; font-size: 0.95rem;">
+                <li><strong>Stage 1:</strong> Binary triage for abnormality screening</li>
+                <li><strong>Stage 2:</strong> 7-class localization with bounding boxes</li>
+                <li><strong>Explainable AI:</strong> Visual validation support</li>
+                <li><strong>Performance:</strong> 84.91% sensitivity, 81.68% specificity</li>
+              </ul>
+            </div>
+
+            <div class="content">
+              <h4 class="title is-5" style="color: #388e3c; margin-bottom: 0.5rem;">🟢 Architecture</h4>
+              <ul style="margin-top: 0; font-size: 0.95rem;">
+                <li><strong>Stage 1:</strong> DenseNet-121 + EfficientNetV2-S + ResNet-50 ensemble (91.03% AUROC)</li>
+                <li><strong>Stage 2:</strong> YOLO11-L with CSPDarknet + PANet (40.10% mAP@0.5)</li>
+                <li><strong>Dataset:</strong> VinDr-SpineXR (10,468 images)</li>
+                <li><strong>Real-time:</strong> 11 FPS on RTX 3050 GPU</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="column is-8 has-text-centered">
+            <div
+              style="border: 1px solid #ddd; padding: 8px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); height: 100%;">
+              <img src="./static/images/3rd-dernet.png" alt="DERNet Dual-Stage Architecture"
+                style="width: 100%; height: 650px; border-radius: 5px; object-fit: contain;">
+              <p class="is-size-7 has-text-weight-bold" style="margin-top: 10px; text-align: left; padding: 0 10px;">
+                <strong>Figure:</strong> Cascaded DERNet-YOLO11 dual-stage architecture combining ensemble
+                classification (Stage 1) and object detection (Stage 2) for automated spine lesion triage and
+                localization.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!--/ Paper video. -->
+    </div>
+  </section>
+
+  <section class="section" style="background-color: #f8f9fa;">
+    <div class="container is-max-widescreen">
+
+      <h2 class="title is-3 has-text-centered">
+        Implementation Details & Experimental Configuration
+      </h2>
+
+      <div class="content has-text-centered mb-5">
+        <p>
+          Specific parameter settings for the DERNet triage threshold, YOLO11 detector, and spinal radiograph
+          enhancement.
+        </p>
+      </div>
+
+      <div class="columns is-variable is-3">
+
+        <!-- Column 1: Threshold Optimization -->
+        <div class="column is-4">
+          <div class="box" style="height: 100%; border-top: 4px solid #00d1b2;">
+            <h4 class="title is-5 has-text-centered" style="margin-bottom: 1rem;">
+              <span class="icon-text"><span class="icon"><i class="fas fa-balance-scale"></i></span> <span>Threshold
+                  Optimization</span></span>
+            </h4>
+            <div class="content is-size-7">
+              <p>
+                <strong>Optimal Threshold $\tau^* = 0.478$</strong><br>
+                Selected via grid search to maximize F1-score on validation set.
+              </p>
+              <ul style="margin-top: -10px; margin-bottom: 10px;">
+                <li>Range: $[0.35, 0.60]$ (default 0.5)</li>
+                <li>Step size: $\Delta\tau = 0.0002$</li>
+                <li>Metric: 5-fold CV average</li>
+              </ul>
+
+              <h6 class="title is-7" style="margin-bottom: 5px;">Method Comparison:</h6>
+              <table class="table is-bordered is-narrow is-fullwidth" style="font-size: 0.65rem;">
+                <thead>
+                  <tr style="background-color: #f0fdf4;">
+                    <th>Method</th>
+                    <th>$\tau^*$</th>
+                    <th>F1 (%)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="background-color: #e6fffa; font-weight: bold;">
+                    <td>F1-Max</td>
+                    <td>0.478</td>
+                    <td>83.09</td>
+                  </tr>
+                  <tr>
+                    <td>Youden's J</td>
+                    <td>0.462</td>
+                    <td>82.84</td>
+                  </tr>
+                  <tr>
+                    <td>Default</td>
+                    <td>0.500</td>
+                    <td>82.63</td>
+                  </tr>
+                  <tr>
+                    <td>Balanced Acc</td>
+                    <td>0.485</td>
+                    <td>83.01</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="mt-2">
+                <em>Why F1-Max?</em> More robust to class imbalance (46.9:1) than Youden or Accuracy.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 2: YOLO11 Hyperparameters -->
+        <div class="column is-4">
+          <div class="box" style="height: 100%; border-top: 4px solid #3273dc;">
+            <h4 class="title is-5 has-text-centered" style="margin-bottom: 1rem;">
+              <span class="icon-text"><span class="icon"><i class="fas fa-sliders-h"></i></span> <span>YOLO11
+                  Configuration</span></span>
+            </h4>
+            <div class="content is-size-7">
+              <p>
+                <strong>optimized on COCO dataset</strong><br>
+                Hyperparameters determined via combination search:
+              </p>
+              <table class="table is-bordered is-narrow is-fullwidth" style="font-size: 0.65rem;">
+                <thead>
+                  <tr style="background-color: #e3f2fd;">
+                    <th>Param</th>
+                    <th>Value</th>
+                    <th>Rationale</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>$\gamma$ (Focal)</strong></td>
+                    <td>2.0</td>
+                    <td>Balances easy/hard examples</td>
+                  </tr>
+                  <tr>
+                    <td><strong>$\alpha$ (Focal)</strong></td>
+                    <td>0.25</td>
+                    <td>Optimal for minority foreground</td>
+                  </tr>
+                  <tr>
+                    <td><strong>$\lambda_{box}$</strong></td>
+                    <td>7.5</td>
+                    <td>Box regression weight</td>
+                  </tr>
+                  <tr>
+                    <td><strong>$\lambda_{cls}$</strong></td>
+                    <td>0.5</td>
+                    <td>Class loss weight</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>
+                <strong>Augmentation:</strong> Copy-Paste ($\alpha=0.2$) utilized to address severe class imbalance
+                (46.9:1).
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 3: Radiograph Preprocessing -->
+        <div class="column is-4">
+          <div class="box" style="height: 100%; border-top: 4px solid #f14668;">
+            <h4 class="title is-5 has-text-centered" style="margin-bottom: 1rem;">
+              <span class="icon-text"><span class="icon"><i class="fas fa-x-ray"></i></span> <span>Radiograph
+                  Preprocessing</span></span>
+            </h4>
+            <div class="content is-size-7">
+              <p>
+                <strong>Strategy:</strong> CLAHE enhancement to mitigate exposure variance.
+              </p>
+              <div class="notification is-light p-2 mb-2" style="font-size: 0.6rem; text-align: left;">
+                $$I'(i, j) = \beta \cdot \frac{CDF_{\Omega_k}(I(i, j)) - CDF_{min}}{|\Omega_k| - CDF_{min}}$$
+              </div>
+              <table class="table is-bordered is-narrow is-fullwidth" style="font-size: 0.65rem;">
+                <thead>
+                  <tr style="background-color: #ffebee;">
+                    <th>Param</th>
+                    <th>Value</th>
+                    <th>Purpose</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Clip Limit</td>
+                    <td>2.0</td>
+                    <td>Limits contrast noise</td>
+                  </tr>
+                  <tr>
+                    <td>Grid Size</td>
+                    <td>$8 \times 8$</td>
+                    <td>Local equalization</td>
+                  </tr>
+                  <tr>
+                    <td>Scale $\beta$</td>
+                    <td>255</td>
+                    <td>8-bit mapping</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>
+                Preprocessing ensures consistent feature extraction across 8,389 training images.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="class-imbalance-study">
+    <div class="container is-max-widescreen">
+      <h2 class="title is-3 has-text-centered">Class Imbalance Study</h2>
+      <div class="content">
+        <p>
+          We leveraged the VinDr-SpineXR [20] benchmark, utilizing 8,389 images for training and 2,077 for testing.
+          The dataset exhibits a severe class imbalance, with Osteophytes dominating the annotations at 82.1%,
+          corresponding
+          to 12,556 bounding boxes. In contrast, clinically important minority classes are much less frequent, including
+          Disc Space Narrowing at 6.0%, Surgical Implants at 2.8%, and Foraminal Stenosis at 2.5%. The rarest class,
+          Vertebral Collapse, comprises only 268 annotations and accounts for 1.8% of the dataset. This yields a class
+          imbalance ratio of 46.9:1, meaning that Osteophytes appear nearly 47 times more often than Vertebral Collapse.
+        </p>
+        <p>
+          To mitigate radiographic exposure variance, Contrast Limited Adaptive Histogram Equalization (CLAHE) computes
+          the enhanced intensity $I'(i, j)$ by mapping the local cumulative distribution function (CDF), as formulated
+          in
+          Eq. 1.
+        </p>
+        <div class="content has-text-centered" style="margin: 20px 0;">
+          <p
+            style="white-space: pre-wrap; word-break: break-word; background: #f5f5f5; padding: 1rem; border-radius: 6px;">
+            $$I'(i, j) = \beta \cdot \frac{\mathrm{CDF}_{\Omega_k}(I(i, j)) - \mathrm{CDF}_{\min}}{|\Omega_k| -
+            \mathrm{CDF}_{\min}}$$
+          </p>
+        </div>
+        <p>
+          Here, Eq. 1 utilizes an $8 \times 8$ tile grid to define the local region cardinality ($|\Omega_k|$) and maps
+          the
+          normalized CDF back to the intensity range using $β = 255$. A clip limit $τ = 2.0$ suppresses contrast
+          over-amplification and noise in homogeneous bone structures prior to normalization and 5-fold
+          cross-validation.
+        </p>
+        <div class="box" style="margin-top: 25px; border-top: 5px solid #00bcd4;">
+          <h4 class="title is-5 has-text-centered">Class Imbalance Distribution</h4>
+          <div style="text-align: center;">
+            <img src="./static/images/class_imbalance_distribution.png" alt="Class imbalance distribution"
+              style="max-width: 100%; height: auto; border-radius: 6px;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-widescreen">
+
+      <h2 class="title is-3 has-text-centered">
+        Performance Evaluation
+      </h2>
+
+      <div class="content has-text-centered mb-5">
+        <p>
+          Comprehensive analysis of the proposed DERNet model demonstrating superior accuracy and clinical relevance.
+        </p>
+      </div>
+
+
+
+      <!-- Three Column Layout -->
+      <div class="columns is-variable is-3">
+
+        <!-- Left Column: LIME Explainability -->
+        <div class="column is-4">
+          <div class="box" style="height: 100%; display: flex; flex-direction: column;">
+            <div style="text-align: center; flex-grow: 1;">
+              <img src="./static/images/post-hoc visualization.png" alt="Post-hoc Visualization"
+                style="max-width: 100%; height: auto; border-radius: 5px;">
+            </div>
+            <div class="content" style="margin-top: 20px;">
+              <h4 class="title is-6">(a) Post-hoc Visualization</h4>
+              <p style="font-size: 0.9rem;">
+                Post-hoc visualization techniques highlight important regions for mild, moderate, and severe cirrhosis
+                classification.
+              </p>
+              <div class="notification is-light is-info" style="margin-top: 10px; padding: 0.75rem;">
+                <p style="font-size: 0.85rem; margin: 0;">
+                  <strong>Why it matters:</strong> <em>Confirms the model focuses on clinically meaningful
+                    structures.</em>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Middle Column: Grad-CAM Analysis -->
+        <div class="column is-4">
+          <div class="box" style="height: 100%; display: flex; flex-direction: column;">
+            <div style="text-align: center; flex-grow: 1;">
+              <img src="./static/images/gradcam.png" alt="Grad-CAM Analysis"
+                style="max-width: 100%; height: auto; border-radius: 5px;">
+            </div>
+            <div class="content" style="margin-top: 20px;">
+              <h4 class="title is-6">(b) Grad-CAM Analysis</h4>
+              <p style="font-size: 0.9rem;">
+                Grad-CAM visualizations indicating regions critical for cirrhosis stage prediction.
+              </p>
+              <div class="notification is-light is-warning" style="margin-top: 10px; padding: 0.75rem;">
+                <p style="font-size: 0.85rem; margin: 0;">
+                  <strong>Why it's better:</strong> <em>Provides transparent, clinically interpretable validation.</em>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Qualitative Visualization -->
+        <div class="column is-4">
+          <div class="box" style="height: 100%; display: flex; flex-direction: column;">
+            <div style="text-align: center; flex-grow: 1;">
+              <img src="./static/images/qualitative.png" alt="Qualitative Visualization"
+                style="max-width: 100%; height: auto; border-radius: 5px;">
+            </div>
+            <div class="content" style="margin-top: 20px;">
+              <h4 class="title is-6">(c) Qualitative Visualization</h4>
+              <p style="font-size: 0.9rem;">
+                Comparison of the ground truth mask and predicted mask along with error analysis for the DERNet model.
+              </p>
+              <div class="notification is-light is-success" style="margin-top: 10px; padding: 0.75rem;">
+                <p style="font-size: 0.85rem; margin: 0;">
+                  <strong>Why it's better:</strong> <em>DERNet approach preserves local anatomical details often
+                    missed by Transformers.</em>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+
+      <h2 class="title is-3 has-text-centered">Classification Ensemble Performance</h2>
+      <div class="content has-text-centered" style="margin-bottom: 30px;">
+        <p>
+          Performance comparison of <strong>DERNet ensemble</strong> (DenseNet-121 + EfficientNetV2-S + ResNet-50)
+          against individual models and baseline using 5-fold cross-validation.
+        </p>
+      </div>
+
+      <div class="box" style="overflow-x: auto; border-top: 5px solid #4caf50;">
+        <h4 class="title is-5 has-text-centered">Table 1: Classification Performance (5-Fold Cross-Validation)</h4>
+        <table class="table is-bordered is-striped is-hoverable is-fullwidth has-text-centered">
+          <thead style="background-color: #e8f5e9;">
+            <tr>
+              <th style="vertical-align: middle;">Model</th>
+              <th>Parameters</th>
+              <th>AUROC (%)</th>
+              <th>Sensitivity (%)</th>
+              <th>Specificity (%)</th>
+              <th>F1-Score (%)</th>
+              <th>Weight</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>DenseNet-121</td>
+              <td>8.0M</td>
+              <td>86.93</td>
+              <td>80.39</td>
+              <td>79.32</td>
+              <td>79.55</td>
+              <td>0.42</td>
+            </tr>
+            <tr>
+              <td>EfficientNetV2-S</td>
+              <td>21.5M</td>
+              <td>89.44</td>
+              <td>70.80</td>
+              <td><strong>91.12</strong></td>
+              <td>79.34</td>
+              <td>0.32</td>
+            </tr>
+            <tr>
+              <td>ResNet-50</td>
+              <td>25.6M</td>
+              <td>88.88</td>
+              <td>82.72</td>
+              <td>78.13</td>
+              <td>80.15</td>
+              <td>0.26</td>
+            </tr>
+            <tr>
+              <td>VinDr Ensemble [2]</td>
+              <td>-</td>
+              <td>88.61</td>
+              <td>83.07</td>
+              <td>79.32</td>
+              <td>81.06</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>HealNNet [15]</td>
+              <td>-</td>
+              <td>88.84</td>
+              <td>-</td>
+              <td>-</td>
+              <td>81.20</td>
+              <td>-</td>
+            </tr>
+            <tr style="background-color: #c8e6c9; font-weight: bold; border: 2px solid #4caf50;">
+              <td><strong>DERNet Ensemble</strong></td>
+              <td>18.3M avg</td>
+              <td><strong>91.03</strong></td>
+              <td><strong>84.91</strong></td>
+              <td>81.68</td>
+              <td><strong>83.09</strong></td>
+              <td>-</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+
+  <section class="section" style="background-color: #f5f5f5;">
+    <div class="container is-max-desktop">
+
+      <h2 class="title is-3 has-text-centered">Detection Performance & Analysis</h2>
+      <div class="content has-text-centered" style="margin-bottom: 30px;">
+        <p>
+          Evaluation of YOLO11-L for spinal lesion localization across 7 pathology types with comparison to baseline
+          methods.
+        </p>
+      </div>
+
+      <div class="box" style="overflow-x: auto; border-top: 5px solid #ff9800;">
+        <h4 class="title is-5 has-text-centered">Table 2: Comparison results of different methods (mAP@0.5)</h4>
+        <table class="table is-bordered is-striped is-hoverable is-fullwidth has-text-centered">
+          <thead style="background-color: #fff3e0;">
+            <tr>
+              <th style="vertical-align: middle;">Method</th>
+              <th>LT2</th>
+              <th>LT4</th>
+              <th>LT6</th>
+              <th>LT8</th>
+              <th>LT10</th>
+              <th>LT11</th>
+              <th>LT13</th>
+              <th>mAP@0.5</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Dino [19]</td>
+              <td>16.58</td>
+              <td>22.87</td>
+              <td>28.53</td>
+              <td>32.71</td>
+              <td>59.78</td>
+              <td>41.28</td>
+              <td>3.24</td>
+              <td>29.28</td>
+            </tr>
+            <tr>
+              <td>RetinaNet [20]</td>
+              <td>14.53</td>
+              <td>25.35</td>
+              <td>41.67</td>
+              <td>32.14</td>
+              <td>65.49</td>
+              <td>51.85</td>
+              <td>5.30</td>
+              <td>28.09</td>
+            </tr>
+            <tr>
+              <td>Faster R-CNN [9]</td>
+              <td>22.66</td>
+              <td>35.99</td>
+              <td>49.24</td>
+              <td>31.68</td>
+              <td>65.22</td>
+              <td>51.68</td>
+              <td>2.16</td>
+              <td>31.83</td>
+            </tr>
+            <tr>
+              <td>Sparse R-CNN [10]</td>
+              <td>20.09</td>
+              <td>32.67</td>
+              <td>48.16</td>
+              <td>45.32</td>
+              <td>72.20</td>
+              <td>49.30</td>
+              <td>5.41</td>
+              <td>33.15</td>
+            </tr>
+            <tr>
+              <td>VinDr-SpineXR [2]</td>
+              <td>21.43</td>
+              <td>27.36</td>
+              <td>34.78</td>
+              <td>41.29</td>
+              <td>62.53</td>
+              <td>43.39</td>
+              <td>4.16</td>
+              <td>33.56</td>
+            </tr>
+            <tr>
+              <td>EGCA-Net [18]</td>
+              <td>22.36</td>
+              <td>29.75</td>
+              <td>36.73</td>
+              <td>44.69</td>
+              <td>66.58</td>
+              <td>50.41</td>
+              <td>2.09</td>
+              <td>36.09</td>
+            </tr>
+            <tr>
+              <td>YOLOv6</td>
+              <td>23.60</td>
+              <td>34.90</td>
+              <td>38.40</td>
+              <td>37.50</td>
+              <td>67.30</td>
+              <td>43.30</td>
+              <td>3.35</td>
+              <td>35.50</td>
+            </tr>
+            <tr>
+              <td>YOLOv12</td>
+              <td>23.60</td>
+              <td>37.70</td>
+              <td>37.00</td>
+              <td>45.90</td>
+              <td>67.00</td>
+              <td>49.80</td>
+              <td>4.01</td>
+              <td>37.90</td>
+            </tr>
+            <tr style="background-color: #ffe0b2; font-weight: bold;">
+              <td>Ours (YOLO11-L)</td>
+              <td>26.70</td>
+              <td>41.40</td>
+              <td>40.60</td>
+              <td>54.80</td>
+              <td>74.10</td>
+              <td>51.20</td>
+              <td>2.99</td>
+              <td>40.10</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="is-size-7 has-text-left mt-2" style="font-style: italic;">
+          (*) LT2, LT4, LT6, LT8, LT10, LT11, LT13 denotes for disc space narrowing, foraminal stenosis, osteophytes,
+          spondylolisthesis, surgical implant, vertebral collapse and other lesions, respectively.
+        </p>
+      </div>
+
+      <div class="box" style="margin-top: 25px; border-top: 5px solid #3f51b5;">
+        <h4 class="title is-5 has-text-centered">Mid-Scale and Fine-Grained Pathology Analysis</h4>
+        <div class="columns is-vcentered">
+          <div class="column is-7">
+            <p class="content">
+              Mid-scale lesions are represented as bounding-box annotations occupying approximately $32 \times 32$ to
+              $96 \times 96$
+              pixels on a normalized $640 \times 640$ input. In addition, fine-grained pathology signals are defined as
+              minute localized features occupying less than $1\%$ of the field-of-view, corresponding to lesions smaller
+              than
+              the mid-scale range (roughly below $32 \times 32$ pixels). These subtle boundary disruptions, such as
+              those seen
+              in foraminal stenosis, are preserved across the deeper layers of the detector and are explicitly
+              emphasized by the
+              proposed multi-scale feature aggregation strategy.
+            </p>
+          </div>
+          <div class="column is-5">
+            <img src="./static/images/image.png" alt="Multi-scale pathology visualization"
+              style="max-width: 100%; height: auto; border-radius: 6px;">
+          </div>
+        </div>
+      </div>
+
+      <br>
+
+      <div class="box" style="overflow-x: auto; border-top: 5px solid #9c27b0;">
+        <h4 class="title is-5 has-text-centered">Table 3: Ablation Study - Component Impact Analysis</h4>
+        <table class="table is-bordered is-striped is-hoverable is-fullwidth has-text-centered">
+          <thead style="background-color: #f3e5f5;">
+            <tr>
+              <th>Component Removed</th>
+              <th>mAP@0.5</th>
+              <th>ΔmAP</th>
+              <th>Impact Level</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background-color: #e1bee7; font-weight: bold;">
+              <td>Full Model (Baseline)</td>
+              <td>40.10%</td>
+              <td>-</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>- Copy-Paste Augmentation</td>
+              <td>37.7%</td>
+              <td><span style="color: #d32f2f;">-2.40%</span></td>
+              <td><span style="color: #d32f2f;">High</span></td>
+            </tr>
+            <tr>
+              <td>- Mosaic Augmentation</td>
+              <td>37.1%</td>
+              <td><span style="color: #d32f2f;">-2.94%</span></td>
+              <td><span style="color: #d32f2f;">High</span></td>
+            </tr>
+            <tr>
+              <td>- C2PSA Module (Attention)</td>
+              <td>38.5%</td>
+              <td><span style="color: #f57c00;">-1.54%</span></td>
+              <td><span style="color: #f57c00;">Medium</span></td>
+            </tr>
+            <tr>
+              <td>- Focal Loss</td>
+              <td>38.9%</td>
+              <td><span style="color: #f57c00;">-1.14%</span></td>
+              <td><span style="color: #f57c00;">Medium</span></td>
+            </tr>
+            <tr>
+              <td>- Task-Aligned Assignment</td>
+              <td>39.2%</td>
+              <td><span style="color: #388e3c;">-0.84%</span></td>
+              <td><span style="color: #388e3c;">Low</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <br>
+
+      <div class="box" style="overflow-x: auto; border-top: 5px solid #607d8b;">
+        <h4 class="title is-5 has-text-centered">Table 4: Computational Performance Analysis</h4>
+        <table class="table is-bordered is-striped is-hoverable is-fullwidth has-text-centered is-size-7">
+          <thead style="background-color: #eceff1;">
+            <tr>
+              <th>Model</th>
+              <th>Parameters</th>
+              <th>FLOPs</th>
+              <th>Inference Time</th>
+              <th>Training Time</th>
+              <th>GPU Memory</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>DenseNet-121</td>
+              <td>7.98M</td>
+              <td>5.72G</td>
+              <td>18ms (~56 FPS)</td>
+              <td>~12h (60 epochs)</td>
+              <td>3.2GB</td>
+            </tr>
+            <tr>
+              <td>EfficientNetV2-S</td>
+              <td>21.46M</td>
+              <td>8.40G</td>
+              <td>24ms (~42 FPS)</td>
+              <td>~15h (60 epochs)</td>
+              <td>4.8GB</td>
+            </tr>
+            <tr>
+              <td>ResNet-50</td>
+              <td>25.56M</td>
+              <td>11.6G</td>
+              <td>28ms (~36 FPS)</td>
+              <td>~14h (60 epochs)</td>
+              <td>5.1GB</td>
+            </tr>
+            <tr style="background-color: #fff3e0;">
+              <td>Ensemble (Average)</td>
+              <td>18.33M</td>
+              <td>8.57G</td>
+              <td>70ms (~14 FPS)</td>
+              <td>~41h total</td>
+              <td>4.37GB avg</td>
+            </tr>
+            <tr>
+              <td>YOLO11-L</td>
+              <td>25.27M</td>
+              <td>164.9G</td>
+              <td>22ms (~45 FPS)</td>
+              <td>~18.5h (50 epochs)</td>
+              <td>6.2GB</td>
+            </tr>
+            <tr style="background-color: #cfd8dc; font-weight: bold;">
+              <td><strong>Combined Pipeline</strong></td>
+              <td><strong>43.6M</strong></td>
+              <td><strong>173.47G</strong></td>
+              <td><strong>~92ms (~11 FPS)</strong></td>
+              <td><strong>~59.5h total</strong></td>
+              <td><strong>10.57GB peak</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-widescreen">
+
+      <h2 class="title is-3 has-text-centered">
+        Error Analysis
+      </h2>
+
+      <div class="content has-text-centered mb-5">
+        <p>
+          Detailed examination of model performance through confusion matrices and analysis of misclassified instances.
+        </p>
+      </div>
+
+      <div class="columns is-variable is-3">
+
+        <!-- Left Column: Confusion Matrix -->
+        <div class="column is-4">
+          <div class="box" style="height: 100%; display: flex; flex-direction: column;">
+            <div style="text-align: center; flex-grow: 1;">
+              <img src="./static/images/confusion_matrix.png" alt="Confusion Matrix"
+                style="max-width: 100%; height: auto; border-radius: 5px;">
+            </div>
+            <div class="content" style="margin-top: 20px;">
+              <h4 class="title is-6">(a) Confusion Matrix</h4>
+              <p style="font-size: 0.9rem;">
+                The class-wise confusion matrix provides a granular breakdown of the model's diagnostic accuracy across
+                all seven spinal lesion categories. By visualizing true positives versus misclassifications, we
+                quantitatively assess the impact of severe class imbalance (e.g., distinguishing rare "Vertebral
+                collapse" from frequent "Osteophytes"). The matrix reveals high diagonal density, confirming robust
+                sensitivity even for minority classes, while highlighting specific inter-class ambiguities—such as the
+                subtle overlap between "Disc space narrowing" and "Spondylolisthesis"—that guided our refined
+                architectural choices.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Middle Column: False Positive Analysis -->
+        <div class="column is-4">
+          <div class="box" style="height: 100%; display: flex; flex-direction: column;">
+            <div style="text-align: center; flex-grow: 1;">
+              <img src="./static/images/false_positives.png" alt="False Positive Analysis"
+                style="max-width: 100%; height: auto; border-radius: 5px;">
+            </div>
+            <div class="content" style="margin-top: 20px;">
+              <h4 class="title is-6">(b) False Positive Analysis</h4>
+              <p style="font-size: 0.9rem;">
+                A systematic investigation of False Positives (FPs) elucidates the model's decision boundaries in
+                complex radiological environments. We examine instances where normal anatomical variations, high-density
+                bone structures, or external artifacts (e.g., surgical clips) were incorrectly flagged as pathological.
+                This analysis is critical for clinical deployment, as reducing FPs—particularly in triage
+                settings—minimizes unnecessary follow-ups. Our findings show that the majority of FPs occur in
+                low-contrast regions, necessitating the integration of context-aware attention mechanisms to suppress
+                background noise.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Missed Lesions Analysis -->
+        <div class="column is-4">
+          <div class="box" style="height: 100%; display: flex; flex-direction: column;">
+            <div style="text-align: center; flex-grow: 1;">
+              <img src="./static/images/missed_lesions.png" alt="Missed Lesions Analysis"
+                style="max-width: 100%; height: auto; border-radius: 5px;">
+            </div>
+            <div class="content" style="margin-top: 20px;">
+              <h4 class="title is-6">(c) Missed Lesions Analysis</h4>
+              <p style="font-size: 0.9rem;">
+                A comprehensive review of False Negatives (FNs) uncovers the morphological characteristics of spinal
+                lesions that evade detection. We analyze 'missed' cases to identify patterns such as extreme subtlety
+                (lesions occupying &lt;1% of the FOV), occlusion by overlapping structures, or atypical visual
+                presentations. Understanding these failure modes—specifically in 'Other lesions' and early-stage
+                'Foraminal stenosis'—drives future improvements in multi-scale feature extraction. This rigorous audit
+                ensures transparency and targeted refinement, directly addressing the safety-critical requirement of
+                minimizing missed diagnoses in clinical workflows.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section" style="background-color: #fff;">
+    <div class="container is-max-desktop">
+
+      <h2 class="title is-3 has-text-centered">Key Findings</h2>
+      <div class="content has-text-centered" style="margin-bottom: 40px;">
+        <p>Summary of major breakthroughs in automated spine pathology triage and localization.</p>
+      </div>
+
+      <div class="columns is-multiline">
+        <div class="column is-6">
+          <div class="box" style="border-top: 5px solid #4caf50; height: 100%;">
+            <div class="media">
+              <div class="media-left">
+                <span style="font-size: 3em;">🎯</span>
+              </div>
+              <div class="media-content">
+                <p class="title is-5">Robust Classification</p>
+                <p class="subtitle is-6" style="margin-top: 5px;">
+                  DERNet ensemble: <strong>AUROC 91.03%</strong>, <strong>Sensitivity 84.91%</strong>,
+                  <strong>Specificity 81.68%</strong>, <strong>F1-Score 83.09%</strong> via weighted fusion of
+                  DenseNet-121, EfficientNetV2-S, ResNet-50.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-6">
+          <div class="box" style="border-top: 5px solid #2196f3; height: 100%;">
+            <div class="media">
+              <div class="media-left">
+                <span style="font-size: 3em;">⚖️</span>
+              </div>
+              <div class="media-content">
+                <p class="title is-5">Class Imbalance Mitigation</p>
+                <p class="subtitle is-6" style="margin-top: 5px;">
+                  Handled <strong>46.9:1 class imbalance</strong> using <strong>Copy-Paste augmentation</strong> and
+                  <strong>Focal Loss</strong>, achieving <strong>mAP@0.5 40.10±0.3%</strong> for 7-class detection.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-6">
+          <div class="box" style="border-top: 5px solid #9c27b0; height: 100%;">
+            <div class="media">
+              <div class="media-left">
+                <span style="font-size: 3em;">🧠</span>
+              </div>
+              <div class="media-content">
+                <p class="title is-5">Explainable AI (XAI) Integration</p>
+                <p class="subtitle is-6" style="margin-top: 5px;">
+                  <strong>LIME</strong>, <strong>Grad-CAM</strong>, and <strong>Qualitative Visualization</strong>
+                  provide saliency maps and visual validation, ensuring model focuses on clinically relevant spinal
+                  regions for transparent diagnosis.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-6">
+          <div class="box" style="border-top: 5px solid #ff9800; height: 100%;">
+            <div class="media">
+              <div class="media-left">
+                <span style="font-size: 3em;">🏅</span>
+              </div>
+              <div class="media-content">
+                <p class="title is-5">Real-Time Clinical Applicability</p>
+                <p class="subtitle is-6" style="margin-top: 5px;">
+                  <strong>~11 FPS (92ms/image)</strong> on RTX 3050 GPU for real-time spine triage with <strong>7
+                    pathology localization</strong> and bounding-box visual explanations.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 50px;">
+        <h2 class="title is-3 has-text-centered" style="color: #2c3e50; font-weight: 700;">Live Clinical Deployment
+          Interface</h2>
+        <div class="content has-text-centered" style="margin-bottom: 25px;">
+          <p style="font-size: 16px; color: #555; line-height: 1.6;">Real-world implementation of the cascaded DERNet
+            and YOLO11 framework for automated spinal lesion triage, precise localization, and explainable AI-driven
+            diagnosis visualization in clinical workflows</p>
+        </div>
+
+        <div class="box"
+          style="background-color: #fff; border: 1px solid #e0e0e0; border-radius: 10px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); position: relative;">
+
+          <!-- Left Arrow -->
+          <button id="demo-prev"
+            style="position: absolute; left: 10px; top: 45%; transform: translateY(-50%); background-color: rgba(50, 115, 220, 0.9); color: white; border: none; border-radius: 50%; width: 45px; height: 45px; font-size: 20px; cursor: pointer; z-index: 10; box-shadow: 0 2px 8px rgba(0,0,0,0.2); transition: background-color 0.3s;"
+            onmouseover="this.style.backgroundColor='rgba(50, 115, 220, 1)'"
+            onmouseout="this.style.backgroundColor='rgba(50, 115, 220, 0.9)'">
+            &#10094;
+          </button>
+
+          <!-- Right Arrow -->
+          <button id="demo-next"
+            style="position: absolute; right: 10px; top: 45%; transform: translateY(-50%); background-color: rgba(50, 115, 220, 0.9); color: white; border: none; border-radius: 50%; width: 45px; height: 45px; font-size: 20px; cursor: pointer; z-index: 10; box-shadow: 0 2px 8px rgba(0,0,0,0.2); transition: background-color 0.3s;"
+            onmouseover="this.style.backgroundColor='rgba(50, 115, 220, 1)'"
+            onmouseout="this.style.backgroundColor='rgba(50, 115, 220, 0.9)'">
+            &#10095;
+          </button>
+
+          <!-- Demo Gallery Container -->
+          <div id="demo-gallery" style="overflow: hidden; padding: 0 60px;">
+            <div id="demo-gallery-wrapper" style="display: flex; gap: 15px; transition: transform 0.5s ease-in-out;">
+
+              <!-- Duplicate last 3 images at start for seamless looping -->
+              <div class="demo-item" style="flex: 0 0 calc(33.333% - 10px); text-align: center;">
+                <img src="./static/images/6.jpg" alt="Demo 6"
+                  style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+              </div>
+              <div class="demo-item" style="flex: 0 0 calc(33.333% - 10px); text-align: center;">
+                <img src="./static/images/7.jpg" alt="Demo 7"
+                  style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+              </div>
+              <div class="demo-item" style="flex: 0 0 calc(33.333% - 10px); text-align: center;">
+                <img src="./static/images/8.jpg" alt="Demo 8"
+                  style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+              </div>
+
+              <!-- Original 8 images -->
+              <div class="demo-item" style="flex: 0 0 calc(33.333% - 10px); text-align: center;">
+                <img src="./static/images/1.jpg" alt="Demo 1"
+                  style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+              </div>
+              <div class="demo-item" style="flex: 0 0 calc(33.333% - 10px); text-align: center;">
+                <img src="./static/images/2.jpg" alt="Demo 2"
+                  style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+              </div>
+              <div class="demo-item" style="flex: 0 0 calc(33.333% - 10px); text-align: center;">
+                <img src="./static/images/3.jpg" alt="Demo 3"
+                  style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+              </div>
+              <div class="demo-item" style="flex: 0 0 calc(33.333% - 10px); text-align: center;">
+                <img src="./static/images/4.jpg" alt="Demo 4"
+                  style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+              </div>
+              <div class="demo-item" style="flex: 0 0 calc(33.333% - 10px); text-align: center;">
+                <img src="./static/images/5.jpg" alt="Demo 5"
+                  style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+              </div>
+              <div class="demo-item" style="flex: 0 0 calc(33.333% - 10px); text-align: center;">
+                <img src="./static/images/6.jpg" alt="Demo 6"
+                  style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+              </div>
+              <div class="demo-item" style="flex: 0 0 calc(33.333% - 10px); text-align: center;">
+                <img src="./static/images/7.jpg" alt="Demo 7"
+                  style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+              </div>
+              <div class="demo-item" style="flex: 0 0 calc(33.333% - 10px); text-align: center;">
+                <img src="./static/images/8.jpg" alt="Demo 8"
+                  style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+              </div>
+
+              <!-- Duplicate first 3 images at end for seamless looping -->
+              <div class="demo-item" style="flex: 0 0 calc(33.333% - 10px); text-align: center;">
+                <img src="./static/images/1.jpg" alt="Demo 1"
+                  style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+              </div>
+              <div class="demo-item" style="flex: 0 0 calc(33.333% - 10px); text-align: center;">
+                <img src="./static/images/2.jpg" alt="Demo 2"
+                  style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+              </div>
+              <div class="demo-item" style="flex: 0 0 calc(33.333% - 10px); text-align: center;">
+                <img src="./static/images/3.jpg" alt="Demo 3"
+                  style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div style="margin-top: 50px;">
+        <h2 class="title is-3 has-text-centered">Future Directions</h2>
+        <div class="content has-text-centered" style="margin-bottom: 30px;">
+          <p>Prospective research avenues to enhance DERNet's clinical impact and deployment.</p>
+        </div>
+
+        <div class="box" style="background-color: #f5f5f5; border-left: 5px solid #363636;">
+          <div class="content">
+            <ul style="list-style: none; margin-left: 0;">
+
+              <li style="margin-bottom: 15px; display: flex; align-items: start;">
+                <span style="color: #3273dc; margin-right: 10px; font-weight: bold;">➤</span>
+                <span>
+                  <strong>Multi-center Validation:</strong> Future studies will focus on multicenter validation to
+                  facilitate generalization of the findings to a broader population, addressing the limitation of the
+                  single-center dataset.
+                </span>
+              </li>
+
+              <li style="margin-bottom: 15px; display: flex; align-items: start;">
+                <span style="color: #3273dc; margin-right: 10px; font-weight: bold;">➤</span>
+                <span>
+                  <strong>Longitudinal Radiographic Surveillance:</strong> Integrating longitudinal radiographic
+                  analysis to monitor disease progression and the disease course proactively.
+                </span>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>@article{DERNet2026,
+  author    = {Anonymized Authors},
+  title     = {A Cascaded DERNet and YOLO11 Framework for Spinal Lesion Triage and Localization with Explainable AI},
+  journal   = {Under Review},
+  year      = {2026},
+}</code></pre>
+    </div>
+  </section>
+
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-10">
+          <div class="content has-text-centered">
+            <p style="margin-bottom: 10px;">
+              <strong>DERNet Framework for Spinal Lesion Triage and Localization</strong>
+            </p>
+            <p style="margin-bottom: 10px;">
+              &copy; 2026 . All rights reserved.
+            </p>
+            <p style="font-size: 0.9em; color: #666;">
+              Website template adapted from <a href="https://github.com/nerfies/nerfies.github.io" target="_blank"
+                style="color: #3273dc;">Nerfies</a>,
+              licensed under <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank"
+                style="color: #3273dc;">CC BY-SA 4.0</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>

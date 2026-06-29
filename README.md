@@ -4,13 +4,7 @@
 [![Paper](https://img.shields.io/badge/Paper-PDF-red)](#)
 [![License](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey)](http://creativecommons.org/licenses/by-sa/4.0/)
 
-**A Cascaded DERNet and YOLO11 Framework for Spinal Lesion Triage and Localization**
-
-## 🌐 Live Web
-Visit the project website for visualizations, detailed methodology, and interactive elements:  
-**[Web Access](https://pronad1.github.io/DERNet/)**
-
----
+** A Cascaded DERNet and YOLO11 Framework for Spinal Lesion Triage and Localization with Explainable AI **
 
 ## 📄 Abstract
 Automated analysis of spinal radiographs is critical for early diagnosis but is often limited by severe class imbalance and the visual subtlety of lesions. **DERNet** introduces a novel dual-stage framework:
@@ -27,8 +21,9 @@ Our approach addresses the sensitivity-specificity trade-off and effectively cap
 *   **Triage Ensemble:** Weighted fusion of **DenseNet-121 (0.38)**, **EfficientNetV2-S (0.36)**, and **ResNet-50 (0.26)** utilizing Test-Time Augmentation (TTA).
 *   **Advanced Localization:** **YOLO11-L** optimized with C2PSA attention modules, SPPF, and a decoupled head for small object detection.
 *   **Robust Imbalance Handling:** Implementation of **Copy-Paste Augmentation**, **Focal Loss**, and **Class-Aware Sampling** to address limit-case class imbalances (up to 46.9:1).
-*   **Validated Performance:** Statistically significant improvement over baselines (p < 0.05) with **90.67% AUROC** in classification and **41.2% mAP@0.5** in detection.
+*   **Validated Performance:** Statistically significant improvement over baselines (p < 0.05) with **91.03% AUROC** in classification and **40.10% mAP@0.5** in detection.
 *   **Explainable AI:** Integrated with LIME and Grad-CAM for transparent clinical decision support.
+*   **Resources:** A fully reproducible framework specifically engineered to operate efficiently within low-resource and controlled environments.
 
 ---
 
@@ -37,13 +32,13 @@ Our approach addresses the sensitivity-specificity trade-off and effectively cap
 ### Classification (5-Fold Cross-Validation)
 | Model | AUROC (%) | Sensitivity (%) | Specificity (%) | F1-Score (%) |
 | :--- | :---: | :---: | :---: | :---: |
-| DenseNet-121 | 90.25 | 83.32 | 82.34 | 82.46 |
+| DenseNet-121 | 86.93 | 80.39 | 79.32 | 79.55 |
 | EfficientNetV2-S | 89.44 | 70.80 | 91.12 | 79.34 |
 | ResNet-50 | 88.88 | 82.72 | 78.13 | 80.15 |
-| **DERNet Ensemble** | **90.67** | **84.58** | **84.12** | **83.21** |
+| **DERNet Ensemble** | **91.03** | **84.91** | **81.68** | **83.09** |
 
 ### Detection (YOLO11-L)
-*   **mAP@0.5:** **41.2% ± 0.3%** (vs. baseline 33.15%)
+*   **mAP@0.5:** **40.10% ± 0.3%** (vs. baseline 33.15%)
 *   **mAP@0.5:0.95:** 20.1% ± 0.2%
 *   **Precision:** 49.8% ± 0.5%
 *   **Recall:** 40.5% ± 0.4%
@@ -52,10 +47,10 @@ Our approach addresses the sensitivity-specificity trade-off and effectively cap
 ### Comparison with Baselines
 | Method | Task | Key Metric | Our Result | Baseline | Improvement | p-value |
 | :--- | :--- | :--- | :---: | :---: | :---: | :---: |
-| VinDr Paper | Classification | AUROC | **90.67%** | 88.61% | +2.06% | <0.001 |
+| VinDr Paper | Classification | AUROC | **91.03%** | 88.61% | +2.42% | <0.001 |
 | VinDr Paper | Classification | Specificity | **84.12%** | 79.32% | +4.80% | <0.001 |
-| RT-DETR-l | Detection | mAP@0.5 | **41.2%** | 25.68% | +60.4% | <0.001 |
-| Paper Baseline | Detection | mAP@0.5 | **41.2%** | 33.15% | +24.3% | <0.001 |
+| RT-DETR-l | Detection | mAP@0.5 | **40.10%** | 25.68% | +56.1% | <0.001 |
+| Paper Baseline | Detection | mAP@0.5 | **40.10%** | 33.15% | +20.9% | <0.001 |
 
 ---
 
@@ -113,7 +108,7 @@ If you use this code in your research, please cite our work:
 ```bibtex
 @article{~,
   author    = {},
-  title     = {A Cascaded DERNet and YOLO11 Framework for Spinal Lesion Triage and Localization},
+  title     = {A Cascaded DERNet and YOLO11 Framework for Spinal Lesion Triage and Localization with Explainable AI},
   journal   = {To be updated},
   year      = {2026},
 }
