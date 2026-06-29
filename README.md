@@ -4,7 +4,7 @@
 [![Paper](https://img.shields.io/badge/Paper-PDF-red)](#)
 [![License](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey)](http://creativecommons.org/licenses/by-sa/4.0/)
 
-** A Cascaded DERNet and YOLO11 Framework for Spinal Lesion Triage and Localization with Explainable AI **
+**A Cascaded DERNet and YOLO11 Framework for Spinal Lesion Triage and Localization with Explainable AI**
 
 ## 📄 Abstract
 Automated analysis of spinal radiographs is critical for early diagnosis but is often limited by severe class imbalance and the visual subtlety of lesions. **DERNet** introduces a novel dual-stage framework:
