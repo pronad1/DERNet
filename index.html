@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="description"
-    content="A Cascaded DERNet and YOLO11 Framework for Spinal Lesion Triage and Localization with Explainable AI">
+    content="A Sensitivity-Gated Cascade for Compute-Efficient Spinal Lesion Detection in Resource-Constrained Settings">
 
   <meta name="keywords" content="Spine X-rays, Radiographs, DERNet, Explainability, YOLO11">
 
@@ -90,8 +90,8 @@
       <div class="container is-max-desktop">
         <div class="columns is-centered">
           <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title">A Cascaded DERNet and YOLO11 Framework for Spinal Lesion Triage and
-              Localization with Explainable AI</h1>
+            <h1 class="title is-1 publication-title">A Sensitivity-Gated Cascade for Compute-Efficient Spinal Lesion
+              Detection in Resource-Constrained Settings</h1>
             <div class="is-size-5 publication-authors">
               <span class="author-block">
                 <a href="#">Anonymized Authors</a>
@@ -247,27 +247,21 @@
           <h2 class="title is-3">Abstract</h2>
           <div class="content has-text-justified">
             <p>
-              Automated analysis of spinal radiographs is essential for
-              early diagnostic triage but remains challenging due to the visual sub-
-              tlety and small scale of many spinal lesions. We propose a unified cas-
-              caded deep learning framework designed to improve screening sensitivity
-              while maintaining precise lesion localization. The diagnostic workflow
-              is structurally decoupled into two stages. First, DERNet, a heteroge-
-              neous ensemble of EfficientNetV2-S, DenseNet121, and ResNet50, per-
-              forms high-sensitivity binary triage to filter normal radiographs. Abnor-
-              mal cases are subsequently routed to a customized YOLO11-L detec-
-              tor for fine-grained lesion localization. Experimental evaluation on the
-              VinDr-SpineXR benchmark demonstrates strong performance, achieving
-              an AUROC of 91.03% for image-level classification and a Mean Average
-              Precision or mAP@0.5 of 40.10% for lesion-level detection. To enhance
-              clinical interpretability, we integrate explainability techniques, including
-              Post-Hoc, Grad-CAM, and qualitative visualization, ensuring that pre-
-              dictions are aligned with anatomically relevant structures. The proposed
-              framework provides an interpretable and efficient solution for automated
-              spinal radiograph analysis. Additional resources, including extended ex-
-              perimental analyses, error analysis, qualitative visualizations, real-time
-              demos, and reproducibility resources, source codes are available at the
-              DERNet project website.
+              Automated analysis of spinal radiographs is essential for early diagnostic triage but remains challenging
+              due to the visual subtlety and small scale of many spinal lesions. We propose a unified cascaded deep
+              learning framework designed to improve screening sensitivity while maintaining precise lesion
+              localization. The diagnostic workflow is structurally decoupled into two stages. First, DERNet, a
+              heterogeneous ensemble of EfficientNetV2-S, DenseNet121, and ResNet50, performs high-sensitivity binary
+              triage to filter normal radiographs. Abnormal cases are subsequently routed to a customized YOLO11-L
+              detector for fine-grained lesion localization. An experimental evaluation of the VinDr-SpineXR benchmark
+              demonstrates strong performance, achieving an AUROC of 91.03% for image-level classification and a Mean
+              Average Precision (mAP@0.5) of 40.10% for lesion-level detection. To enhance clinical interpretability, we
+              integrate explainability techniques, including Saliency Map, Grad-CAM, and LIME, ensuring that predictions
+              align with anatomically relevant structures. Our proposed framework, designed for low-resource settings,
+              uses standard 2D X-rays to deliver output comparable to that of an expensive MRI and also serves as a
+              triage tool, ensuring that critical patients receive priority for an MRI. Additional resources, including
+              experimental analyses, error analysis, real-time deployment interface, and source codes, are available at
+              https://cimilab.github.io/DERNet/.
             </p>
           </div>
         </div>
@@ -581,15 +575,16 @@
                 style="max-width: 100%; height: auto; border-radius: 5px;">
             </div>
             <div class="content" style="margin-top: 20px;">
-              <h4 class="title is-6">(a) Post-hoc Visualization</h4>
+              <h4 class="title is-6">(a) Saliency Map</h4>
               <p style="font-size: 0.9rem;">
-                Post-hoc visualization techniques highlight important regions for mild, moderate, and severe cirrhosis
-                classification.
+                Saliency maps align with YOLO11-L localizations via a mean X-IoU of 0.61 — the spatial overlap
+                between the ground-truth box and the thresholded heatmap. This confirms the ensemble's triage
+                decisions are anchored to microstructures along vertebral boundaries.
               </p>
               <div class="notification is-light is-info" style="margin-top: 10px; padding: 0.75rem;">
                 <p style="font-size: 0.85rem; margin: 0;">
-                  <strong>Why it matters:</strong> <em>Confirms the model focuses on clinically meaningful
-                    structures.</em>
+                  <strong>Why it matters:</strong> <em>Anchors triage decisions to anatomically meaningful
+                    microstructures.</em>
                 </p>
               </div>
             </div>
@@ -604,9 +599,11 @@
                 style="max-width: 100%; height: auto; border-radius: 5px;">
             </div>
             <div class="content" style="margin-top: 20px;">
-              <h4 class="title is-6">(b) Grad-CAM Analysis</h4>
+              <h4 class="title is-6">(b) Grad-CAM</h4>
               <p style="font-size: 0.9rem;">
-                Grad-CAM visualizations indicating regions critical for cirrhosis stage prediction.
+                Grad-CAM heatmaps consistently localize the same regions identified by the YOLO11-L detector. We
+                validated this spatial alignment quantitatively with a mean X-IoU of 0.64, confirming that the
+                triage logic is anchored in authentic pathology rather than imaging artifacts.
               </p>
               <div class="notification is-light is-warning" style="margin-top: 10px; padding: 0.75rem;">
                 <p style="font-size: 0.85rem; margin: 0;">
@@ -621,18 +618,20 @@
         <div class="column is-4">
           <div class="box" style="height: 100%; display: flex; flex-direction: column;">
             <div style="text-align: center; flex-grow: 1;">
-              <img src="./static/images/qualitative.png" alt="Qualitative Visualization"
+              <img src="./static/images/LIME Explainability.png" alt="Qualitative Visualization"
                 style="max-width: 100%; height: auto; border-radius: 5px;">
             </div>
             <div class="content" style="margin-top: 20px;">
-              <h4 class="title is-6">(c) Qualitative Visualization</h4>
+              <h4 class="title is-6">(c) LIME</h4>
               <p style="font-size: 0.9rem;">
-                Comparison of the ground truth mask and predicted mask along with error analysis for the DERNet model.
+                LIME local importance regions show the model focuses on real spinal structures (e.g., vertebral
+                edges and foraminal regions) rather than random background. The localized importance maps support
+                that the AI's decisions are based on correct medical areas.
               </p>
               <div class="notification is-light is-success" style="margin-top: 10px; padding: 0.75rem;">
                 <p style="font-size: 0.85rem; margin: 0;">
-                  <strong>Why it's better:</strong> <em>DERNet approach preserves local anatomical details often
-                    missed by Transformers.</em>
+                  <strong>Why it matters:</strong> <em>Validates that the model attends to clinically relevant
+                    anatomy.</em>
                 </p>
               </div>
             </div>
@@ -1013,6 +1012,52 @@
         </table>
       </div>
 
+      <br>
+
+      <div class="box" style="overflow-x: auto; border-top: 5px solid #455a64; margin-top: 20px;">
+        <h4 class="title is-5 has-text-centered">Table 5: Computational Efficiency & Latency</h4>
+        <table class="table is-bordered is-striped is-hoverable is-fullwidth has-text-centered is-size-7">
+          <thead style="background-color: #eceff1;">
+            <tr>
+              <th>Component</th>
+              <th>GFLOPs</th>
+              <th>Runtime Memory</th>
+              <th>Typical Latency</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>DERNet (screening)</td>
+              <td>15.4</td>
+              <td>0.9 GB</td>
+              <td>120 ms</td>
+              <td>Ultra-light screening stage; optimized for CPU inference.</td>
+            </tr>
+            <tr>
+              <td>YOLO11-L (detailed localization)</td>
+              <td>74.6</td>
+              <td>1.8 GB</td>
+              <td>350 ms</td>
+              <td>Executed only for abnormal cases to preserve compute budget.</td>
+            </tr>
+            <tr style="background-color: #e8f5e9; font-weight: bold;">
+              <td>Staged Pipeline (typical)</td>
+              <td>15.4 (+74.6 if localized)</td>
+              <td>0.9–1.8 GB</td>
+              <td>120 ms (screening); +350 ms if localization invoked</td>
+              <td>Staging reduces average computation and supports practical CPU deployment.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="is-size-7 has-text-left" style="font-style: italic; margin-top: 8px;">
+          The DERNet→YOLO11-L staged strategy runs the lightweight screening model (DERNet) on all images and
+          only activates the computationally heavier detector (YOLO11-L) for positives. This significantly
+          reduces average per-image compute, lowers average latency, and enables viable CPU-based deployment in
+          low-resource clinical settings where GPUs are unavailable.
+        </p>
+      </div>
+
     </div>
   </section>
 
@@ -1105,77 +1150,59 @@
   <section class="section" style="background-color: #fff;">
     <div class="container is-max-desktop">
 
-      <h2 class="title is-3 has-text-centered">Key Findings</h2>
-      <div class="content has-text-centered" style="margin-bottom: 40px;">
-        <p>Summary of major breakthroughs in automated spine pathology triage and localization.</p>
-      </div>
 
-      <div class="columns is-multiline">
-        <div class="column is-6">
-          <div class="box" style="border-top: 5px solid #4caf50; height: 100%;">
-            <div class="media">
-              <div class="media-left">
-                <span style="font-size: 3em;">🎯</span>
+
+      <div class="columns is-centered">
+        <div class="column is-three-quarters">
+          <div class="box" style="border-top: 6px solid #2e7d32; box-shadow: 0 10px 30px rgba(34,41,47,0.06);">
+            <h4 class="title is-4 has-text-centered">Primary Contributions</h4>
+            <div class="columns is-multiline is-variable is-4">
+              <div class="column is-6">
+                <div style="display:flex; gap:12px; align-items:flex-start;">
+                  <div style="font-size:28px; color:#2e7d32;">🔬</div>
+                  <div>
+                    <p style="margin:0; font-weight:700;">Ensemble Screening</p>
+                    <p style="margin:4px 0 0 0; color:#555;">DenseNet121 + EfficientNetV2-S + ResNet50 achieve AUROC
+                      91.03%.</p>
+                  </div>
+                </div>
               </div>
-              <div class="media-content">
-                <p class="title is-5">Robust Classification</p>
-                <p class="subtitle is-6" style="margin-top: 5px;">
-                  DERNet ensemble: <strong>AUROC 91.03%</strong>, <strong>Sensitivity 84.91%</strong>,
-                  <strong>Specificity 81.68%</strong>, <strong>F1-Score 83.09%</strong> via weighted fusion of
-                  DenseNet-121, EfficientNetV2-S, ResNet-50.
-                </p>
+              <div class="column is-6">
+                <div style="display:flex; gap:12px; align-items:flex-start;">
+                  <div style="font-size:28px; color:#1976d2;">📍</div>
+                  <div>
+                    <p style="margin:0; font-weight:700;">Precise Localization</p>
+                    <p style="margin:4px 0 0 0; color:#555;">Customized YOLO11-L achieves mAP@0.5 = 40.10% for lesions.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="column is-6">
+                <div style="display:flex; gap:12px; align-items:flex-start;">
+                  <div style="font-size:28px; color:#6a1b9a;">🧭</div>
+                  <div>
+                    <p style="margin:0; font-weight:700;">Latency-Optimized Inference</p>
+                    <p style="margin:4px 0 0 0; color:#555;">Staged DERNet→YOLO11-L with Saliency, Grad-CAM, LIME for
+                      transparent decisions.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="column is-6">
+                <div style="display:flex; gap:12px; align-items:flex-start;">
+                  <div style="font-size:28px; color:#ff7043;">♻️</div>
+                  <div>
+                    <p style="margin:0; font-weight:700;">Reproducible Low-Resource Design</p>
+                    <p style="margin:4px 0 0 0; color:#555;">Engineered to run efficiently on CPUs and constrained
+                      clinical environments.</p>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-
-        <div class="column is-6">
-          <div class="box" style="border-top: 5px solid #2196f3; height: 100%;">
-            <div class="media">
-              <div class="media-left">
-                <span style="font-size: 3em;">⚖️</span>
-              </div>
-              <div class="media-content">
-                <p class="title is-5">Class Imbalance Mitigation</p>
-                <p class="subtitle is-6" style="margin-top: 5px;">
-                  Handled <strong>46.9:1 class imbalance</strong> using <strong>Copy-Paste augmentation</strong> and
-                  <strong>Focal Loss</strong>, achieving <strong>mAP@0.5 40.10±0.3%</strong> for 7-class detection.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="column is-6">
-          <div class="box" style="border-top: 5px solid #9c27b0; height: 100%;">
-            <div class="media">
-              <div class="media-left">
-                <span style="font-size: 3em;">🧠</span>
-              </div>
-              <div class="media-content">
-                <p class="title is-5">Explainable AI (XAI) Integration</p>
-                <p class="subtitle is-6" style="margin-top: 5px;">
-                  <strong>LIME</strong>, <strong>Grad-CAM</strong>, and <strong>Qualitative Visualization</strong>
-                  provide saliency maps and visual validation, ensuring model focuses on clinically relevant spinal
-                  regions for transparent diagnosis.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="column is-6">
-          <div class="box" style="border-top: 5px solid #ff9800; height: 100%;">
-            <div class="media">
-              <div class="media-left">
-                <span style="font-size: 3em;">🏅</span>
-              </div>
-              <div class="media-content">
-                <p class="title is-5">Real-Time Clinical Applicability</p>
-                <p class="subtitle is-6" style="margin-top: 5px;">
-                  <strong>~11 FPS (92ms/image)</strong> on RTX 3050 GPU for real-time spine triage with <strong>7
-                    pathology localization</strong> and bounding-box visual explanations.
-                </p>
+            <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+              <div style="color:#666;">Includes ensemble screening (AUROC 91.03%), YOLO11-L localization (mAP@0.5
+                40.10%), and a latency-optimized staged strategy for practical deployment.</div>
+              <div>
+                <a class="button is-primary is-rounded" href="#class-imbalance-study">Read Details</a>
               </div>
             </div>
           </div>
@@ -1284,9 +1311,6 @@
 
       <div style="margin-top: 50px;">
         <h2 class="title is-3 has-text-centered">Future Directions</h2>
-        <div class="content has-text-centered" style="margin-bottom: 30px;">
-          <p>Prospective research avenues to enhance DERNet's clinical impact and deployment.</p>
-        </div>
 
         <div class="box" style="background-color: #f5f5f5; border-left: 5px solid #363636;">
           <div class="content">
@@ -1312,6 +1336,8 @@
             </ul>
           </div>
         </div>
+
+
       </div>
 
     </div>
@@ -1322,7 +1348,7 @@
       <h2 class="title">BibTeX</h2>
       <pre><code>@article{DERNet2026,
   author    = {Anonymized Authors},
-  title     = {A Cascaded DERNet and YOLO11 Framework for Spinal Lesion Triage and Localization with Explainable AI},
+  title     = {A Sensitivity-Gated Cascade for Compute-Efficient Spinal Lesion Detection in Resource-Constrained Settings},
   journal   = {Under Review},
   year      = {2026},
 }</code></pre>
@@ -1336,14 +1362,12 @@
         <div class="column is-10">
           <div class="content has-text-centered">
             <p style="margin-bottom: 10px;">
-              <strong>DERNet Framework for Spinal Lesion Triage and Localization</strong>
+              <strong>DERNet</strong>
             </p>
             <p style="margin-bottom: 10px;">
               &copy; 2026 . All rights reserved.
             </p>
             <p style="font-size: 0.9em; color: #666;">
-              Website template adapted from <a href="https://github.com/nerfies/nerfies.github.io" target="_blank"
-                style="color: #3273dc;">Nerfies</a>,
               licensed under <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank"
                 style="color: #3273dc;">CC BY-SA 4.0</a>.
             </p>
