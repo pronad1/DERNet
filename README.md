@@ -1,7 +1,7 @@
 # DERNet: Spinal Lesion Triage and Localization
 
 [![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen?style=for-the-badge)](https://cimilab.github.io/DERNet/)
-[![Paper](https://img.shields.io/badge/Paper-PDF-red?style=for-the-badge)]
+![Paper](https://img.shields.io/badge/Paper-PDF-red?style=for-the-badge)
 [![License](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey?style=for-the-badge)](http://creativecommons.org/licenses/by-sa/4.0/)
 
 A concise web-based presentation of the DERNet framework for explainable spinal lesion analysis.
@@ -22,10 +22,6 @@ DERNet combines a lightweight screening ensemble with a customized YOLO11-L dete
 - **Class imbalance:** 46.9:1
 - **Low-resource deployment:** 15.4 GFLOPs, 0.9 GB RAM, 120 ms for screening
 - **Localization stage:** 74.6 GFLOPs, 1.8 GB RAM, 350 ms when invoked
-
-## Links
-
-- Live demo: https://cimilab.github.io/DERNet/
 
 ## Notes
 
