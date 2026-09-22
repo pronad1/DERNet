@@ -61,25 +61,16 @@
 
   <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
+      <!-- Logo always visible, including on mobile -->
+      <a class="navbar-item" href="#">
+        <div style="display: flex; flex-direction: column; align-items: center; line-height: 1.2;">
+          <img src="./static/images/dernet.png" alt="DERNet Logo"
+            style="max-height: 60px; width: auto; margin-bottom: 2px;">
+          <span style="font-weight: bold; font-size: 20px; color: #333;">
+            DERNet
+          </span>
+        </div>
       </a>
-    </div>
-
-    <div id="navbarMenu" class="navbar-menu">
-      <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
-        <a class="navbar-item" href="#">
-          <div style="display: flex; flex-direction: column; align-items: center; line-height: 1.2;">
-            <img src="./static/images/dernet.png" alt="DERNet Logo"
-              style="max-height: 60px; width: auto; margin-bottom: 2px;">
-            <span style="font-weight: bold; font-size: 20px; color: #333;">
-              DERNet
-            </span>
-          </div>
-        </a>
-      </div>
     </div>
   </nav>
 
@@ -1401,18 +1392,32 @@
           at the MIRASOL Workshop, MICCAI 2026. View inline or download the full PDF.</p>
       </div>
 
-      <!-- Poster PDF Embed -->
-      <div
+      <!-- Poster PDF Embed: desktop iframe + mobile card -->
+
+      <!-- Desktop: inline iframe (hidden on mobile) -->
+      <div class="poster-desktop-embed"
         style="background: rgba(255,255,255,0.06); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; padding: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); margin-bottom: 28px;">
         <div style="position: relative; width: 100%; border-radius: 10px; overflow: hidden; background: #fff;">
           <iframe src="./static/pdf/DERNet_MIRASOL_MICCAI2026_poster.pdf" width="100%" height="850px"
             style="border: none; border-radius: 10px; display: block;" title="DERNet MIRASOL MICCAI 2026 Poster">
-            <p style="padding: 20px; text-align: center;">Your browser does not support embedded PDFs.
-              <a href="./static/pdf/DERNet_MIRASOL_MICCAI2026_poster.pdf" style="color: #1565c0;">Click here to download
-                the poster.</a>
-            </p>
           </iframe>
         </div>
+      </div>
+
+      <!-- Mobile: card with buttons (hidden on desktop) -->
+      <div class="poster-mobile-card"
+        style="background: rgba(255,255,255,0.1); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.25); border-radius: 16px; padding: 32px 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); margin-bottom: 28px; text-align: center;">
+        <div style="font-size: 5rem; margin-bottom: 16px;">📄</div>
+        <p style="color: #fff; font-size: 1.1rem; font-weight: 700; margin-bottom: 6px;">DERNet — MIRASOL 2026</p>
+        <p style="color: #90caf9; font-size: 0.9rem; margin-bottom: 28px;">Conference Poster &bull; MICCAI 2026</p>
+        <a href="./static/pdf/DERNet_MIRASOL_MICCAI2026_poster.pdf" target="_blank"
+          style="display: block; width: 100%; max-width: 320px; margin: 0 auto 14px; background: #fff; color: #0d47a1; font-weight: 700; padding: 16px 24px; border-radius: 30px; text-decoration: none; font-size: 1.05rem; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+          <i class="fas fa-eye" style="margin-right: 8px;"></i> View Poster
+        </a>
+        <a href="./static/pdf/DERNet_MIRASOL_MICCAI2026_poster.pdf" download="DERNet_MIRASOL_MICCAI2026_poster.pdf"
+          style="display: block; width: 100%; max-width: 320px; margin: 0 auto; background: linear-gradient(135deg, #00bcd4, #0097a7); color: #fff; font-weight: 700; padding: 16px 24px; border-radius: 30px; text-decoration: none; font-size: 1.05rem; box-shadow: 0 4px 20px rgba(0,188,212,0.4);">
+          <i class="fas fa-download" style="margin-right: 8px;"></i> Download PDF
+        </a>
       </div>
 
       <!-- Action Buttons -->

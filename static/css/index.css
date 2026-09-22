@@ -14,6 +14,26 @@ body {
   display: block;
 }
 
+/* --- Navbar: center logo on all screen sizes --- */
+.navbar-brand {
+  justify-content: center !important;
+  width: 100%;
+}
+
+/* --- Poster: responsive desktop/mobile switching --- */
+
+/* Desktop (≥769px): show iframe, hide mobile card */
+@media screen and (min-width: 769px) {
+  .poster-desktop-embed { display: block; }
+  .poster-mobile-card   { display: none;  }
+}
+
+/* Mobile (<769px): hide iframe, show card */
+@media screen and (max-width: 768px) {
+  .poster-desktop-embed { display: none;  }
+  .poster-mobile-card   { display: block; }
+}
+
 /* --- Hero / Publication Header --- */
 @media screen and (max-width: 768px) {
   .hero-body {
