@@ -1,16 +1,290 @@
 body {
   font-family: 'Noto Sans', sans-serif;
+  overflow-x: hidden;
+}
+
+/* ─── Mobile & Responsive Overrides ─── */
+
+/* --- Navbar burger toggle --- */
+.navbar-burger {
+  cursor: pointer;
+}
+
+.navbar-menu.is-active {
+  display: block;
+}
+
+/* --- Hero / Publication Header --- */
+@media screen and (max-width: 768px) {
+  .hero-body {
+    padding: 2rem 1rem !important;
+  }
+
+  .title.is-1.publication-title {
+    font-size: 1.5rem !important;
+    line-height: 1.3;
+  }
+
+  .is-size-5.publication-authors {
+    font-size: 1rem !important;
+  }
+
+  .is-size-6.publication-authors {
+    font-size: 0.8rem !important;
+  }
+
+  /* Publication link buttons: wrap naturally */
+  .publication-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  /* Remove the nested column padding that causes extra indentation */
+  .column.has-text-centered>.column.has-text-centered {
+    padding: 0;
+  }
+}
+
+/* --- Teaser image grids (lesion sample rows) --- */
+/* On mobile: 2 columns */
+@media screen and (max-width: 768px) {
+
+  /* Target the flex rows used for lesion sample images */
+  .hero.teaser .hero-body>div[style*="display: flex"] {
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+  }
+
+  .hero.teaser .hero-body>div[style*="display: flex"]>div[style*="width: 23%"] {
+    width: calc(50% - 5px) !important;
+    min-width: calc(50% - 5px) !important;
+  }
+
+  .hero.teaser .hero-body>div[style*="display: flex"]>div img {
+    height: 160px !important;
+  }
+
+  .hero.teaser .hero-body h2.subtitle {
+    font-size: 0.85rem !important;
+    text-align: left !important;
+    padding: 0 0.5rem;
+  }
+}
+
+/* On very small screens: 1 column */
+@media screen and (max-width: 480px) {
+  .hero.teaser .hero-body>div[style*="display: flex"]>div[style*="width: 23%"] {
+    width: 100% !important;
+    min-width: 100% !important;
+  }
+}
+
+/* --- Methodology / Workflow image --- */
+@media screen and (max-width: 768px) {
+  section.hero.is-light .hero-body {
+    padding: 1.5rem 1rem !important;
+  }
+
+  section.hero.is-light .hero-body img {
+    border-radius: 4px;
+  }
+
+  section.hero.is-light .subtitle {
+    font-size: 0.85rem !important;
+  }
+}
+
+/* --- Architecture section (is-4 + is-8 columns) --- */
+@media screen and (max-width: 768px) {
+
+  /* Stack columns vertically */
+  .columns.is-centered.is-vcentered {
+    flex-direction: column !important;
+    display: flex !important;
+  }
+
+  .columns.is-centered.is-vcentered .column.is-4,
+  .columns.is-centered.is-vcentered .column.is-8 {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: none !important;
+  }
+
+  /* Constrain the tall architecture image */
+  .column.is-8 img[style*="height: 650px"] {
+    height: auto !important;
+    max-height: 350px !important;
+    width: 100% !important;
+    object-fit: contain !important;
+  }
+
+  /* Clinical problem / workflow / architecture bullet font */
+  .column.is-4 .content ul {
+    font-size: 0.85rem !important;
+  }
+}
+
+/* --- 3-column sections (Performance, Error Analysis) --- */
+@media screen and (max-width: 768px) {
+  .columns.is-variable.is-3 {
+    flex-direction: column !important;
+    display: flex !important;
+  }
+
+  .columns.is-variable.is-3 .column.is-4 {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: none !important;
+    margin-bottom: 1rem;
+  }
+}
+
+/* --- Tables: always horizontal-scroll on mobile --- */
+@media screen and (max-width: 768px) {
+
+  .box[style*="overflow-x: auto"],
+  .box {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .table {
+    font-size: 0.7rem !important;
+    white-space: nowrap;
+  }
+
+  /* Table 4 & 5 are already is-size-7; keep them readable */
+  .table.is-size-7 {
+    font-size: 0.65rem !important;
+  }
+
+  h4.title.is-5 {
+    font-size: 1rem !important;
+  }
+}
+
+/* --- Implementation Details 3-column cards --- */
+@media screen and (max-width: 768px) {
+  .columns.is-variable.is-3 .column.is-4 .box {
+    height: auto !important;
+  }
+}
+
+/* --- Mid-scale pathology 2-column box --- */
+@media screen and (max-width: 768px) {
+
+  .columns.is-vcentered .column.is-7,
+  .columns.is-vcentered .column.is-5 {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: none !important;
+  }
+}
+
+/* --- Primary Contributions box --- */
+@media screen and (max-width: 768px) {
+  .column.is-three-quarters {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: none !important;
+  }
+
+  .columns.is-multiline.is-variable.is-4 .column.is-6 {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: none !important;
+  }
+
+  /* Bottom bar of contributions box */
+  div[style*="justify-content:space-between"] {
+    flex-direction: column !important;
+    gap: 12px;
+  }
+}
+
+/* --- Live Demo Gallery --- */
+@media screen and (max-width: 768px) {
+
+  /* Show 1 item at a time on mobile */
+  #demo-gallery {
+    padding: 0 40px !important;
+  }
+
+  .demo-item {
+    flex: 0 0 calc(100% - 0px) !important;
+    min-width: calc(100% - 0px) !important;
+  }
+
+  .demo-item img[style*="height: 400px"] {
+    height: 220px !important;
+  }
+
+  /* Arrow buttons: smaller on mobile */
+  #demo-prev,
+  #demo-next {
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 16px !important;
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+
+  /* Tablet: show 2 items at a time */
+  .demo-item {
+    flex: 0 0 calc(50% - 8px) !important;
+    min-width: calc(50% - 8px) !important;
+  }
+}
+
+/* --- Future Directions / BibTeX --- */
+@media screen and (max-width: 768px) {
+  pre code {
+    font-size: 0.7rem !important;
+    word-break: break-all;
+    white-space: pre-wrap;
+  }
+
+  .section {
+    padding: 2rem 0.75rem !important;
+  }
+}
+
+/* --- Footer --- */
+@media screen and (max-width: 768px) {
+  .footer .column.is-10 {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: none !important;
+  }
+}
+
+/* --- General utility: prevent horizontal scroll --- */
+.container {
+  max-width: 100% !important;
+  overflow-x: hidden;
+}
+
+@media screen and (max-width: 768px) {
+
+  .container.is-max-desktop,
+  .container.is-max-widescreen {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
 }
 
 
 .footer .icon-link {
-    font-size: 25px;
-    color: #000;
+  font-size: 25px;
+  color: #000;
 }
 
 .link-block a {
-    margin-top: 5px;
-    margin-bottom: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .dnerf {
@@ -28,8 +302,7 @@ body {
 }
 
 
-.publication-title {
-}
+.publication-title {}
 
 .publication-banner {
   max-height: parent;
@@ -44,71 +317,67 @@ body {
   object-fit: fit;
 }
 
-.publication-header .hero-body {
-}
+.publication-header .hero-body {}
 
 .publication-title {
-    font-family: 'Google Sans', sans-serif;
+  font-family: 'Google Sans', sans-serif;
 }
 
 .publication-authors {
-    font-family: 'Google Sans', sans-serif;
+  font-family: 'Google Sans', sans-serif;
 }
 
 .publication-venue {
-    color: #555;
-    width: fit-content;
-    font-weight: bold;
+  color: #555;
+  width: fit-content;
+  font-weight: bold;
 }
 
 .publication-awards {
-    color: #ff3860;
-    width: fit-content;
-    font-weight: bolder;
+  color: #ff3860;
+  width: fit-content;
+  font-weight: bolder;
 }
 
-.publication-authors {
-}
+.publication-authors {}
 
 .publication-authors a {
-   color: hsl(204, 86%, 53%) !important;
+  color: hsl(204, 86%, 53%) !important;
 }
 
 .publication-authors a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .author-block {
   display: inline-block;
 }
 
-.publication-banner img {
-}
+.publication-banner img {}
 
 .publication-authors {
   /*color: #4286f4;*/
 }
 
 .publication-video {
-    position: relative;
-    width: 100%;
-    height: 0;
-    padding-bottom: 56.25%;
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%;
 
-    overflow: hidden;
-    border-radius: 10px !important;
+  overflow: hidden;
+  border-radius: 10px !important;
 }
 
 .publication-video iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
-.publication-body img {
-}
+.publication-body img {}
 
 .results-carousel {
   overflow: hidden;
@@ -138,8 +407,7 @@ body {
   border-radius: 5px;
 }
 
-.interpolation-video-column {
-}
+.interpolation-video-column {}
 
 .interpolation-panel .slider {
   margin: 0 !important;
@@ -152,6 +420,7 @@ body {
 #interpolation-image-wrapper {
   width: 100%;
 }
+
 #interpolation-image-wrapper img {
   border-radius: 5px;
 }

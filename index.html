@@ -61,14 +61,14 @@
 
   <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
       </a>
     </div>
 
-    <div class="navbar-menu">
+    <div id="navbarMenu" class="navbar-menu">
       <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
 
         <a class="navbar-item" href="#">
@@ -94,13 +94,36 @@
               Detection in Resource-Constrained Settings</h1>
             <div class="is-size-5 publication-authors">
               <span class="author-block">
-                <a href="#">Anonymized Authors</a>
+                <a href="#">Prosenjit Mondol</a><sup>1</sup>
+                <a href="https://orcid.org/0009-0009-4827-4768" target="_blank" rel="noopener noreferrer"
+                  title="ORCID: 0009-0009-4827-4768">
+                  <img src="https://orcid.org/sites/default/files/images/orcid_16x16.png" alt="ORCID iD"
+                    style="vertical-align:middle; margin-left:2px; margin-bottom:2px;">
+                </a>,&nbsp;
               </span>
-
+              <span class="author-block">
+                <a href="#">Samrat Kumar Dey</a><sup>2</sup>
+                <a href="https://orcid.org/0000-0002-7999-8576" target="_blank" rel="noopener noreferrer"
+                  title="ORCID: 0000-0002-7999-8576">
+                  <img src="https://orcid.org/sites/default/files/images/orcid_16x16.png" alt="ORCID iD"
+                    style="vertical-align:middle; margin-left:2px; margin-bottom:2px;">
+                </a>,&nbsp;
+              </span>
+              <span class="author-block">
+                and <a href="#">Arpita Howlder</a><sup>1</sup>
+                <a href="https://orcid.org/0000-0001-5413-2277" target="_blank" rel="noopener noreferrer"
+                  title="ORCID: 0000-0001-5413-2277">
+                  <img src="https://orcid.org/sites/default/files/images/orcid_16x16.png" alt="ORCID iD"
+                    style="vertical-align:middle; margin-left:2px; margin-bottom:2px;">
+                </a>
+              </span>
             </div>
 
-            <div class="is-size-5 publication-authors">
-              <span class="author-block">Anonymized Affiliations</span>
+            <div class="is-size-6 publication-authors">
+              <span class="author-block"><sup>1</sup>Faculty of Computer Science and Engineering, Patuakhali Science and
+                Technology University, Dumki 8602, Bangladesh.</span><br>
+              <span class="author-block"><sup>2</sup>School of Science and Technology, Bangladesh Open University,
+                Gazipur 1705, Bangladesh</span>
             </div>
 
             <div class="column has-text-centered">
@@ -1346,11 +1369,12 @@
   <section class="section" id="BibTeX">
     <div class="container is-max-desktop content">
       <h2 class="title">BibTeX</h2>
-      <pre><code>@article{DERNet2026,
-  author    = {Anonymized Authors},
+      <pre><code>@inproceedings{mondol2026dernet,
   title     = {A Sensitivity-Gated Cascade for Compute-Efficient Spinal Lesion Detection in Resource-Constrained Settings},
-  journal   = {Under Review},
+  author    = {Prosenjit Mondol and Samrat Kumar Dey and Arpita Howlder},
+  booktitle = {Medical Image Computing in Resource Constrained Settings Workshop {\&} Knowledge Interchange (MIRASOL)},
   year      = {2026},
+  url       = {https://openreview.net/forum?id=91seetK1GO}
 }</code></pre>
     </div>
   </section>
@@ -1367,15 +1391,24 @@
             <p style="margin-bottom: 10px;">
               &copy; 2026 . All rights reserved.
             </p>
-            <p style="font-size: 0.9em; color: #666;">
-              licensed under <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank"
-                style="color: #3273dc;">CC BY-SA 4.0</a>.
-            </p>
           </div>
         </div>
       </div>
     </div>
   </footer>
+  <script>
+    // Navbar burger toggle for mobile
+    document.addEventListener('DOMContentLoaded', function () {
+      const burgers = document.querySelectorAll('.navbar-burger');
+      burgers.forEach(function (burger) {
+        burger.addEventListener('click', function () {
+          const target = document.getElementById(burger.dataset.target);
+          burger.classList.toggle('is-active');
+          if (target) target.classList.toggle('is-active');
+        });
+      });
+    });
+  </script>
 </body>
 
 </html>
