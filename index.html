@@ -61,16 +61,6 @@
 
   <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <a class="navbar-item" href="#">
-        <div style="display: flex; flex-direction: column; align-items: center; line-height: 1.2;">
-          <img src="./static/images/dernet.png" alt="DERNet Logo"
-            style="max-height: 60px; width: auto; margin-bottom: 2px;">
-          <span style="font-weight: bold; font-size: 20px; color: #333;">
-            DERNet
-          </span>
-        </div>
-      </a>
-
       <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
@@ -80,9 +70,15 @@
 
     <div id="navbarMenu" class="navbar-menu">
       <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
-        <a class="navbar-item" href="#class-imbalance-study">Dataset</a>
-        <a class="navbar-item" href="#poster-section">🏆 Poster</a>
-        <a class="navbar-item" href="#BibTeX">BibTeX</a>
+        <a class="navbar-item" href="#">
+          <div style="display: flex; flex-direction: column; align-items: center; line-height: 1.2;">
+            <img src="./static/images/dernet.png" alt="DERNet Logo"
+              style="max-height: 60px; width: auto; margin-bottom: 2px;">
+            <span style="font-weight: bold; font-size: 20px; color: #333;">
+              DERNet
+            </span>
+          </div>
+        </a>
       </div>
     </div>
   </nav>
@@ -93,9 +89,11 @@
         <div class="columns is-centered">
           <div class="column has-text-centered">
             <!-- MICCAI 2026 MIRASOL Acceptance Badge -->
-            <div style="display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg, #1a237e 0%, #283593 50%, #1565c0 100%); color: #fff; padding: 10px 22px; border-radius: 30px; margin-bottom: 18px; box-shadow: 0 4px 18px rgba(26,35,126,0.35); font-size: 1rem; font-weight: 700; letter-spacing: 0.02em;">
+            <div
+              style="display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg, #1a237e 0%, #283593 50%, #1565c0 100%); color: #fff; padding: 10px 22px; border-radius: 30px; margin-bottom: 18px; box-shadow: 0 4px 18px rgba(26,35,126,0.35); font-size: 1rem; font-weight: 700; letter-spacing: 0.02em;">
               <span style="font-size: 1.4rem;">🏆</span>
-              <span>Accepted at <strong style="color: #90caf9;">MICCAI 2026</strong> &mdash; <strong style="color: #b3e5fc;">MIRASOL Workshop</strong></span>
+              <span>Accepted at <strong style="color: #90caf9;">MICCAI 2026</strong> &mdash; <strong
+                  style="color: #b3e5fc;">MIRASOL Workshop</strong></span>
             </div>
 
             <h1 class="title is-1 publication-title">A Sensitivity-Gated Cascade for Compute-Efficient Spinal Lesion
@@ -174,8 +172,7 @@
                 </span>
                 <!-- Poster Link. -->
                 <span class="link-block">
-                  <a href="#poster-section"
-                    class="external-link button is-normal is-rounded"
+                  <a href="#poster-section" class="external-link button is-normal is-rounded"
                     style="background: linear-gradient(135deg, #1565c0, #0d47a1); color: #fff; border: none; box-shadow: 0 3px 10px rgba(21,101,192,0.4);">
                     <span class="icon">
                       <i class="fas fa-chalkboard"></i>
@@ -1387,30 +1384,32 @@
   </section>
 
   <!-- ===== POSTER SECTION ===== -->
-  <section class="section" id="poster-section" style="background: linear-gradient(135deg, #0d1b4b 0%, #1a237e 40%, #0d47a1 100%); padding: 60px 20px;">
+  <section class="section" id="poster-section"
+    style="background: linear-gradient(135deg, #0d1b4b 0%, #1a237e 40%, #0d47a1 100%); padding: 60px 20px;">
     <div class="container is-max-desktop">
 
       <!-- Section Header -->
       <div class="has-text-centered" style="margin-bottom: 40px;">
-        <div style="display: inline-flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.12); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.25); border-radius: 30px; padding: 8px 22px; margin-bottom: 20px;">
+        <div
+          style="display: inline-flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.12); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.25); border-radius: 30px; padding: 8px 22px; margin-bottom: 20px;">
           <span style="font-size: 1.2rem;">🏆</span>
-          <span style="color: #b3e5fc; font-weight: 700; font-size: 1rem; letter-spacing: 0.04em;">MICCAI 2026 &mdash; MIRASOL Workshop</span>
+          <span style="color: #b3e5fc; font-weight: 700; font-size: 1rem; letter-spacing: 0.04em;">MICCAI 2026 &mdash;
+            MIRASOL Workshop</span>
         </div>
         <h2 class="title is-2" style="color: #ffffff; font-weight: 800; margin-bottom: 8px;">Conference Poster</h2>
-        <p style="color: #90caf9; font-size: 1.05rem; max-width: 600px; margin: 0 auto;">Our accepted poster presented at the MIRASOL Workshop, MICCAI 2026. View inline or download the full PDF.</p>
+        <p style="color: #90caf9; font-size: 1.05rem; max-width: 600px; margin: 0 auto;">Our accepted poster presented
+          at the MIRASOL Workshop, MICCAI 2026. View inline or download the full PDF.</p>
       </div>
 
       <!-- Poster PDF Embed -->
-      <div style="background: rgba(255,255,255,0.06); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; padding: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); margin-bottom: 28px;">
+      <div
+        style="background: rgba(255,255,255,0.06); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; padding: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); margin-bottom: 28px;">
         <div style="position: relative; width: 100%; border-radius: 10px; overflow: hidden; background: #fff;">
-          <iframe
-            src="./static/pdf/DERNet_MIRASOL_MICCAI2026_poster.pdf"
-            width="100%"
-            height="850px"
-            style="border: none; border-radius: 10px; display: block;"
-            title="DERNet MIRASOL MICCAI 2026 Poster">
+          <iframe src="./static/pdf/DERNet_MIRASOL_MICCAI2026_poster.pdf" width="100%" height="850px"
+            style="border: none; border-radius: 10px; display: block;" title="DERNet MIRASOL MICCAI 2026 Poster">
             <p style="padding: 20px; text-align: center;">Your browser does not support embedded PDFs.
-              <a href="./static/pdf/DERNet_MIRASOL_MICCAI2026_poster.pdf" style="color: #1565c0;">Click here to download the poster.</a>
+              <a href="./static/pdf/DERNet_MIRASOL_MICCAI2026_poster.pdf" style="color: #1565c0;">Click here to download
+                the poster.</a>
             </p>
           </iframe>
         </div>
